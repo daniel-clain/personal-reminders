@@ -1,14 +1,6 @@
-import React, { Component } from 'react';
-import { QuestionStore } from '../../../mobx-stores/question.store';
-import { TagStore } from '../../../mobx-stores/tag.store';
+import React from 'react';
 import { observer } from 'mobx-react';
 
-@observer
-export default class Quiz extends Component<{
-  questionStore: QuestionStore; 
-  tagStore: TagStore;
-}>{
-  render(){
-    return <div>Quiz</div>
-  }
-}
+export default observer(function Quiz_V(){
+  return <div>Quiz</div>
+})

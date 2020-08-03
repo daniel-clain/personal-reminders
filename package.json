@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "dev": "webpack-dev-server"
+    "dev": "webpack-dev-server",
+    "build": "webpack"
   },
   "devDependencies": {
     "@types/react": "^16.9.11",

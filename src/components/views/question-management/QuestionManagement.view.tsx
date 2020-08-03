@@ -1,40 +1,26 @@
-import React, { Component } from 'react';
-import { QuestionStore } from '../../../mobx-stores/question.store';
-import { TagStore } from '../../../mobx-stores/tag.store';
-import QuestionForm from './components/QuestionForm.component';
-import QuestionsList from './components/QuestionsList.component';
-import { QuestionViewButtons } from './components/QuestionViewButtons.component';
-import { QuestionViews } from '../../../types/views.type';
-import TagManagement from './components/tag-management/TagManagement.component';
+import React, { useState } from 'react';
+import QuestionForm from './question-management-components/QuestionForm.component';
+import QuestionsList from './question-management-components/QuestionsList.component';
 
-export default class QuestionManagement extends Component<{
-  questionStore: QuestionStore;
-  tagStore: TagStore;
-}, {questionView: QuestionViews}>{
+import { QuestionManagementView } from '../../../types/view.type';
+import TagManagement from './question-management-components/tag-management/TagManagement.component';
+import QuestionManagementViewButtons from './question-management-components/QuestionManagementViewButtons.component';
+
+export default function QuestionManagement_V(){
   
-  constructor(props){
-    super(props)
-    this.state = {
-      questionView: 'Questions List'
-    }
-  }
-  setQuestionView(questionView: QuestionViews){
-    this.setState({questionView: questionView})
-    console.log('this.state.questionView :', this.state.questionView);
-  }
-  render() {
-    const { questionStore, tagStore } = this.props
-    const { questionView } = this.state
-    return (
-      <div>
-        <QuestionForm questionStore={questionStore} tagStore={tagStore} />
-        <hr />
-        <QuestionViewButtons setQuestionView={this.setQuestionView.bind(this)}/>
-        {questionView === 'Questions List' &&
-        <QuestionsList questionStore={questionStore} tagStore={tagStore} />}
-        {questionView === 'Tag Management' &&
-        <TagManagement tagStore={tagStore} />}
-      </div>
-    )
-  }
+  const [questionManagementView, setQuestionManagementView] = 
+  useState<QuestionManagementView>('Questions List');
+  
+  return <>
+    <QuestionForm/>
+    <hr />
+    <QuestionManagementViewButtons {...{
+      setQuestionManagementView, questionManagementView
+    }}/>
+
+    <QuestionsList />
+
+    {questionManagementView === 'Tag Management' &&
+    <TagManagement />}
+  </>
 }

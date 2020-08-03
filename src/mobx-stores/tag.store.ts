@@ -1,11 +1,16 @@
 import {observable} from 'mobx';
 import { Tag } from '../types/tag.type';
-import { SubmittedTag } from '../types/submitted-tag';
+import { EditedTag } from '../types/edited-tag.type';
 
-export class TagStore{
-  @observable tags: Tag[] = [{value: 'tag1', dateLastUpdated: new Date()}]
+function TagStore(){
+  const tags: Tag[] = observable([{value: 'tag1', dateLastUpdated: new Date()}])
+
+  return {
+    tags,
+    addTag
+  }
   
-  addTag({value}: SubmittedTag){
+  function addTag({value}: EditedTag){
     const tag: Tag = {
       id: null,
       value,
@@ -13,7 +18,8 @@ export class TagStore{
     }
     this.tags.push(tag)
   }
+
 }
-const tagStoreSingleton = new TagStore()
+const tagStoreSingleton = TagStore()
 
 export default tagStoreSingleton

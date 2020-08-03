@@ -1,16 +1,15 @@
-import {observable, autorun} from 'mobx';
-import { Views } from '../types/views.type';
-export class ViewStore{
-  @observable activeView: Views = 'Start Quiz'
+import {observable, IObservableValue} from 'mobx';
+import { View } from '../types/view.type';
 
-  constructor(){
-    this.setActiveView('Question Management')
-  }
+function ViewStore(){
+  const activeView: IObservableValue<View> = observable.box('Start Quiz')
+  activeView.set('Question Management')
 
-  setActiveView(view: Views){
-    this.activeView = view
+  return {
+    activeView    
   }
+  
 }
-const viewStoreSingleton = new ViewStore()
 
+const viewStoreSingleton = ViewStore()
 export default viewStoreSingleton

@@ -1,55 +1,67 @@
 import {observable} from 'mobx';
 import { Question } from '../types/question.type';
-import { SubmittedQuestion } from '../types/submitted-question.type';
+import { EditedQuestion } from '../types/edited-question.type';
 
-export class QuestionStore{
-  @observable questions: Question[] = [
-    
-  ]
-  constructor(){
-    this.addQuestion({
-      value: 'What color is the sun?',
-      correctAnswer: 'yellow',
-      tags: [{value: 'practice questions', dateLastUpdated: new Date()}]
-    })
+interface IQuestionStore{
+  questions: Question[]
+  addQuestion(edditedQuestion: EditedQuestion)
+  updateQuestion(questionId: string, edditedQuestion: EditedQuestion)
+}
+
+function QuestionStore(): IQuestionStore{
+  const questions: Question[] = observable([])
+
+  addQuestion({
+    value: 'What color is the sun?',
+    correctAnswer: 'yellow',
+    tags: [{value: 'practice questions', dateLastUpdated: new Date()}]
+  }) 
+
+
+  function addQuestion(edditedQuestion: EditedQuestion){
+      
+    try{validate(edditedQuestion)} 
+    catch(e){alert(`Add Failed. ${e}`)}
+
+    const newQuestion: Question = {
+      id: Math.random().toString(),
+      ...edditedQuestion,
+      dateLastUpdated: new Date(),
+      dateLastAsked: null,
+      correctnessRating: null,
+    }
+    questions.push(newQuestion)
   }
 
-  validate(value, correctAnswer){
+  function updateQuestion(questionId: string, edditedQuestion: EditedQuestion){
+    try{validate(edditedQuestion)} 
+    catch(e){alert(`Update Failed. ${e}`)}
+
+    questions.find(question => {
+      if(question.id == questionId){
+        question = {
+          ...question,
+          ...edditedQuestion, 
+          dateLastUpdated: new Date()
+        }
+        return true
+      }
+    })
+  }
+  
+  function validate({value, correctAnswer}: EditedQuestion){
     const validationErrors = []
     if(!value) validationErrors.push('requires question')
     if(!correctAnswer) validationErrors.push('requires answer')
     if(validationErrors.length > 0)throw(validationErrors)
   }
 
-  addQuestion({value, correctAnswer, tags}: SubmittedQuestion){
-    this.validate(value, correctAnswer)
-    // if validation doesnt throw
-    const newQuestion: Question = {
-      id: Math.random().toString(),
-      value,
-      correctAnswer,
-      tags,
-      dateLastUpdated: new Date(),
-      dateLastAsked: null,
-      correctnessRating: null,
-    }
-    this.questions.push(newQuestion)
-  }
-
-  updateQuestion(editingQuestion: Question, {value, correctAnswer, tags}: SubmittedQuestion){
-    this.validate(value, correctAnswer)
-    // if validation doesnt throw
-    this.questions = this.questions.map(question => {
-      if(question.id == editingQuestion.id){
-        question.value = value
-        question.correctAnswer = correctAnswer
-        question.tags = tags
-        question.dateLastUpdated = new Date()
-      }
-      return question
-    })
+  return {
+    questions,
+    addQuestion,
+    updateQuestion
   }
 }
-const questionStoreSingleton = new QuestionStore()
 
+const questionStoreSingleton = QuestionStore()
 export default questionStoreSingleton

@@ -1,40 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-
-import Nav from './components/Nav.component';
-import QuestionManagement from './components/views/question-management/QuestionManagement.view';
-import Quiz from './components/views/quiz/Quiz.view';
-
 import {observer} from 'mobx-react';
+
+import Nav_P from './components/partials/Nav.partial';
+import Quiz_V from './components/views/quiz/Quiz.view';
 import viewStoreSingleton from './mobx-stores/view.store';
-import questionStoreSingleton from './mobx-stores/question.store';
-import tagStoreSingleton from './mobx-stores/tag.store';
+import QuestionManagement_V from './components/views/question-management/QuestionManagement.view';
 
 import './../global-style.scss'
-
 @observer
 class App extends Component{
-  render(){    
+  render(){
     const {activeView} = viewStoreSingleton
-    return <>test
-      <Nav viewStore={viewStoreSingleton}/>
-      {
-        activeView === 'Start Quiz' &&
-        <Quiz
-          questionStore={questionStoreSingleton}
-          tagStore={tagStoreSingleton}
-        />
-      }
-      {
-        activeView === 'Question Management' &&
-        <QuestionManagement
-          questionStore={questionStoreSingleton}
-          tagStore={tagStoreSingleton}
-        />
-      }
-    </>
+    if('Start Quiz' == activeView.get())
+      return [<Nav_P/>,<Quiz_V/>]
+    else 
+    if('Question Management' == activeView.get())
+      return [<Nav_P/>, <QuestionManagement_V/>]
   }
 }
+
 
 
 const reactRenderingContainer = document.getElementById('react-rendering-div')
