@@ -16,7 +16,7 @@ import './../global-style.scss'
 class App extends Component{
   render(){    
     const {activeView} = viewStoreSingleton
-    return <>
+    return <>test
       <Nav viewStore={viewStoreSingleton}/>
       {
         activeView === 'Start Quiz' &&
