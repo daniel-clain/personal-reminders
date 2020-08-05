@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import FormField from "../../../objects/FormField";
-import { EditedQuestion } from "../../../../types/edited-question.type";
-import { Question } from "../../../../types/question.type";
-import questionStoreSingleton from "../../../../mobx-stores/question.store";
+import FormField from "../../../partials/FormField";
+import { Question } from "../../../../other/types/question.type";
+import { EditedQuestion } from "../../../../other/types/edited-question.type";
+import questionStoreSingleton from "../../../../other/mobx-stores/question.store";
+
 
 export type QuestionFields = 'question' | 'answer' | 'tags'
 
-export default function QuestionForm({existingQuestion}: {existingQuestion?: Question}){
+export default function Form_Sub({existingQuestion}: {existingQuestion?: Question}){
 
   let initialQuestion: EditedQuestion = {value: '', correctAnswer: '', tags: []}
   if(existingQuestion){

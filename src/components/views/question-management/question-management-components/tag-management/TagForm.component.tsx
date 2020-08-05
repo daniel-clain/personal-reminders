@@ -1,7 +1,8 @@
-import React, { Component, useState } from "react";
-import tagStoreSingleton from "../../../../../mobx-stores/tag.store";
-import FormField from "../../../../objects/FormField";
-import { EditedTag } from "../../../../../types/edited-tag.type";
+import React, { useState } from "react"
+import FormField from "../../../../partials/FormField"
+import { EditedTag } from "../../../../../other/types/edited-tag.type"
+import tagStoreSingleton from "../../../../../other/mobx-stores/tag.store"
+
 
 export type TagFields = 'tag name'
 

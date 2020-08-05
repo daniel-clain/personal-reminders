@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { QuestionFields } from "../views/question-management/components/QuestionForm.component";
-import { TagFields } from "../views/question-management/components/tag-management/TagForm.component";
-import { Tag } from "../../types/tag.type";
-import { TagStore } from "../../mobx-stores/tag.store";
+import { QuestionFields } from "../views/question-management/question-management-components/Form.sub";
+import { TagFields } from "../views/question-management/question-management-components/tag-management/TagForm.component";
 import {observer} from 'mobx-react';
+import tagStore from "../../other/mobx-stores/tag.store";
+import { Tag } from "../../other/types/tag.type";
 
 type FormFieldTypes = 'input' | 'textarea' | 'checkboxes'
 type FieldNames = QuestionFields | TagFields
@@ -14,7 +14,6 @@ interface FormFieldProps {
   onUpdate(name: FieldNames, value: any)
   value?: string
   tags?: Tag[]
-  tagStore?: TagStore
 }
 
 @observer
@@ -31,7 +30,7 @@ export default class FormField extends Component<FormFieldProps, {}, any>{
     onUpdate(name, tags)
   }
   render() {
-    const { name, type, onUpdate, value, tags, tagStore } = this.props
+    const { name, type, onUpdate, value, tags } = this.props
     let elem: JSX.Element
     switch (type) {
       case 'input':

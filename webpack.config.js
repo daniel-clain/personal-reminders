@@ -18,7 +18,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './index.html'
+      title: 'Personal Quiz'
     })
  ]
 }   

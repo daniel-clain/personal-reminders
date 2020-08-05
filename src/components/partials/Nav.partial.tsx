@@ -1,9 +1,14 @@
 import React from 'react';
-import viewStoreSingleton from '../../mobx-stores/view.store';
+import viewStore from '../../other/mobx-stores/view.store';
 
 export default function Nav_P(){
-  return <>
-    <button onClick={() => viewStoreSingleton.activeView.set('Start Quiz')}>Start Quizz</button>
-    <button onClick={() => viewStoreSingleton.activeView.set('Question Management')}>Question Management</button>
-  </>
+
+  const {viewState} = viewStore
+
+  return <nav>
+    <button onClick={() => viewState.activeView = 'Quiz'}>
+      Start Quizz</button>
+    <button onClick={() => viewState.activeView = 'Question Management'}>
+      Question Management</button>
+  </nav>
 }

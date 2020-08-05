@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from 'mobx-react';
-import tagStoreSingleton from "../../../../../mobx-stores/tag.store";
+import tagStoreSingleton from "../../../../../other/mobx-stores/tag.store";
 
 
 export default observer(function TagsList(){

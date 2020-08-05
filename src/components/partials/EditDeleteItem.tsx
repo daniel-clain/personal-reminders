@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Tag } from '../../types/tag.type';
-import { Question } from '../../types/question.type';
+import { Question } from '../../other/types/question.type';
+import { Tag } from '../../other/types/tag.type';
 export default class EditDeleteItem extends Component<
   {item: Question | Tag},
   {expanded: boolean}
