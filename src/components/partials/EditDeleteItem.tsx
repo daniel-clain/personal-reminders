@@ -1,42 +1,37 @@
-import React, { Component } from 'react';
-import { Question } from '../../other/types/question.type';
-import { Tag } from '../../other/types/tag.type';
-export default class EditDeleteItem extends Component<
-  {item: Question | Tag},
-  {expanded: boolean}
->{
+import React, { useState, useContext, ReactChild } from 'react'
+import { PersonalQuizContext } from '../../other/mobx-stores/personal-quiz.store'
 
-  constructor(params) {
-    super(params)
-    this.state = {
-      expanded: false
+interface EditDeleteItemProps_Interface{
+  value: string
+  type: 'Question' | 'Category'
+  id: string
+  children: ReactChild
+}
+
+export default function EditDeleteItem({value, type, id, children}: EditDeleteItemProps_Interface) {
+  const [expanded, setExpanded] = useState(false)
+  const {questionStore, categoryStore}= useContext(PersonalQuizContext)
+
+  function handleDelete(){
+    const deleteConfirmed = confirm(`Are you sure you want to delete the ${type.toLocaleLowerCase()}: \n\t ${value}`)
+    if(deleteConfirmed){
+      setExpanded(false)
+      switch(type){
+        case 'Question': return questionStore.deleteQuestion(id)
+        case 'Category': return categoryStore.deleteCategory(id)
+      }
     }
   }
-  submitUpdatedItem(){}
-  expandItem(){
-    this.setState({expanded: true})
-  }
-  closeItem(){
-    this.setState({expanded: false})
-  }
-  deleteItem(){}
 
-  render(){
-    const {item} = this.props
-    return (
-      <div>
-        {this.state.expanded ? (
-        <div>
-          {this.props.children}       
-          <button type="button" onClick={() => this.closeItem()}>Close</button>
-          <button onClick={() => this.deleteItem()}> Delete</button >
-        </div>
-        ) : (
-          <div className="list__item" onClick={() => this.expandItem()}>
-          { item.value }
-        </div>
-        )}
-      </div>
-    )
-  }
-};
+  return expanded ? 
+    <div className="list__item--expanded">
+      {children}
+      <button type="button" onClick={() => setExpanded(false)}>Close</button>
+      <button onClick={handleDelete}>Delete</button >
+    </div>
+    : 
+    <div className="list__item" onClick={() => setExpanded(true)}>
+      {value}
+    </div>
+      
+} 

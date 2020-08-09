@@ -1,67 +1,102 @@
-import {observable} from 'mobx';
-import { Question } from '../types/question.type';
-import { EditedQuestion } from '../types/edited-question.type';
+import { observable, action } from 'mobx'
+import { Question_Type } from '../types/question.type'
+import { EditedQuestion_Type } from '../types/edited-question.type'
+import stubQuestions from './stub-questions'
+import { SubmittedQuestion_Type } from '../types/submitted-question.type'
+import { CorrectnessMark_Type } from '../types/correctness-mark.type'
+import { Collection } from '../interfaces/collection.interface'
 
-interface IQuestionStore{
-  questions: Question[]
-  addQuestion(edditedQuestion: EditedQuestion)
-  updateQuestion(questionId: string, edditedQuestion: EditedQuestion)
+
+export interface IQuestionStore {
+  questions: Question_Type[]
+  addQuestion(submittedQuestion: SubmittedQuestion_Type)
+  updateQuestion(editedQuestion: EditedQuestion_Type)
+  deleteQuestion(id: string)
+  updateQuestionCorrectnessRating(quesiton: Question_Type, correctnessRating: number)
+  setCollection
 }
+export function QuestionStore(): IQuestionStore {
+  let questionCollection: Collection
 
-function QuestionStore(): IQuestionStore{
-  const questions: Question[] = observable([])
+  const sqs: Question_Type[] = stubQuestions.map(sq => ({
+    ...sq,
+    correctnessRating: 2,
+    dateLastAsked: new Date(sq.dateLastAsked),
+    dateLastUpdated: new Date(sq.dateLastUpdated)
+  }))
 
-  addQuestion({
-    value: 'What color is the sun?',
-    correctAnswer: 'yellow',
-    tags: [{value: 'practice questions', dateLastUpdated: new Date()}]
-  }) 
+  let questions: Question_Type[] = observable([])
 
 
-  function addQuestion(edditedQuestion: EditedQuestion){
-      
-    try{validate(edditedQuestion)} 
-    catch(e){alert(`Add Failed. ${e}`)}
+  function addQuestion(submittedQuestion: SubmittedQuestion_Type) {
 
-    const newQuestion: Question = {
-      id: Math.random().toString(),
-      ...edditedQuestion,
+    if(!questionCollection)throw('no question collection')
+    try { validate(submittedQuestion) }
+    catch (e) { alert(`Add Failed. ${e}`) }
+    
+    return questionCollection.add({
+      ...submittedQuestion,
       dateLastUpdated: new Date(),
       dateLastAsked: null,
       correctnessRating: null,
-    }
-    questions.push(newQuestion)
-  }
-
-  function updateQuestion(questionId: string, edditedQuestion: EditedQuestion){
-    try{validate(edditedQuestion)} 
-    catch(e){alert(`Update Failed. ${e}`)}
-
-    questions.find(question => {
-      if(question.id == questionId){
-        question = {
-          ...question,
-          ...edditedQuestion, 
-          dateLastUpdated: new Date()
-        }
-        return true
-      }
     })
   }
-  
-  function validate({value, correctAnswer}: EditedQuestion){
+
+  function updateQuestion(editedQuestion: EditedQuestion_Type) {
+    if(!questionCollection)throw('no question collection')
+    const { id, ...submittedQuestion } = editedQuestion
+    try { validate(submittedQuestion) }
+    catch (e) { alert(`Update Failed. ${e}`) }
+    questionCollection.doc(id).update({...submittedQuestion})
+  }
+
+  function deleteQuestion(questionId: string) {
+    if(!questionCollection)throw('no question collection')
+    questionCollection.doc(questionId).delete()
+  }
+
+  function validate({ value, correctAnswer }: SubmittedQuestion_Type) {
     const validationErrors = []
-    if(!value) validationErrors.push('requires question')
-    if(!correctAnswer) validationErrors.push('requires answer')
-    if(validationErrors.length > 0)throw(validationErrors)
+    if (!value) validationErrors.push('requires question')
+    if (!correctAnswer) validationErrors.push('requires answer')
+    if (validationErrors.length > 0) throw (validationErrors)
+  }
+
+  function updateQuestionCorrectnessRating(question: Question_Type, correctnessRating: number) {
+    if(!questionCollection)throw('no question collection')
+    const { id, ...data } = question
+    questionCollection.doc(id).update({...data, correctnessRating})
+  }
+
+  function setCollection(collection: Collection) {
+    questionCollection = collection;
+
+    /* const zxy = sqs.filter(sq => sq.categoryIds.includes('Z3l5qLbLpyFRJ1JGwzAp'))
+
+    zxy.forEach(async sq => {
+      const {id, ...rest} = sq
+      //await addQuestion({...rest, categoryIds: ['uqb8AeMwKGQCLpj88fk4']})
+      console.log('added', sq.value)
+    }) */
+    questionCollection.onSnapshot(snapshot => {
+      questions.splice(0, questions.length,
+        ...snapshot.docs.map(doc => (
+          <Question_Type>{ ...doc.data(), id: doc.id }
+        ))
+      )
+    })
+    
+    
+
   }
 
   return {
     questions,
     addQuestion,
-    updateQuestion
+    updateQuestion,
+    deleteQuestion,
+    updateQuestionCorrectnessRating: action(updateQuestionCorrectnessRating),
+    setCollection
   }
-}
 
-const questionStoreSingleton = QuestionStore()
-export default questionStoreSingleton
+}

@@ -1,7 +1,8 @@
-import { Tag } from "./tag.type";
 
-export type EditedQuestion = {
+export type EditedQuestion_Type = {
+  id: string
   value: string
   correctAnswer: string
-  tags: Tag[]
+  categoryIds: string[]
+  correctnessRating: number
 }

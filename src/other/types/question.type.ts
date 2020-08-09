@@ -1,13 +1,11 @@
-import { Tag } from "./tag.type";
 
-export type CorrectnessRating = 'Wrong' | 'Kinda' | 'Almost' | 'Correct'
 
-export type Question = {
+export type Question_Type = {
   id: string
   value: string
   correctAnswer: string
-  tags: Tag[]
-  correctnessRating?: CorrectnessRating
+  categoryIds: string[]
+  correctnessRating: number
   dateLastAsked: Date
   dateLastUpdated: Date
 }

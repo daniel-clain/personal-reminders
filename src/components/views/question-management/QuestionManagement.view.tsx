@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-
-import QuestionForm from './question-management-components/Form.sub';
-import QuestionsList from './question-management-components/List.sub';
-import TagManagement from './question-management-components/tag-management/TagManagement.component';
-import QuestionManagementViewButtons from './question-management-components/ViewButtons.sub';
-import ViewProps_Interface from '../../../other/interfaces/view-props.interface';
-import ViewButtons_Sub from './question-management-components/ViewButtons.sub';
-import viewStore from '../../../other/mobx-stores/view.store';
-import Form_Sub from './question-management-components/Form.sub';
-import List_Sub from './question-management-components/List.sub';
+import React, { useContext } from 'react'
+import ViewProps_Interface from '../../../other/interfaces/view-props.interface'
+import ViewButtons_Sub from './question-management-components/ViewButtons.sub'
+import QuestionForm_Sub from './question-management-components/QuestionForm.sub'
+import QuestionList_Sub from './question-management-components/QuestionList.sub'
+import { observer } from 'mobx-react'
+import CategoryManagement_View from './question-management-components/category-management/CategoryManagement.view'
+import { PersonalQuizContext } from '../../../other/mobx-stores/personal-quiz.store'
 
 
-export default function QuestionManagement_View({isActive}: ViewProps_Interface){
+function QuestionManagement_View({isActive}: ViewProps_Interface){
   
   if(isActive == false) return null
 
+  const {viewStore} = useContext(PersonalQuizContext)
   const {questionManagementView} = viewStore.viewState
   
   return <main id='question-management-view'>
-    <Form_Sub/>
+    <QuestionForm_Sub/>
     <hr />
     <ViewButtons_Sub />
 
     {questionManagementView == 'Questions List' && 
-      <List_Sub />
+      <QuestionList_Sub />
     }
 
-    {questionManagementView === 'Tag Management' &&
-      <TagManagement />
+    {questionManagementView === 'Category Management' &&
+      <CategoryManagement_View />
     }
   </main>
 }
+
+export default observer(QuestionManagement_View)

@@ -1,0 +1,16 @@
+{
+  "icons": [
+    {
+      "src": "icon_128x128.13cbc666094a5f76f617877085be92ee.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
+  "name": "Personal Quiz",
+  "short_name": "Personal Quiz",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#172225",
+  "theme_color": "#172225"
+}

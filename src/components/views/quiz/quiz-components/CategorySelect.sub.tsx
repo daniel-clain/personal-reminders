@@ -1,14 +1,16 @@
-import React from 'react'
-import tagStore from '../../../../other/mobx-stores/tag.store'
-import quizStore from '../../../../other/mobx-stores/quiz.store'
+import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
-import TagSelector_Partial from '../../../partials/TagSelector.partial'
+import CategorySelector_Partial from '../../../partials/CategorySelector.partial'
+import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
 
 function CategorySelect_Sub() {
-  const {selectedTags, tagSelected} = quizStore
+  
+  const {quizStore} = useContext(PersonalQuizContext)
+  const {quizState, categorySelected} = quizStore
+  const selectedCategoryIds = quizState.selectedCategories.map(c => c.id)
 
   return <section id='quiz-question-category-select'>    
-    <TagSelector_Partial {...{selectedTags, tagSelected}} />
+    <CategorySelector_Partial {...{selectedCategoryIds, categorySelected}} />
   </section>
 }
 
