@@ -1,14 +1,22 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sriracha');
+
+
+
+$color-main: #43636B;
+$color-complement: #6B4B43;
+
+$c: #30584C;
+
 html{  
-  font-size: 12px;
-  height: 100%;
-}
+  font-size: 14px;
+  
+   * {     
+    box-sizing: border-box;
 
-body{
-  margin: 0; 
-  background-color: #172225;
-  height: 100%;
 
-  > * {
     &::-webkit-scrollbar{
       width: 0.5rem;
       background-color: #5B777E;
@@ -26,10 +34,22 @@ body{
   }
 }
 
+body{
+  margin: 0; 
+  background-color: #111715;
+  overflow-y: scroll;
+  height: 100%;
+  min-height: 100vh;
 
+}
+hr{
+  border-color: #3f6184;
+}
 #personal-quiz {
   font-family: Helvetica, sans-serif;
-  background: #43636b;
+  background: #262935;
+  //background-image: url('./src/images/brick-tile.jpg');  
+  //background-size: 8rem;
   color: white;
   text-shadow: 1px 1px #222;
   padding: 1.5rem;
@@ -37,8 +57,8 @@ body{
   margin: auto;
   box-sizing: border-box;
   display: block;
-  overflow-y: scroll;
-  height: 100%;  
+  height: 100%;
+  min-height: 100vh;
 }
 
 personal-quiz > *,
@@ -49,21 +69,76 @@ main > *{
   &:last-child{margin-bottom: 0;}
 }
 
+h1{  
+  color: #6c95bf;
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 1px #160e25, 2px 2px 2px #160e25;
+}
+
 h2{
   font-size: 1.1rem;
   font-weight: 400;
   margin: 0;
 }
 
+%inputStyle2{    
+  display: block;
+  font-family: 'Sriracha', cursive;
+  padding: 1rem 1.2rem;
+  border-radius: 2px;
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  border: 0.3rem solid #50341f;
+  outline: none;
+  box-shadow: inset 3px 3px 2px 0px rgba(0, 0, 0, .3), inset -1px -1px 1px 0px rgba(0, 0, 0, .4), 1px 1px 1px -1px black, -1px -1px 1px -1px black;
+  letter-spacing: 0.1rem;
+  text-shadow: 1px 1px #000000b8;
+  background-color: #2f5a4c;
+
+  &:hover, &:focus{
+    outline: none;  
+    border-color:#5d402a;  
+  }
+}
+
+
+.text-field{
+  &__label{    
+    text-transform: capitalize;
+    font-family: monospace;
+    font-size: 1.1rem;
+    margin-bottom: .5rem;
+    display: inline-block;
+    color: #80afe0;
+  }
+  &__input{
+    @extend %inputStyle2;
+  }
+}
 %inputStyle{
   display: block;
   box-sizing: border-box;
   font-family: Helvetica, sans-serif;
-  padding: 0.5rem;
+  padding: 0.8rem;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.3rem;
   width: 100%;
   margin-bottom: 0.5rem;
+  border-top-color: #222;
+  border-style: solid;
+  border-width: 2px;
+  border-left-color: #222;
+  outline: none;
+
+  &:hover, &:focus{
+    outline: none;    
+  }
+}
+
+textarea{
+  resize:none;
+  overflow-y: auto;
 }
 
 
@@ -77,13 +152,19 @@ select {
 }
 
 .list {
+  &-filter{
+    margin-bottom: 1rem;
+  }
   &__item {
-    background-color: #84979b;
-    margin-bottom: 0.2rem;
-    padding: 0.2rem 0.5rem;
+    background-color: #32353c;
+    margin-bottom: 0.3rem;
+    padding: 0.3rem 0.7rem;
+    font-size: 1.1rem;
+    border-radius: 0.1rem;
+    box-shadow: 0.1rem 0.1rem 0.2rem -0.1rem #3e3e3e;
     &--expanded{
       padding: 1rem 1rem;
-      background-color: #84979b;
+      background-color: #32353c;
       margin: 1rem 0;
     }
   }
@@ -91,24 +172,27 @@ select {
 
 .filter{
   @extend %inputStyle;
+  padding: 0.4rem 0 0.4rem 0.9rem;
+  font-size: 1.1rem;
+  background: #bac3cc;
+  color: #0e2e4e;
 }
 
-.category-selector{  
-  background: white;
-  color: black;
-  text-shadow: none;
+.category-selector{      background: #6f8fc338;
+  color: #bddde0;
   padding: 1rem 1rem 0.5rem 1rem;
   border-radius: 5px;
-  border: 1px solid #a9a9a9;
+  border: 1px solid #415569;
 
   header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
   &__heading{    
     margin-right: 2rem;
+    color: #b0d5fb;
   }
   &__filter{
     flex: 1;
@@ -137,9 +221,10 @@ select {
   &__name {
     text-transform: capitalize;
     font-family: monospace;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin-bottom: .5rem;
     display: inline-block;
+    color: #80afe0;
   }
   &__input,
   &__text-area {
@@ -184,20 +269,21 @@ select {
 }
 
 button{
-  color: white;
-  background-color: #AD8C6B;
+  color: #f9f1eb;
+  background-color: #886644;
   outline: none;
-  border-color: #8A6A4A;
-  padding: 4px 8px;
+  border-color: #4a2f1b;
+  padding: 0.4rem 0.7rem;
   border-radius: 5px;
-  text-shadow: 1px 1px #222;
+  text-shadow: 1px 1px 1px #222;
   margin: 3px 5px 3px 0;
   cursor: pointer;
-  font: 600 1.2rem monospace;
+  font: 500 1.1rem monospace;
 
   &:active, &.selected {
-      background: #8A6A4A;
-      border-color: #724E29;
+    background: #b38250;
+    border-color: #563727;
+    color: #ffffff;
   }
 }
 .quiz-question{

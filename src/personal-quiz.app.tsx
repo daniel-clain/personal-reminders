@@ -9,11 +9,13 @@ function PersonalQuiz_App() {
 
   const { userInfo, viewStore } = useContext(PersonalQuizContext)
   const { activeView } = viewStore.viewState
-
+  const goThing = () => console.log('hooray')
   return userInfo.isAuthenticated ? <>
     <Nav_Partial />
+    
     <Quiz_View isActive={activeView == 'Quiz'} />
     <QuestionManagement_View isActive={activeView == 'Question Management'} />
+    
   </> : <p>Sign in with Facebook to use Personal Quiz</p>
 }
 export default observer(PersonalQuiz_App)

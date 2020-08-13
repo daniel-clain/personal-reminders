@@ -3,6 +3,7 @@ import FormField from '../../../../../partials/FormField'
 import { EditedCategory_Type } from '../../../../../../other/types/edited-category.type'
 import { SubmittedCategory_Type } from '../../../../../../other/types/submitted-category.type'
 import { PersonalQuizContext } from '../../../../../../other/mobx-stores/personal-quiz.store'
+import TextField, { TextFieldProps_Interface } from '../../../../../partials/TextField'
 
 export type CategoryFields = 'category name'
 
@@ -26,14 +27,20 @@ export default function CategoryForm_Sub({ editedCategory }: FormProps_Interface
   return (
     <div className="add-category">
       <h1>Add Category</h1>
-      <FormField name="category name" objKey="value" type="input" onUpdate={handleFieldUpdate} value={value} />
+      <TextField {...categoryFieldProps()}/>      
       <button onClick={submitCategory}>Submit New Category</button>
     </div>
   )
 
-  function handleFieldUpdate(value: any, key: string) {
-    setCategory({ ...category, [key]: value })
+  function categoryFieldProps(): TextFieldProps_Interface{
+    return {
+      label: `Category Name`,
+      value,
+      onValueUpdated: value => setCategory({...category, value})
+      
+    }
   }
+
 
   function submitCategory() {
     try {

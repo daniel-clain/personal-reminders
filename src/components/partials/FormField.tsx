@@ -13,7 +13,7 @@ interface FormFieldProps_Interface {
 	type: FormFieldTypes
 	objKey?: any
 	readOnly?: boolean
-	onUpdate?(name: string, value: any)
+	onUpdate?(name: string | string[], value: any)
 	value?: string | string[]
 }
 
@@ -66,10 +66,10 @@ function FormField({ name, objKey, type, onUpdate, value, readOnly }: FormFieldP
 		const categoryIsAlreadySelected = categoryIndex >= 0
 		if (categoryIsAlreadySelected) {
 			categoryIds.splice(categoryIndex, 1)
-			onUpdate(objKey, categoryIds)
+			onUpdate(categoryIds, objKey)
 		} else {
 			categoryIds.push(selectedCategory.id)
-			onUpdate(objKey, categoryIds)
+			onUpdate(categoryIds, objKey)
 		}
 	}
 }

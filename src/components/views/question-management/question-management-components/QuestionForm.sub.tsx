@@ -3,6 +3,7 @@ import FormField from '../../../partials/FormField'
 import { SubmittedQuestion_Type } from '../../../../other/types/submitted-question.type'
 import { EditedQuestion_Type } from '../../../../other/types/edited-question.type'
 import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
+import TextField from '../../../partials/TextField'
 
 export type QuestionFields = 'question' | 'answer' | 'categories'
 
@@ -11,7 +12,7 @@ interface FormProps_Interface {
 }
 
 export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface) {
-  const {questionStore} = useContext(PersonalQuizContext)
+  const { questionStore } = useContext(PersonalQuizContext)
   const emptyQuestion: SubmittedQuestion_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2 }
   let initialQuestion: SubmittedQuestion_Type = { ...emptyQuestion }
 
@@ -26,14 +27,10 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
   return (
     <div className="add-question">
       <h1>Add Question</h1>
-      <FormField name="question" objKey="value" type="input" onUpdate={handleFieldUpdate} value={value} />
-      <FormField
-        name="answer"
-        objKey="correctAnswer"
-        type="textarea"
-        onUpdate={handleFieldUpdate}
-        value={correctAnswer}
-      />
+
+      <TextField {...questionFieldProps()}/>
+      <TextField {  ...answerFieldProps()}/>
+
       <FormField
         name="categories"
         objKey="categoryIds"
@@ -44,6 +41,23 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
       <button onClick={submitQuestion}>{editedQuestion ? 'Update' : 'Submit'}</button>
     </div>
   )
+
+  function questionFieldProps(){
+    return {
+      label:'Question',
+      value,
+      onValueUpdated: value => setQuestion({ ...question, value })      
+    }
+  }
+
+  
+  function answerFieldProps(){
+    return {
+      label:'Answer',
+      value: correctAnswer,
+      onValueUpdated: correctAnswer => setQuestion({ ...question, correctAnswer })      
+    }
+  }
 
   function handleFieldUpdate(value: any, key: any) {
     setQuestion({ ...question, [key]: value })
