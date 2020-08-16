@@ -1,29 +1,22 @@
 import { observable, action } from 'mobx'
 import { Question_Type } from '../types/question.type'
 import { EditedQuestion_Type } from '../types/edited-question.type'
-import stubQuestions from './stub-questions'
 import { SubmittedQuestion_Type } from '../types/submitted-question.type'
-import { CorrectnessMark_Type } from '../types/correctness-mark.type'
 import { Collection } from '../interfaces/collection.interface'
+import { CorrectnessMark_Type } from '../types/correctness-mark.type'
 
 
 export interface IQuestionStore {
   questions: Question_Type[]
   addQuestion(submittedQuestion: SubmittedQuestion_Type)
-  updateQuestion(editedQuestion: EditedQuestion_Type)
+  updateQuestion(editedQuestion: Question_Type)
   deleteQuestion(id: string)
-  updateQuestionCorrectnessRating(quesiton: Question_Type, correctnessRating: number)
+  updateQuestionCorrectnessRating(quesiton: Question_Type, correctnessRating: CorrectnessMark_Type)
   setCollection
 }
 export function QuestionStore(): IQuestionStore {
   let questionCollection: Collection
 
-  const sqs: Question_Type[] = stubQuestions.map(sq => ({
-    ...sq,
-    correctnessRating: 2,
-    dateLastAsked: new Date(sq.dateLastAsked),
-    dateLastUpdated: new Date(sq.dateLastUpdated)
-  }))
 
   let questions: Question_Type[] = observable([])
 
@@ -42,12 +35,12 @@ export function QuestionStore(): IQuestionStore {
     })
   }
 
-  function updateQuestion(editedQuestion: EditedQuestion_Type) {
+  function updateQuestion(editedQuestion: Question_Type) {
     if(!questionCollection)throw('no question collection')
     const { id, ...submittedQuestion } = editedQuestion
     try { validate(submittedQuestion) }
     catch (e) { alert(`Update Failed. ${e}`) }
-    questionCollection.doc(id).update({...submittedQuestion})
+    questionCollection.doc(id).update({...submittedQuestion, dateLastUpdated: new Date()})
   }
 
   function deleteQuestion(questionId: string) {
@@ -62,10 +55,34 @@ export function QuestionStore(): IQuestionStore {
     if (validationErrors.length > 0) throw (validationErrors)
   }
 
-  function updateQuestionCorrectnessRating(question: Question_Type, correctnessRating: number) {
+  function updateQuestionCorrectnessRating(question: Question_Type, correctnessMark: CorrectnessMark_Type) {
     if(!questionCollection)throw('no question collection')
-    const { id, ...data } = question
-    questionCollection.doc(id).update({...data, correctnessRating})
+    
+    let newRating
+    
+    if(correctnessMark == 'Correct'){
+      newRating = question.correctnessRating + 1
+    }
+    if(correctnessMark == 'Almost'){
+      newRating = question.correctnessRating + 0.5
+    }
+    if(correctnessMark == 'Kinda'){
+      newRating = question.correctnessRating - 0.5
+    }
+    if(correctnessMark == 'Wrong'){
+      newRating = question.correctnessRating - 1
+    }
+
+    if(newRating > 10){
+      newRating = 10
+    }
+    if(newRating < 1){
+      newRating = 1
+    }
+
+    updateQuestion({...question, correctnessRating: newRating, dateLastAsked: new Date()})
+
+    
   }
 
   function setCollection(collection: Collection) {

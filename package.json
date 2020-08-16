@@ -2,7 +2,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "test": "jest --watch -i"
+    "test": "jest --watch -i",
+    "start:demo": "webpack-dev-server --env.NODE_ENV=demo"
   },
   "devDependencies": {
     "@firebase/app-types": "^0.6.1",

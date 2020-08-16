@@ -40,7 +40,7 @@ export function QuizStore(questionStore: IQuestionStore){
     quizState.correctnessMarkSubmitted = true
     const { activeQuiz, activeQuestionIndex } = quizState
     const question = activeQuiz.questions[activeQuestionIndex]
-    questionStore.updateQuestionCorrectnessRating(question, 2)
+    questionStore.updateQuestionCorrectnessRating(question, correctnessMark)
   }
 
 

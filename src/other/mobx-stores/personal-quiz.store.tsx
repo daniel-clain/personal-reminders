@@ -22,7 +22,9 @@ const userInfo = observable({
   isAuthenticated: false
 })
 var provider = new firebase.auth.FacebookAuthProvider();
-
+console.log('NODE_ENV :>> ', process.env.NODE_ENV);
+console.log('NODE_ENV2 :>> ', process.env);
+console.log('NODE_ENV3 :>> ', process.env.IS_DEMO);
 firebaseAuth.onAuthStateChanged(user => {
   console.log('u :>> ', user);
   userInfo.isAuthenticated = !!user

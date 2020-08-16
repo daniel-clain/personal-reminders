@@ -3,10 +3,12 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { firebaseConfig } from './firebase.config';
+import { firebaseConfig, firebaseDemoConfig } from './firebase.config';
 
-
-firebase.initializeApp(firebaseConfig)
+if(!!'Use demo' == true)
+  firebase.initializeApp(firebaseDemoConfig)
+else
+  firebase.initializeApp(firebaseConfig)
 
 const firebaseAuth = firebase.auth()
 const firestore = firebase.firestore()

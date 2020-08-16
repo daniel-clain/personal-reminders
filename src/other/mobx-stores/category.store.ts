@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx'
 import { Category_Type } from '../types/category.type'
-import st from './stub-categories'
 import { SubmittedCategory_Type } from '../types/submitted-category.type'
 import { EditedCategory_Type } from '../types/edited-category.type'
 import { Collection } from '../interfaces/collection.interface'
@@ -10,7 +9,7 @@ import { Collection } from '../interfaces/collection.interface'
 export function CategoryStore() {
 
   let categoriesCollection: Collection
-  const stubCategories: Category_Type[] = st.map(x => ({ ...x, dateLastUpdated: new Date() }))
+
   let categories: Category_Type[] = observable([])
 
   return {

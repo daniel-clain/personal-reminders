@@ -7,6 +7,8 @@ import { PersonalQuiz_Store_Provider } from './other/mobx-stores/personal-quiz.s
 import PersonalQuiz_App from './personal-quiz.app'
 import { Playground } from './playground';
 
+console.log(`the env is: {-- ${process.env}  --}.`)
+
 document.body.innerHTML = `<main id='personal-quiz'></main>`
 const personalQuizContainer = document.getElementById('personal-quiz')
 

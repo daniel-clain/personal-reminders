@@ -28,7 +28,7 @@ export function generateQuiz(questionStore: IQuestionStore): Quiz_Type{
   function randomQuestions(questionsWithRating: QuestionWithRating_Type[]): Question_Type[]{
 
     const questionsWithRandomValue: QuestionWithRandomValue_Type[] =  assignQuestionsRandomValue(questionsWithRating)
-
+      console.log('questionsWithRandomValue', questionsWithRandomValue)
       const quizQuestions: Question_Type[] = 
       shuffle(questionsWithRandomValue)
       .sort((a, b) => a.randomValue - b.randomValue)

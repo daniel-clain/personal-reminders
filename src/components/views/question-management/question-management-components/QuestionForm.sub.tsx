@@ -4,16 +4,17 @@ import { SubmittedQuestion_Type } from '../../../../other/types/submitted-questi
 import { EditedQuestion_Type } from '../../../../other/types/edited-question.type'
 import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
 import TextField from '../../../partials/TextField'
+import { Question_Type } from '../../../../other/types/question.type'
 
 export type QuestionFields = 'question' | 'answer' | 'categories'
 
 interface FormProps_Interface {
-  editedQuestion?: EditedQuestion_Type
+  editedQuestion?: Question_Type
 }
 
 export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface) {
   const { questionStore } = useContext(PersonalQuizContext)
-  const emptyQuestion: SubmittedQuestion_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2 }
+  const emptyQuestion: SubmittedQuestion_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2, dateLastAsked: null, dateLastUpdated: null }
   let initialQuestion: SubmittedQuestion_Type = { ...emptyQuestion }
 
   if (editedQuestion) {

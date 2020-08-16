@@ -4,4 +4,6 @@ export type SubmittedQuestion_Type = {
   correctAnswer: string
   categoryIds: string[]
   correctnessRating: number
+  dateLastAsked: Date
+  dateLastUpdated: Date
 }
