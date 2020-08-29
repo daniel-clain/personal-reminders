@@ -1,8 +1,6 @@
-
-import { generateQuiz } from "./quiz-generator.service"
-import { Question_Type } from '../types/question.type'
-import { Quiz_Type } from '../types/quiz.type'
-import { IQuestionStore } from "../mobx-stores/question.store"
+import { Question_Type } from "../../types/question.type"
+import { Quiz_Type } from "../../types/quiz.type"
+import { generateQuiz } from "../../services/quiz-generator.service"
 
 jest.mock('./utilities.service')
 
@@ -30,7 +28,7 @@ function setup(testQuestionUpdates) {
 
   testQuestions = [...Array(100).fill(baseQuestion), testQuestion]
   mockQuestionStore.questions = testQuestions
-  returnedQuiz = generateQuiz(mockQuestionStore as IQuestionStore)
+  returnedQuiz = generateQuiz()
 }
 
 
@@ -96,7 +94,7 @@ It returns a quiz with 10 random questions, the random questions selected should
       beforeAll(() => {
         testQuestions = [...Array(100).fill(baseQuestion), testQuestion]
         mockQuestionStore.questions = testQuestions
-        returnedQuiz = generateQuiz(mockQuestionStore as IQuestionStore)
+        returnedQuiz = generateQuiz()
       })
       
 

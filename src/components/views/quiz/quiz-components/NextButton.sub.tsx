@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
+import React from 'react'
+import quizStore  from '../../../../other/stores/quiz.store'
 
 function NextButton_Sub() {
 
-  const {quizStore} = useContext(PersonalQuizContext)
-  const { activeQuiz, activeQuestionIndex } = quizStore.quizState
+  const { activeQuiz, activeQuestionIndex } = quizStore
   const lastQuestion = activeQuiz.questions.length == activeQuestionIndex + 1
   return (
     <>

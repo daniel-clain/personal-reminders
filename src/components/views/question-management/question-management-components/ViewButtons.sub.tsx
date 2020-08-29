@@ -1,21 +1,20 @@
-import React, { useContext } from 'react'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
+import React from 'react'
+import { viewStore } from '../../../../other/stores/view.store'
 
 export default function ViewButtons_Sub() {
-  const {viewState} = useContext(PersonalQuizContext).viewStore
   return <>
     <button
       className={selectedIfViewMatches('Questions List')}
-      onClick={() => viewState.questionManagementView = 'Questions List'}>
+      onClick={() => viewStore.selectedSubView = 'Questions List'}>
       Questions List
     </button>
     <button
       className={selectedIfViewMatches('Category Management')}
-      onClick={() => viewState.questionManagementView = 'Category Management'}>
+      onClick={() => viewStore.selectedSubView = 'Category Management'}>
       Category Management
     </button>
   </>
   function selectedIfViewMatches(buttonView) {
-    return buttonView == viewState.questionManagementView ? 'selected' : ''
+    return buttonView == viewStore.selectedSubView ? 'selected' : ''
   }
 }

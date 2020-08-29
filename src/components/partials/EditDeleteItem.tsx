@@ -1,5 +1,6 @@
-import React, { useState, useContext, ReactChild } from 'react'
-import { PersonalQuizContext } from '../../other/mobx-stores/personal-quiz.store'
+import React, { useState, ReactChild } from 'react'
+import questionStore from '../../other/stores/question.store'
+import categoryStore from '../../other/stores/category.store'
 
 interface EditDeleteItemProps_Interface{
   value: string
@@ -10,7 +11,6 @@ interface EditDeleteItemProps_Interface{
 
 export default function EditDeleteItem({value, type, id, children}: EditDeleteItemProps_Interface) {
   const [expanded, setExpanded] = useState(false)
-  const {questionStore, categoryStore}= useContext(PersonalQuizContext)
 
   function handleDelete(){
     const deleteConfirmed = confirm(`Are you sure you want to delete the ${type.toLocaleLowerCase()}: \n\t ${value}`)

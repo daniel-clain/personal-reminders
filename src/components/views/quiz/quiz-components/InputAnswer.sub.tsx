@@ -1,20 +1,13 @@
-import React, { useContext } from 'react'
-import FormField from '../../../partials/FormField'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store';
+import React from 'react'
 import { observer } from 'mobx-react';
 import TextField from '../../../partials/TextField';
+import quizStore from '../../../../other/stores/quiz.store';
 
-function InputAnswer_Sub() {
-  const {quizState} = useContext(PersonalQuizContext).quizStore
-
-  return <TextField {...inputFieldProps()}/>
-
-  function inputFieldProps(){
-    return {
-      label: `Enter you're answer`,
-      value: quizState.inputAnswer
-    }
-  }
-}
-
-export default observer(InputAnswer_Sub)
+export default observer(() => {
+  console.log('input answer rerender');
+  return <TextField {...{
+    label: `Enter you're answer`,
+    value: quizStore.inputAnswer,
+    onValueUpdated: answer => quizStore.inputAnswer = answer
+  }} />
+})

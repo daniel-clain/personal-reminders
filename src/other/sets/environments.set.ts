@@ -1,0 +1,1 @@
+export type Environments_Set = 'Development' | 'Production'

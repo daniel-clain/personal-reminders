@@ -1,21 +1,18 @@
-import React, { useState, useContext } from 'react'
-import FormField from '../../../../../partials/FormField'
-import { EditedCategory_Type } from '../../../../../../other/types/edited-category.type'
-import { SubmittedCategory_Type } from '../../../../../../other/types/submitted-category.type'
-import { PersonalQuizContext } from '../../../../../../other/mobx-stores/personal-quiz.store'
+import React, { useState } from 'react'
 import TextField, { TextFieldProps_Interface } from '../../../../../partials/TextField'
+import categoryStore from '../../../../../../other/stores/category.store'
+import { Category_Type } from '../../../../../../other/types/category.type'
 
 export type CategoryFields = 'category name'
 
 interface FormProps_Interface {
-  editedCategory?: EditedCategory_Type
+  editedCategory?: Category_Type
 }
 
 export default function CategoryForm_Sub({ editedCategory }: FormProps_Interface) {
-  const {categoryStore} = useContext(PersonalQuizContext)
 
-  const emptyCategory: SubmittedCategory_Type = { value: '' }
-  let initialCategory: SubmittedCategory_Type = { ...emptyCategory }
+  const emptyCategory: Category_Type = { value: '' }
+  let initialCategory: Category_Type = { ...emptyCategory }
 
   if (editedCategory) {
     const { id, ...rest } = editedCategory

@@ -16,7 +16,7 @@ function TextField({label, value, onValueUpdated, readonly}: TextFieldProps_Inte
     <div 
       className='text-field__input' 
       contentEditable='true'
-      onBlur={e => onValueUpdated(e.target.innerText)}
+      onBlur={e => onValueUpdated?.(e.target.innerText)}
       suppressContentEditableWarning={true}
     >
       {value}

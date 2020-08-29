@@ -1,10 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import FormField from '../../../partials/FormField'
-import { SubmittedQuestion_Type } from '../../../../other/types/submitted-question.type'
-import { EditedQuestion_Type } from '../../../../other/types/edited-question.type'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
 import TextField from '../../../partials/TextField'
 import { Question_Type } from '../../../../other/types/question.type'
+import questionStore from '../../../../other/stores/question.store'
 
 export type QuestionFields = 'question' | 'answer' | 'categories'
 
@@ -13,9 +11,8 @@ interface FormProps_Interface {
 }
 
 export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface) {
-  const { questionStore } = useContext(PersonalQuizContext)
-  const emptyQuestion: SubmittedQuestion_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2, dateLastAsked: null, dateLastUpdated: null }
-  let initialQuestion: SubmittedQuestion_Type = { ...emptyQuestion }
+  const emptyQuestion: Question_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2, dateLastAsked: null, dateLastUpdated: null }
+  let initialQuestion: Question_Type = { ...emptyQuestion }
 
   if (editedQuestion) {
     const { id, ...rest } = editedQuestion

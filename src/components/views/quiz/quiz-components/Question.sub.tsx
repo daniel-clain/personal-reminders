@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
 import TextField from '../../../partials/TextField'
+import quizStore  from '../../../../other/stores/quiz.store'
 
 function Question_Sub() {
 
-  const {quizStore} = useContext(PersonalQuizContext)
-  const {activeQuestionIndex, activeQuiz} = quizStore.quizState
+  const {activeQuestionIndex, activeQuiz} = quizStore
   const {value} = activeQuiz.questions[activeQuestionIndex]
 
   return <TextField {...questionFieldProps()}/>

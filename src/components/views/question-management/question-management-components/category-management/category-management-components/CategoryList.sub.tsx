@@ -1,12 +1,11 @@
-import React, { useContext } from "react"
+import React from "react"
 import {observer} from 'mobx-react'
 import EditDeleteItem from "../../../../../partials/EditDeleteItem"
 import CategoryForm_Sub from "./CategoryForm.sub"
-import { PersonalQuizContext } from "../../../../../../other/mobx-stores/personal-quiz.store"
+import categoryStore  from "../../../../../../other/stores/category.store"
 
 
 function CategoryList_Sub(){  
-  const {categoryStore} = useContext(PersonalQuizContext)
   return (
     <div className="category-list">
       <h1>Categories</h1>

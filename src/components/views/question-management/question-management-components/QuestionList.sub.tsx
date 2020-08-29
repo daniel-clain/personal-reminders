@@ -1,18 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { observer } from 'mobx-react'
 import EditDeleteItem from '../../../partials/EditDeleteItem'
 import QuestionForm_Sub from './QuestionForm.sub'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
+import questionStore from '../../../../other/stores/question.store'
 
 function QuestionList_Sub() {
-  const {questions} = useContext(PersonalQuizContext).questionStore
   const [questionFilter, setQuestionFilter] = useState('')
   return (
     <div className="list questions-list">
       <h1>Questions</h1>
       
       <input className='filter list-filter' onChange={e => setQuestionFilter(e.target.value.toLocaleLowerCase())}/>
-      {questions
+      {questionStore.questions
       .filter(q => q.value.toLocaleLowerCase().includes(questionFilter))
       .map((question, i) => (
         <EditDeleteItem 

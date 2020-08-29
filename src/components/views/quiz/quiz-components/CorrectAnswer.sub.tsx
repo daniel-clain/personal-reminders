@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
 import TextField from '../../../partials/TextField'
+import quizStore  from '../../../../other/stores/quiz.store'
 
 function CorrectAnswer_Sub() {
   
-  const {quizStore} = useContext(PersonalQuizContext)
-  const { activeQuiz, activeQuestionIndex } = quizStore.quizState
+  const { activeQuiz, activeQuestionIndex } = quizStore
   const { correctAnswer } = activeQuiz.questions[activeQuestionIndex]
   
   return <TextField {...answerFieldProps()}/>

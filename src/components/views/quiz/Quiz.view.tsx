@@ -1,40 +1,34 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { observer } from 'mobx-react'
-import ViewProps_Interface from '../../../other/interfaces/view-props.interface'
-
 import { SubmitButton_Sub, CategorySelect_Sub, StartButton_Sub, Question_Sub, InputAnswer_Sub, CorrectAnswer_Sub, CorrectnessButtons_Sub, NextButton_Sub } from './quiz-components'
-import { PersonalQuizContext } from '../../../other/mobx-stores/personal-quiz.store'
+import quizStore  from '../../../other/stores/quiz.store'
 
-function Quiz_View({ isActive }: ViewProps_Interface) {
-  
-  const {quizStore} = useContext(PersonalQuizContext)
-  if (isActive == false) return null
+function Quiz_View() {
 
-  const { quizInProgress, answerSubmitted, correctnessMarkSubmitted } = quizStore.quizState
+  return (
+    <main id='quiz-view'>
+      {quizStore.quizInProgress == false ? <>
+        <CategorySelect_Sub />
+        <StartButton_Sub />
+      </> : null}
 
-  return <main id='quiz-view'>
-    {quizInProgress == false && <>
-      <CategorySelect_Sub />
-      <StartButton_Sub />
-    </>}
-
-    {quizInProgress == true && <>
-      <Question_Sub />
-      <InputAnswer_Sub />
-      {answerSubmitted == false &&
-        <SubmitButton_Sub />
-      }
-
-      {answerSubmitted == true && <>
-        <CorrectAnswer_Sub />
-        <CorrectnessButtons_Sub />
-
-        {correctnessMarkSubmitted == true &&
-          <NextButton_Sub />
+      {quizStore.quizInProgress == true ? <>
+        <Question_Sub />
+        <InputAnswer_Sub />
+        {
+          quizStore.answerSubmitted == false ?
+            <SubmitButton_Sub />: 
+          quizStore.answerSubmitted == true ? <>
+            <CorrectAnswer_Sub />
+            <CorrectnessButtons_Sub />
+            {quizStore.answerSubmitted == true ?
+              <NextButton_Sub /> : null 
+            }
+          </> : null
         }
-      </>}
-    </>}
-  </main>
+      </> : null}
+    </main>
+  )
 }
 
 export default observer(Quiz_View)

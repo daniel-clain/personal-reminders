@@ -1,14 +1,21 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const chalk = require('chalk');
 
 
-module.exports = env => {
-	if(!!env){
-		console.log(`da environment bruv => ${env.NODE_ENV}`)
-	}
-		//entry: './src/NEW_APP_INDEX_IDEA.tsx',
+module.exports = ({NODE_ENV}) => {
+	if(!NODE_ENV) throw('Gotta specify and environment bro....')
+	console.log(chalk.green('YOUR ENVIRONMENT IS '  + NODE_ENV.toUpperCase()))
 	return {
+		entry: [
+			NODE_ENV == 'development' ? './src/other/set-environment-modules/set-environment-development.ts' : `./src/other/set-environment-modules/set-environment-production.ts`,
+			'./src/index.tsx'
+		],
 		devtool: 'source-map',
+		devServer: {
+			hot: true,
+			http2: true
+		},
 		resolve: {
 			extensions: [ '.tsx', '.ts', '.js' ]
 		},

@@ -1,5 +1,7 @@
-export type Category_Type = {
-  id: string
-  dateLastUpdated: Date
+import { Data } from "../interfaces/data.interface"
+
+export type Category_Type = Data & {
+  id?: string
+  dateLastUpdated?: Date
   value: string
 }

@@ -3,11 +3,11 @@ import { chainFunctions, shuffle, random } from "./utilities.service"
 import { Question_Type } from "../types/question.type"
 import { QuestionWithRating_Type } from "../types/question-with-rating.type"
 import { QuestionWithRandomValue_Type } from "../types/question-with-random-value.type"
-import { IQuestionStore } from "../mobx-stores/question.store"
+import questionStore from "../stores/question.store"
 
 
 
-export function generateQuiz(questionStore: IQuestionStore): Quiz_Type{
+export function generateQuiz(): Quiz_Type{
 
   return {questions: chainFunctions({
     'Get all questions that match selected categories': getQuestions,

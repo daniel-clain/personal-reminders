@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack",
-    "test": "jest --watch -i",
-    "start:demo": "webpack-dev-server --env.NODE_ENV=demo"
+    "start:development": "webpack-dev-server --env.NODE_ENV=development",
+    "start:production": "webpack-dev-server --env.NODE_ENV=production",
+    "build:development": "webpack  --env.NODE_ENV=development",
+    "build:production": "webpack  --env.NODE_ENV=production",
+    "test": "jest --watch -i"
   },
   "devDependencies": {
     "@firebase/app-types": "^0.6.1",
@@ -33,5 +34,8 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-pwa-manifest": "^4.2.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0"
   }
 }

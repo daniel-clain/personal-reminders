@@ -1,16 +1,24 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { CorrectnessMark_Type } from '../../../../other/types/correctness-mark.type'
-import { PersonalQuizContext } from '../../../../other/mobx-stores/personal-quiz.store'
+import quizStore  from '../../../../other/stores/quiz.store'
+import { observer } from 'mobx-react'
 
 function CorrectnessButtons_Sub() {
   const correctnessMarks: CorrectnessMark_Type[] = ['Correct', 'Almost', 'Kinda', 'Wrong']
-  const {quizStore} = useContext(PersonalQuizContext)
-  const { submitCorrectnessMark } = quizStore
+  const { submitCorrectnessMark, correctnessMarkSubmitted } = quizStore
   return <>
     {correctnessMarks.map(correctnessMark =>
-      <button key={correctnessMark} onClick={() => submitCorrectnessMark(correctnessMark)}>{correctnessMark}</button>
+      <button 
+        key={correctnessMark} 
+        className={
+          correctnessMarkSubmitted == correctnessMark ? 'selected' : ''
+        }
+        onClick={() => submitCorrectnessMark(correctnessMark)}
+      >
+          {correctnessMark}
+      </button>
     )}
   </>
 }
 
-export default CorrectnessButtons_Sub
+export default observer(CorrectnessButtons_Sub)
