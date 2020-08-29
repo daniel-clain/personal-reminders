@@ -61,7 +61,7 @@ function FormField({ name, objKey, type, onUpdate, value, readOnly }: FormFieldP
 
 	function categorySelected(selectedCategory: Category_Type) {
 		const categoryIds = value as string[]
-		const categoryIndex = categoryIds.findIndex((id) => id == selectedCategory.id)
+		const categoryIndex = categoryIds?.findIndex((id) => id == selectedCategory.id)
 
 		const categoryIsAlreadySelected = categoryIndex >= 0
 		if (categoryIsAlreadySelected) {

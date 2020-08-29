@@ -48,6 +48,7 @@ export default function CategoryForm_Sub({ editedCategory }: FormProps_Interface
         setCategory(emptyCategory)
       }
     } catch (error) {
+      console.error(error)
       alert(error)
     }
   }

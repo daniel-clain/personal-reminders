@@ -4,6 +4,8 @@ import { Question_Type } from "../types/question.type"
 import { QuestionWithRating_Type } from "../types/question-with-rating.type"
 import { QuestionWithRandomValue_Type } from "../types/question-with-random-value.type"
 import questionStore from "../stores/question.store"
+import { Category_Type } from "../types/category.type"
+import quizStore from "../stores/quiz.store"
 
 
 
@@ -15,10 +17,9 @@ export function generateQuiz(): Quiz_Type{
     'Select random questions based on thier selection chance': randomQuestions
   })}
 
-
-
   function getQuestions(): Question_Type[]{
-    return questionStore.questions
+    const categories = quizStore.selectedCategories
+    return questionStore.questions.filter(question => question.categoryIds.some(id => categories.some(category => category.id == id)))
   }
 
   function giveRating(questions: Question_Type[]): QuestionWithRating_Type[]{

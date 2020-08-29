@@ -70,6 +70,7 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
         setQuestion(emptyQuestion)
       }
     } catch (error) {
+      console.error(error)
       alert(error)
     }
   }

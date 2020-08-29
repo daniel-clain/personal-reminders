@@ -29,7 +29,7 @@ function CategorySelector_Partial({ selectedCategoryIds, categorySelected }: Cat
       .map(category =>
         <button key={category.id}
           className={
-            selectedCategoryIds.some(id => id == category.id) ? 'selected' : ''
+            selectedCategoryIds?.some(id => id == category.id) ? 'selected' : ''
           }
           onClick={() => categorySelected(category)}
         >

@@ -4,7 +4,7 @@ import QuestionForm_Sub from './question-management-components/QuestionForm.sub'
 import QuestionList_Sub from './question-management-components/QuestionList.sub'
 import { observer } from 'mobx-react'
 import CategoryManagement_View from './question-management-components/category-management/CategoryManagement.view'
-import { viewStore } from '../../../other/stores/view.store'
+import viewStore from '../../../other/stores/view.store'
 
 
 function QuestionManagement_View(){  

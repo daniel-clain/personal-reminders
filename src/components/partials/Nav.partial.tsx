@@ -1,5 +1,5 @@
 import React from 'react'
-import { viewStore } from '../../other/stores/view.store'
+import viewStore from '../../other/stores/view.store'
 
 export default function Nav_Partial(){
 

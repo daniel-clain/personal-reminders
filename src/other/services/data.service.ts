@@ -6,8 +6,12 @@ import userStore from '../stores/user.store'
 import { Data } from '../interfaces/data.interface'
 import { Collections_Set } from '../sets/collections.set'
 import { observable, when } from 'mobx'
+import environmentService from './environment.service'
 
+import {QuerySnapshot, DocumentData} from 'firestore'
+import firebase from 'firebase/app'
 
+const {requiresAuthentication} = environmentService.environment
 
 
 export default observable({
@@ -20,18 +24,29 @@ export default observable({
 
 function data$<T extends Data>(collectionName: Collections_Set, receiveDataFunc: (data: T[]) => void) {
   
-  when(() => !!userStore.userDoc, () => {    
-    userStore.userDoc.collection(collectionName).onSnapshot({
-      next: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) =>
+  if(requiresAuthentication){  
+    when(() => !!userStore.userDoc, () => {  
+      userStore.userDoc.collection(collectionName).onSnapshot({
+        next: (snapshot: QuerySnapshot<DocumentData>) =>
+          receiveDataFunc(snapshot.docs.map(doc => <T>({ ...doc.data(), id: doc.id })))
+      })
+    })
+  }
+  else{
+    firebase.firestore().collection(collectionName).onSnapshot({
+      next: (snapshot: QuerySnapshot<DocumentData>) =>
         receiveDataFunc(snapshot.docs.map(doc => <T>({ ...doc.data(), id: doc.id })))
     })
-  })
+  }
 }
 
-function getCollection(collectionName: Collections_Set){
-  try{
+function getCollection(collectionName: Collections_Set){  
+  if(requiresAuthentication){ 
     return userStore.userDoc.collection(collectionName)
-  } catch(e){throw e}
+  } 
+  else {
+    return firebase.firestore().collection(collectionName)
+  }
 }
 
 function add<T extends Data>(collectionName: Collections_Set, data: T) {

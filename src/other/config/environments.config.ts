@@ -6,6 +6,11 @@ export const development: Environment_Interface = {
   firebaseConfig: firebaseDemoConfig,
   requiresAuthentication: false
 }
+export const demo: Environment_Interface = {
+  name: 'Demo',
+  firebaseConfig: firebaseDemoConfig,
+  requiresAuthentication: false
+}
 export const production: Environment_Interface = {
   name: 'Production',
   firebaseConfig: firebaseConfig,

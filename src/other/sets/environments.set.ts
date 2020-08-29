@@ -1,1 +1,1 @@
-export type Environments_Set = 'Development' | 'Production'
+export type Environments_Set = 'Development' | 'Demo' | 'Production'

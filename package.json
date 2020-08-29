@@ -1,41 +1,39 @@
 {
-  "scripts": {
-    "start:development": "webpack-dev-server --env.NODE_ENV=development",
-    "start:production": "webpack-dev-server --env.NODE_ENV=production",
-    "build:development": "webpack  --env.NODE_ENV=development",
-    "build:production": "webpack  --env.NODE_ENV=production",
-    "test": "jest --watch -i"
-  },
-  "devDependencies": {
-    "@firebase/app-types": "^0.6.1",
-    "@firebase/firestore-types": "^1.12.0",
-    "@types/jest": "^26.0.9",
-    "@types/react": "^16.9.44",
-    "@types/react-dom": "^16.9.8",
-    "css-loader": "^4.2.1",
-    "file-loader": "^6.0.0",
-    "firebase": "^7.17.2",
-    "firestore": "^1.1.6",
-    "html-webpack-plugin": "^4.3.0",
-    "jest": "^26.2.2",
-    "mobx": "^5.15.5",
-    "mobx-react": "^6.2.5",
-    "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-firestore": "^1.0.1",
-    "sass-loader": "^9.0.3",
-    "style-loader": "^1.2.1",
-    "ts-jest": "^26.1.4",
-    "ts-loader": "^8.0.2",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.7",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "webpack-pwa-manifest": "^4.2.0"
-  },
-  "dependencies": {
-    "chalk": "^4.1.0"
-  }
+	"sideEffects": false,
+	"scripts": {
+		"start:development": "webpack-dev-server --env=development --mode=development",
+		"start:production": "webpack-dev-server --env=production --mode=development",
+		"build:demo": "webpack --env=demo --mode=production",
+		"build:production": "webpack --env=production --mode=production",
+		"test": "jest --watch -i"
+	},
+	"dependencies": {
+		"@firebase/app-types": "^0.6.1",
+		"@firebase/firestore-types": "^1.12.0",
+		"@types/jest": "^26.0.9",
+		"@types/react": "^16.9.44",
+		"@types/react-dom": "^16.9.8",
+		"chalk": "^4.1.0",
+		"css-loader": "^4.2.1",
+		"file-loader": "^6.0.0",
+		"firebase": "^7.17.2",
+		"firestore": "^1.1.6",
+		"html-webpack-plugin": "^4.3.0",
+		"jest": "^26.2.2",
+		"mobx": "^5.15.5",
+		"mobx-react": "^6.2.5",
+		"node-sass": "^4.14.1",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"sass-loader": "^9.0.3",
+		"style-loader": "^1.2.1",
+		"ts-jest": "^26.1.4",
+		"ts-loader": "^8.0.2",
+		"ts-node": "^8.10.2",
+		"typescript": "^3.9.7",
+		"webpack": "^4.44.1",
+		"webpack-cli": "^3.3.12",
+		"webpack-dev-server": "^3.11.0",
+		"webpack-pwa-manifest": "^4.2.0"
+	}
 }

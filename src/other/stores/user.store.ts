@@ -3,18 +3,22 @@ import { observable} from "mobx";
 import { User, auth, firestore } from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import environmentService from '../services/environment.service';
 
-var userStore = observable({
+const userStore = observable({
   user: <User> null,
   userAuthenticated: undefined,
-  userDoc: <Document> null,
-  setupFirebaseUser: () => {
-    auth().onAuthStateChanged(u => {
-      userStore.user = u
-      userStore.userAuthenticated = !!u
-      userStore.userDoc = u ? firestore().collection('Users').doc(u.uid) : null
-    })
-  }
+  userDoc: <Document> null
 })
+
+if(environmentService.environment.requiresAuthentication){
+  auth().onAuthStateChanged(u => {
+    userStore.user = u
+    userStore.userAuthenticated = !!u
+    userStore.userDoc = u ? firestore().collection('Users').doc(u.uid) : null
+  })
+}
+
 export default userStore
 window['userStore'] = userStore
+

@@ -2,13 +2,14 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["dom", "es2015", "es2016"],
+    "lib": ["dom", "es2016"],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
     "jsx": "react",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "types": [ "node", "react", "jest", "react-dom" ]
+    "types": [ "node", "react", "jest", "react-dom" ],
+    "listFiles": true
   }
 }
