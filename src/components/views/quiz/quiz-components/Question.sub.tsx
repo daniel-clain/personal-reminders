@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
-import TextField from '../../../partials/TextField'
+import TextField from '../../../partials/TextField.partial'
 import quizStore  from '../../../../other/stores/quiz.store'
 
 function Question_Sub() {

@@ -1,6 +1,6 @@
 import React from "react"
 import {observer} from 'mobx-react'
-import EditDeleteItem from "../../../../../partials/EditDeleteItem"
+import EditDeleteItem from "../../../../../partials/EditDeleteItem.partial"
 import CategoryForm_Sub from "./CategoryForm.sub"
 import categoryStore  from "../../../../../../other/stores/category.store"
 

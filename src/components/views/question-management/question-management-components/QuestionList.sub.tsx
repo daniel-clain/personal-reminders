@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react'
-import EditDeleteItem from '../../../partials/EditDeleteItem'
+import EditDeleteItem from '../../../partials/EditDeleteItem.partial'
 import QuestionForm_Sub from './QuestionForm.sub'
 import questionStore from '../../../../other/stores/question.store'
 

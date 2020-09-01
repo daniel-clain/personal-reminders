@@ -4,11 +4,15 @@ import CategorySelector_Partial from '../../../partials/CategorySelector.partial
 import quizStore  from '../../../../other/stores/quiz.store'
 
 function CategorySelect_Sub() {  
-  const {categorySelected, selectedCategories} = quizStore
-  const selectedCategoryIds = selectedCategories.map(c => c.id)
 
   return <section id='quiz-question-category-select'>    
-    <CategorySelector_Partial {...{selectedCategoryIds, categorySelected}} />
+    <CategorySelector_Partial {...{
+      label: 'Select quiz categories',
+      categoryIds: quizStore.selectedCategoryIds,
+      onValueUpdated: categoryIds => {
+        quizStore.selectedCategoryIds = categoryIds
+      }
+    }} />
   </section>
 }
 

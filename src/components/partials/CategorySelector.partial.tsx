@@ -5,22 +5,18 @@ import { observer } from 'mobx-react'
 import categoryStore  from '../../other/stores/category.store';
 
 interface CategorySelectorProps_Interface {
-  selectedCategoryIds: string[]
-  categorySelected: (category: Category_Type) => void
+  label: string
+  categoryIds: string[]
+  onValueUpdated: (categoryIds: string[]) => void
 }
 
-function CategorySelector_Partial({ selectedCategoryIds, categorySelected }: CategorySelectorProps_Interface) {
+const CategorySelector_Partial = ({ label, categoryIds, onValueUpdated }: CategorySelectorProps_Interface) => {
   const [categoryFilter, setCategoryFilter] = useState(null)
 
-  function doesCategoryMatchFilter(category: Category_Type){
-    return !categoryFilter || 
-      category.value.toLocaleLowerCase()
-      .includes(categoryFilter.toLocaleLowerCase())
-  }
 
   return <div className='category-selector'>
     <header>
-      <h2 className='category-selector__heading'>Select categories for quiz</h2>
+      <h2 className='category-selector__heading'>{label}</h2>
       <input className='category-selector__filter filter' onChange={e => setCategoryFilter(e.target.value)}/>
     </header>
     <div className="categories-container">
@@ -28,16 +24,33 @@ function CategorySelector_Partial({ selectedCategoryIds, categorySelected }: Cat
       .filter(doesCategoryMatchFilter)
       .map(category =>
         <button key={category.id}
-          className={
-            selectedCategoryIds?.some(id => id == category.id) ? 'selected' : ''
+          className={categoryIds?.some(id => id == category.id) ? 
+            'selected' : ''
           }
-          onClick={() => categorySelected(category)}
+          onClick={() => handleCategorySelected(category)}
         >
           {category.value}
         </button>
       )}
     </div>
   </div>
+
+  function handleCategorySelected(selectedCategory: Category_Type){
+
+    const categoryIsAlreadySelected = categoryIds?.find(id => id == selectedCategory.id)
+    
+		if (categoryIsAlreadySelected) {	
+			onValueUpdated(categoryIds.filter(id => id != selectedCategory.id))
+		} else {
+      onValueUpdated([...categoryIds, selectedCategory.id])
+		}
+  }
+
+  function doesCategoryMatchFilter(category: Category_Type){
+    return !categoryFilter || 
+      category.value.toLocaleLowerCase()
+      .includes(categoryFilter.toLocaleLowerCase())
+  }
 }
 
 export default observer(CategorySelector_Partial)

@@ -1,4 +1,4 @@
-import React, { createRef } from 'react'
+import React from 'react'
 
 export interface TextFieldProps_Interface{
   label?: string, 
@@ -8,7 +8,7 @@ export interface TextFieldProps_Interface{
 }
 
 
-function TextField({label, value, onValueUpdated, readonly}: TextFieldProps_Interface) {  
+const TextField_Partial = ({label, value, onValueUpdated, readonly}: TextFieldProps_Interface) => {  
   return <div className='text-field'>
     <div className='text-field__label'>
       {label}:
@@ -24,4 +24,4 @@ function TextField({label, value, onValueUpdated, readonly}: TextFieldProps_Inte
   </div>
 }
 
-export default TextField
+export default TextField_Partial

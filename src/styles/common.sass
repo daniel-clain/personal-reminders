@@ -1,0 +1,27 @@
+@mixin thing
+  background-color: blue
+
+  
+  
+@mixin scroll-bar($alwaysOn) 
+  @if $alwaysOn == 'always on'     
+    overflow-y: scroll
+  @else 
+    overflow-y: auto
+
+  &::-webkit-scrollbar
+    width: 0.5rem
+    background-color: #5B777E
+  
+  &::-webkit-scrollbar-track
+    box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3)
+    -webkit-box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3)
+    border-radius: 0.5rem
+    background-color: #5B777E
+  
+  &::-webkit-scrollbar-thumb
+    border-radius: 0.5rem
+    box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3)
+    -webkit-box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3)
+    background-color: #2A3E43
+    

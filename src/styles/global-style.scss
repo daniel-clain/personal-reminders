@@ -1,36 +1,32 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Sriracha');
+
+@use '/styles/nav';
+
+
 
 
 
 $color-main: #43636B;
 $color-complement: #6B4B43;
 
-$c: #30584C;
+//$_The_Golden_Ratio: 1.61803398875;
+
+$_base_font_size: 14px;
+
+
+
+
+
+
 
 html{  
+  @include nav.nav-style;
   font-size: 14px;
   
    * {     
     box-sizing: border-box;
 
-
-    &::-webkit-scrollbar{
-      width: 0.5rem;
-      background-color: #5B777E;
-    }
-    &::-webkit-scrollbar-track{
-      -webkit-box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3);
-      border-radius: 0.5rem;
-      background-color: #5B777E;
-    }
-    &::-webkit-scrollbar-thumb{
-      border-radius: 0.5rem;
-      -webkit-box-shadow: inset 0 0 0.25rem rgba(0,0,0,.3);
-      background-color: #2A3E43;
-    }
   }
 }
 
@@ -45,7 +41,7 @@ body{
 hr{
   border-color: #3f6184;
 }
-#personal-quiz {
+personal-quiz {
   font-family: Helvetica, sans-serif;
   background: #262935;
   //background-image: url('./src/images/brick-tile.jpg');  
@@ -60,6 +56,8 @@ hr{
   height: 100%;
   min-height: 100vh;
 }
+
+
 
 personal-quiz > *,
 main > *{

@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
-import FormField from '../../../partials/FormField'
-import TextField from '../../../partials/TextField'
+import TextField from '../../../partials/TextField.partial'
 import { Question_Type } from '../../../../other/types/question.type'
 import questionStore from '../../../../other/stores/question.store'
-
-export type QuestionFields = 'question' | 'answer' | 'categories'
+import CategorySelector_Partial from '../../../partials/CategorySelector.partial'
 
 interface FormProps_Interface {
   editedQuestion?: Question_Type
@@ -27,15 +25,9 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
       <h1>Add Question</h1>
 
       <TextField {...questionFieldProps()}/>
-      <TextField {  ...answerFieldProps()}/>
+      <TextField { ...answerFieldProps()}/>
+      <CategorySelector_Partial {...categoriesFieldProps()}/>
 
-      <FormField
-        name="categories"
-        objKey="categoryIds"
-        type="category selector"
-        onUpdate={handleFieldUpdate}
-        value={categoryIds}
-      />
       <button onClick={submitQuestion}>{editedQuestion ? 'Update' : 'Submit'}</button>
     </div>
   )
@@ -47,7 +39,6 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
       onValueUpdated: value => setQuestion({ ...question, value })      
     }
   }
-
   
   function answerFieldProps(){
     return {
@@ -57,8 +48,12 @@ export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface
     }
   }
 
-  function handleFieldUpdate(value: any, key: any) {
-    setQuestion({ ...question, [key]: value })
+  function categoriesFieldProps(){
+    return {
+      label: "Categories",
+      categoryIds,
+      onValueUpdated: categoryIds => setQuestion({ ...question, categoryIds })
+    }
   }
 
   function submitQuestion() {

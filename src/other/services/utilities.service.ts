@@ -1,14 +1,13 @@
-export function chainFunctions(functionsObj: Object){
-  let result
+export function chainFunctions<T>(functions: Function[]): T{
+  /* let result
   for(let key in functionsObj) {
     result = functionsObj[key](result)
   }
-  return result
-  
-  /* return <Function[]>Object.values(functions).reduce(
+  return result */
+  return functions.reduce(
     (returnOfLastFunction, currentFunction) => 
       currentFunction(returnOfLastFunction), null
-  ) */
+  )
 }
 
 export function shuffle(array){

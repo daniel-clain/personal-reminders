@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import TextField, { TextFieldProps_Interface } from '../../../../../partials/TextField'
+import TextField, { TextFieldProps_Interface } from '../../../../../partials/TextField.partial'
 import categoryStore from '../../../../../../other/stores/category.store'
 import { Category_Type } from '../../../../../../other/types/category.type'
-
-export type CategoryFields = 'category name'
 
 interface FormProps_Interface {
   editedCategory?: Category_Type
@@ -11,7 +9,7 @@ interface FormProps_Interface {
 
 export default function CategoryForm_Sub({ editedCategory }: FormProps_Interface) {
 
-  const emptyCategory: Category_Type = { value: '' }
+  const emptyCategory: Category_Type = { value: '', parentCategoryIds: [], childCategoryIds: [] }
   let initialCategory: Category_Type = { ...emptyCategory }
 
   if (editedCategory) {

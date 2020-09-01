@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import TextField from '../../../partials/TextField'
+import React from 'react'
+import TextField from '../../../partials/TextField.partial'
 import quizStore  from '../../../../other/stores/quiz.store'
 
 function CorrectAnswer_Sub() {

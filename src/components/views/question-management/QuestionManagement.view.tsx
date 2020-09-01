@@ -5,20 +5,16 @@ import QuestionList_Sub from './question-management-components/QuestionList.sub'
 import { observer } from 'mobx-react'
 import CategoryManagement_View from './question-management-components/category-management/CategoryManagement.view'
 import viewStore from '../../../other/stores/view.store'
-
+import { show } from '../../../other/services/utilities.service'
 
 function QuestionManagement_View(){  
-  
+  const {selectedSubView} = viewStore  
   return <main id='question-management-view'>
     <QuestionForm_Sub/>
     <hr />
     <ViewButtons_Sub />
-    {
-      viewStore.selectedSubView == 'Questions List' ?
-        <QuestionList_Sub /> :
-      viewStore.selectedSubView == 'Category Management' ?
-        <CategoryManagement_View /> : null
-    }
+    {show(<QuestionList_Sub />).if(selectedSubView).is('Questions List')}
+    {show(<CategoryManagement_View />).if(selectedSubView).is('Category Management')}
   </main>
 }
 

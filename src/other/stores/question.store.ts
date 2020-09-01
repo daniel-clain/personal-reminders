@@ -14,4 +14,3 @@ dataService.data$('Questions', (q: Question_Type[]) => questionStore.questions =
 export default questionStore
 window['questionStore'] = questionStore
 
-

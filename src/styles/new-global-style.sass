@@ -1,0 +1,59 @@
+
+  
+@use 'variables' as v
+@use 'base-tools' as t
+@use 'common' as common
+@import 'reset'
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Sriracha')
+
+
+
+html
+  font-size: 4px
+body
+  background-color: #111715  
+  @include common.scroll-bar('always on')
+
+personal-quiz
+  background-color: v.$yellow
+  color: v.$blue
+  max-width: 500px
+  margin: auto
+  display: flex
+  flex-direction: column
+  font-size: t.getSpace('fibonacci size 4', 'single')
+  min-height: 100vh
+  padding: t.getSpace('fibonacci size 3', 'all')
+  font-family: 'Sriracha', cursive
+
+  > * + *
+    margin-top: t.getSpace('fibonacci size 3', 'golden single')
+
+  main > * + *, main > * > * + *
+    margin-top: t.getSpace('fibonacci size 3', 'golden single')
+
+  nav 
+    button + button
+      margin-left: t.getSpace('fibonacci size 1', 'single')
+
+  h1 
+    font-size: t.getSpace('fibonacci size 4', single)
+    font-weight: bold
+
+  .text-field, .category-selector
+    & > * + *
+      margin-top: t.getSpace('fibonacci size 1', 'golden single')
+  
+  .text-field
+    &__input      
+      font-family: 'Sriracha', cursive
+      color: white
+      display: block
+      outline: none
+      box-shadow: inset 3px 3px 2px 0px rgba(0, 0, 0, .3), inset -1px -1px 1px 0px rgba(0, 0, 0, .4), 1px 1px 1px -1px black, -1px -1px 1px -1px black
+      letter-spacing: 0.1rem
+      text-shadow: 1px 1px #000000b8
+  
+    

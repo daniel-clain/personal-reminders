@@ -18,8 +18,13 @@ let config = {
 				},
 			},
 			{
-				test: /\.scss$/,
-				use: [ 'style-loader', 'css-loader', 'sass-loader' ]
+				test: /\.s[ac]ss$/,
+				use: [ 'style-loader', 'css-loader', 
+				{
+					loader: 'sass-loader', options: {						
+						implementation: require('sass')
+					}
+				}]
 			},
 			{
 				test: /\.(png|svg|jpg)$/,

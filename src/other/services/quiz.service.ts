@@ -1,5 +1,5 @@
 /* 
-  function updateQuestionCorrectnessRating(question: Question_Type, correctnessMark: CorrectnessMark_Type) {
+  function updateQuestionCorrectnessRating(question: Question_Type, correctnessMark: CorrectnessMark_Set) {
     if(!questionCollection)throw('no question collection')
     
     let newRating

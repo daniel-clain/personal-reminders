@@ -1,1 +1,0 @@
-export type CorrectnessMark_Type = 'Wrong' | 'Kinda' | 'Almost' | 'Correct'

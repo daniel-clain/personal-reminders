@@ -5,8 +5,9 @@ export function random() {
  
 export function shuffle(array) { return array }
 
-export function chainFunctions(...functions){
+export function chainFunctions<T>(functions: Function[]): T{
   return functions.reduce(
     (returnOfLastFunction, currentFunction) => 
-      currentFunction(returnOfLastFunction), null)
+      currentFunction(returnOfLastFunction), null
+  )
 }

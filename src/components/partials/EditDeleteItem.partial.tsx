@@ -1,6 +1,7 @@
 import React, { useState, ReactChild } from 'react'
 import questionStore from '../../other/stores/question.store'
 import categoryStore from '../../other/stores/category.store'
+import { observer } from 'mobx-react'
 
 interface EditDeleteItemProps_Interface{
   value: string
@@ -9,7 +10,7 @@ interface EditDeleteItemProps_Interface{
   children: ReactChild
 }
 
-export default function EditDeleteItem({value, type, id, children}: EditDeleteItemProps_Interface) {
+const EditDeleteItem_Partial = ({value, type, id, children}: EditDeleteItemProps_Interface) => {
   const [expanded, setExpanded] = useState(false)
 
   function handleDelete(){
@@ -35,3 +36,5 @@ export default function EditDeleteItem({value, type, id, children}: EditDeleteIt
     </div>
       
 } 
+
+export default observer(EditDeleteItem_Partial)
