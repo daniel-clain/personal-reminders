@@ -1,72 +1,57 @@
 import React, { useState } from 'react'
-import TextField from '../../../partials/TextField.partial'
-import { Question_Type } from '../../../../other/types/question.type'
-import questionStore from '../../../../other/stores/question.store'
-import CategorySelector_Partial from '../../../partials/CategorySelector.partial'
+import { Question_Object } from '../../../../other/object-models/question.object'
+import Form_Partial from '../../../partials/Form.partial'
 
 interface FormProps_Interface {
-  editedQuestion?: Question_Type
+  editedQuestion?: Question_Object
+  onUpdate?(): void
 }
 
-export default function QuestionForm_Sub({ editedQuestion }: FormProps_Interface) {
-  const emptyQuestion: Question_Type = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2, dateLastAsked: null, dateLastUpdated: null }
-  let initialQuestion: Question_Type = { ...emptyQuestion }
+export default function QuestionForm_Sub({ editedQuestion, onUpdate }: FormProps_Interface) {
+  const emptyQuestion: Question_Object = { value: '', correctAnswer: '', categoryIds: [], correctnessRating: 2, dateLastAsked: null, dateLastUpdated: null }
+  let initialQuestion: Question_Object = { ...emptyQuestion }
 
   if (editedQuestion) {
-    const { id, ...rest } = editedQuestion
-    initialQuestion = rest
+    initialQuestion = editedQuestion
+  }
+
+  const handleOnUpdate = () => {
+    if(!editedQuestion){
+      setQuestion(initialQuestion)
+    }
+    
+    if(onUpdate) onUpdate()
   }
 
   const [question, setQuestion] = useState(initialQuestion)
   const { value, correctAnswer, categoryIds } = question
 
   return (
-    <div className="add-question">
-      <h1>Add Question</h1>
-
-      <TextField {...questionFieldProps()}/>
-      <TextField { ...answerFieldProps()}/>
-      <CategorySelector_Partial {...categoriesFieldProps()}/>
-
-      <button onClick={submitQuestion}>{editedQuestion ? 'Update' : 'Submit'}</button>
-    </div>
+    <Form_Partial
+      dataType='Question'
+      data={question}
+      onUpdate={handleOnUpdate}
+      isEdit={!!editedQuestion}
+      fields={[
+        {
+          label: 'Question',
+          value: value,
+          type: 'Input',
+          onChange: value => setQuestion({ ...question, value })
+        },
+        {
+          label: 'Correct Answer',
+          value: correctAnswer,
+          type: 'Input',
+          onChange: correctAnswer => setQuestion({ ...question, correctAnswer })
+        },
+        {
+          label: 'Categories',
+          value: categoryIds,
+          type: 'Category Select',
+          onChange: categoryIds => setQuestion({ ...question, categoryIds })
+        }
+      ]}
+    />
   )
-
-  function questionFieldProps(){
-    return {
-      label:'Question',
-      value,
-      onValueUpdated: value => setQuestion({ ...question, value })      
-    }
-  }
-  
-  function answerFieldProps(){
-    return {
-      label:'Answer',
-      value: correctAnswer,
-      onValueUpdated: correctAnswer => setQuestion({ ...question, correctAnswer })      
-    }
-  }
-
-  function categoriesFieldProps(){
-    return {
-      label: "Categories",
-      categoryIds,
-      onValueUpdated: categoryIds => setQuestion({ ...question, categoryIds })
-    }
-  }
-
-  function submitQuestion() {
-    try {
-      if (editedQuestion) {
-        questionStore.updateQuestion({ ...question, id: editedQuestion.id })
-      } else {
-        questionStore.addQuestion(question)
-        setQuestion(emptyQuestion)
-      }
-    } catch (error) {
-      console.error(error)
-      alert(error)
-    }
-  }
 }

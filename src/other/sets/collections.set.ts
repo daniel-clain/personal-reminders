@@ -1,1 +1,0 @@
-export type Collections_Set = 'Questions' | 'Categories'

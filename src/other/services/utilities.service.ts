@@ -32,15 +32,6 @@ export function shuffle(array){
 export function random() { return Math.random() }
 
 
-export const show = block => {
-  return {
-    if: <T>(first: T) => {
-      return {
-        is: (second: T) => {
-          if(first === second)
-            return block
-        }
-      }
-    }
-  }
-}
+export const show = blocks => ({
+  if: condition => condition ? blocks : null
+})

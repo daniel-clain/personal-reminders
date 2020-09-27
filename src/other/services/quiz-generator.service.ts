@@ -1,14 +1,14 @@
-import { Quiz_Type } from "../types/quiz.type"
+import { Quiz_Object } from "../object-models/quiz.object"
 import { chainFunctions, shuffle, random } from "./utilities.service"
-import { Question_Type } from "../types/question.type"
-import { QuestionWithRating_Type } from "../types/question-with-rating.type"
-import { QuestionWithRandomValue_Type } from "../types/question-with-random-value.type"
-import questionStore from "../stores/question.store"
+import { Question_Object } from "../object-models/question.object"
+import { QuestionWithRating_Object } from "../object-models/question-with-rating.object"
+import { QuestionWithRandomValue_Object } from "../object-models/question-with-random-value.object"
 import quizStore from "../stores/quiz.store"
+import questionsService from "./questions.service"
 
 const numberOfQuestionsInQuiz = 10
 
-export function generateQuiz(): Quiz_Type {
+export function generateQuiz(): Quiz_Object {
 
   return {
     questions: chainFunctions([
@@ -27,10 +27,10 @@ var f = {
   'Select random questions based on thier selection chance': randomQuestions
 }
 
-function getQuestions(): Question_Type[] {
+function getQuestions(): Question_Object[] {
   const { selectedCategoryIds } = quizStore
-  const { questions } = questionStore
-  let returnQuestions: Question_Type[]
+  const { questions } = questionsService
+  let returnQuestions: Question_Object[]
 
   if (selectedCategoryIds.length == 0)
     returnQuestions = questions
@@ -48,10 +48,10 @@ function getQuestions(): Question_Type[] {
   return returnQuestions
 }
 
-function rateQuestions(questions: Question_Type[]): QuestionWithRating_Type[] {
+function rateQuestions(questions: Question_Object[]): QuestionWithRating_Object[] {
   //console.log(`%c questions ${questions}`, 'color: white; background: green')
   const { mostRecentDate, lastAskedDaysRange } = getLaskAskedDaysRange(questions)
-  return questions.map((question: Question_Type) => {
+  return questions.map((question: Question_Object) => {
     const lastAskedRating: number = getLastAskedRating(mostRecentDate, question.dateLastAsked, lastAskedDaysRange)
 
     let rating = (question.correctnessRating + lastAskedRating) / 2
@@ -60,23 +60,23 @@ function rateQuestions(questions: Question_Type[]): QuestionWithRating_Type[] {
   })
 }
 
-function randomQuestions(questionsWithRating: QuestionWithRating_Type[]): Question_Type[] {
+function randomQuestions(questionsWithRating: QuestionWithRating_Object[]): Question_Object[] {
   //console.log(`%c questionsWithRating ${questionsWithRating}`, 'color: white; background: blue')
 
-  const questionsWithRandomValue: QuestionWithRandomValue_Type[] = assignQuestionsRandomValue(questionsWithRating)
+  const questionsWithRandomValue: QuestionWithRandomValue_Object[] = assignQuestionsRandomValue(questionsWithRating)
   //console.log(`%c questionsWithRandomValue ${questionsWithRandomValue}`, 'color: white; background: red')
-  const quizQuestions: Question_Type[] =
+  const quizQuestions: Question_Object[] =
     shuffle(questionsWithRandomValue)
       .sort((a, b) => a.randomValue - b.randomValue)
       .slice(0, numberOfQuestionsInQuiz)
-      .map((questionsWithRandomValue: QuestionWithRandomValue_Type) => questionsWithRandomValue.question)
+      .map((questionsWithRandomValue: QuestionWithRandomValue_Object) => questionsWithRandomValue.question)
 
   return quizQuestions
 }
 
 
 
-function getLaskAskedDaysRange(questions: Question_Type[]) {
+function getLaskAskedDaysRange(questions: Question_Object[]) {
   const datesArray = questions.map(question => question.dateLastAsked)
   const sortedDates = datesArray.sort()
   const longestAgo = sortedDates[0]
@@ -102,11 +102,11 @@ function getLastAskedRating(mostRecent: Date, questionDate: Date, dayRange: numb
   return Math.round(10 - lastAskedDaysSinceMostRecent / dayRange * 10)
 }
 
-function assignQuestionsRandomValue(questionsWithRating: QuestionWithRating_Type[]): QuestionWithRandomValue_Type[] {
+function assignQuestionsRandomValue(questionsWithRating: QuestionWithRating_Object[]): QuestionWithRandomValue_Object[] {
   return questionsWithRating.map(questionWithRating => {
     const { rating, question } = questionWithRating
     const randomValue = Math.round(rating * random())
-    const questionWithRandomValue: QuestionWithRandomValue_Type = { question, randomValue }
+    const questionWithRandomValue: QuestionWithRandomValue_Object = { question, randomValue }
     return questionWithRandomValue
   })
 }

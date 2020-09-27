@@ -18,7 +18,7 @@ const quizStore = observable({
 })
 
 export default quizStore
-window['quizStore'] = quizStore
+
 
 function startQuiz() {
   try{

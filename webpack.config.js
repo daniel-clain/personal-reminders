@@ -28,7 +28,13 @@ let config = {
 			},
 			{
 				test: /\.(png|svg|jpg)$/,
-				use: [ 'file-loader' ]
+				use: [{
+					loader: 'file-loader',
+					options: {
+            name: "[name].[ext]",
+            outputPath: "images",
+          }
+				}]
 			}
 		]
 	},

@@ -1,23 +1,22 @@
-import { Question_Type } from "../../types/question.type"
-import { Quiz_Type } from "../../types/quiz.type"
+import { Question_Object } from "../../object-models/question.object"
+import { Quiz_Object } from "../../object-models/quiz.object"
+import questionsService from "../../services/questions.service"
 import { generateQuiz } from "../../services/quiz-generator.service"
-import questionStore from '../../stores/question.store'
 
 jest.mock('../../services/utilities.service')
-jest.mock('../../stores/question.store')
-jest.mock('../../stores/quiz.store')
+jest.mock('../../services/question.service')
 
-let testQuestions: Question_Type[] = []
+let testQuestions: Question_Object[] = []
 
 
-const baseQuestion: Question_Type = {
+const baseQuestion: Question_Object = {
   id: 'base question',
   correctnessRating: 2,
   dateLastAsked: new Date('April 20, 2019 17:30')
-} as Question_Type
+} as Question_Object
 
 
-let testQuestion: Question_Type, returnedQuiz: Quiz_Type
+let testQuestion: Question_Object, returnedQuiz: Quiz_Object
 
 function setup(testQuestionUpdates) {
 
@@ -29,7 +28,7 @@ function setup(testQuestionUpdates) {
 
   testQuestions = [...Array(100).fill(baseQuestion), testQuestion]
   
-  questionStore.questions = testQuestions
+  questionsService.questions = testQuestions
   returnedQuiz = generateQuiz()
 }
 
@@ -88,7 +87,7 @@ describe(`generateQuiz()`, () => {
             setup({
               dateLastAsked: new Date('April 19, 2019 17:30'),
               correctnessRating: 2
-            } as Question_Type)
+            } as Question_Object)
           })
 
           test('returned quiz should include test question', () =>

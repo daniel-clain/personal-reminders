@@ -1,27 +1,17 @@
 import React from 'react'
+import { FormFieldProps_Interface } from './Form.partial'
 
-export interface TextFieldProps_Interface{
-  label?: string, 
-  value?: string, 
-  onValueUpdated?: (value: string) => void
-  readonly?: boolean
-}
-
-
-const TextField_Partial = ({label, value, onValueUpdated, readonly}: TextFieldProps_Interface) => {  
-  return <div className='text-field'>
-    <div className='text-field__label'>
-      {label}:
-    </div>
-    <div 
-      className='text-field__input' 
-      contentEditable='true'
-      onBlur={e => onValueUpdated?.(e.target.innerText)}
-      suppressContentEditableWarning={true}
-    >
-      {value}
-    </div>
-  </div>
+const TextField_Partial = ({label, value, onChange, editable, type}: FormFieldProps_Interface) => {  
+  return (
+      <text-input 
+        class='text-input'
+        contentEditable
+        onBlur={(e: any) => onChange?.(e.target.innerText)}
+        suppressContentEditableWarning={true}
+      >
+        {value}
+      </text-input>
+  )
 }
 
 export default TextField_Partial

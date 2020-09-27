@@ -1,8 +1,8 @@
 import { observable } from 'mobx'
-import { View_Set, SubView_Set } from '../sets/view.set'
+import { View_Type } from '../sets/view.set'
 
 const viewStore = observable({
-  selectedView: <View_Set>'Question Management',
-  selectedSubView: <SubView_Set>'Category Management'
+  selectedView: <View_Type>'Question Management'
 })
+
 export default viewStore

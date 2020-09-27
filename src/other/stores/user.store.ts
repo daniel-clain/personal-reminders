@@ -11,6 +11,9 @@ const userStore = observable({
   userDoc: <Document> null
 })
 
+export default userStore
+
+
 if(environmentService.environment.requiresAuthentication){
   auth().onAuthStateChanged(u => {
     userStore.user = u
@@ -18,7 +21,3 @@ if(environmentService.environment.requiresAuthentication){
     userStore.userDoc = u ? firestore().collection('Users').doc(u.uid) : null
   })
 }
-
-export default userStore
-window['userStore'] = userStore
-

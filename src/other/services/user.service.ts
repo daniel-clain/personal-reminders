@@ -7,3 +7,4 @@ export default {
   showFacebookSignIn: () => 
     auth().signInWithPopup(provider)
 }
+

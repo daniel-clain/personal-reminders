@@ -1,52 +1,65 @@
-import React, { useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { Category_Type } from '../../other/types/category.type'
+import { Category_Object } from '../../other/object-models/category.object'
 import { observer } from 'mobx-react'
-import categoryStore  from '../../other/stores/category.store';
+import { FormFieldProps_Interface } from './Form.partial';
+import categoriesService from '../../other/services/categories.service';
 
-interface CategorySelectorProps_Interface {
-  label: string
-  categoryIds: string[]
-  onValueUpdated: (categoryIds: string[]) => void
-}
 
-const CategorySelector_Partial = ({ label, categoryIds, onValueUpdated }: CategorySelectorProps_Interface) => {
+
+const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Interface) => {
   const [categoryFilter, setCategoryFilter] = useState(null)
+  const [expandedCategory, setExpandedCategory] = useState(null)
+  const categoryIds: string[] = value as string[]
 
+  const filterRef = useRef(null);
 
-  return <div className='category-selector'>
-    <header>
-      <h2 className='category-selector__heading'>{label}</h2>
-      <input className='category-selector__filter filter' onChange={e => setCategoryFilter(e.target.value)}/>
-    </header>
-    <div className="categories-container">
-      {categoryStore.categories
-      .filter(doesCategoryMatchFilter)
-      .map(category =>
-        <button key={category.id}
-          className={categoryIds?.some(id => id == category.id) ? 
-            'selected' : ''
+  useEffect (() => {
+    filterRef.current.addEventListener('filtering', 
+      filteringEvent => setCategoryFilter(filteringEvent.detail)
+    )
+  })
+
+  return (
+    <category-selector>
+      <category-filter 
+        contentEditable
+        ref={filterRef}
+      />
+      <div className="categories">
+        {categoriesService.categories
+        .filter(doesCategoryMatchFilter)
+        .map(category => 
+        <category-tag         
+          {...
+            categoryIds?.some(id => id == category.id) ? {selected:''} : 
+            expandedCategory?.some(id => id == category.id) ? {expanded:''} : 
+            category.childCategoryIds.length ? {'has-children':''} : {} 
           }
-          onClick={() => handleCategorySelected(category)}
-        >
-          {category.value}
-        </button>
-      )}
-    </div>
-  </div>
+          key={category.id}>
+          <div
+            className='expander'
+            onClick={() => handleCategorySelected(category)}
+          >
+            {category.value}
+          </div>
+        </category-tag>)}
+      </div>
+    </category-selector>
+  )
 
-  function handleCategorySelected(selectedCategory: Category_Type){
+  function handleCategorySelected(selectedCategory: Category_Object){
 
     const categoryIsAlreadySelected = categoryIds?.find(id => id == selectedCategory.id)
     
 		if (categoryIsAlreadySelected) {	
-			onValueUpdated(categoryIds.filter(id => id != selectedCategory.id))
+			onChange(categoryIds.filter(id => id != selectedCategory.id))
 		} else {
-      onValueUpdated([...categoryIds, selectedCategory.id])
+      onChange([...categoryIds, selectedCategory.id])
 		}
   }
 
-  function doesCategoryMatchFilter(category: Category_Type){
+  function doesCategoryMatchFilter(category: Category_Object){
     return !categoryFilter || 
       category.value.toLocaleLowerCase()
       .includes(categoryFilter.toLocaleLowerCase())
@@ -54,3 +67,4 @@ const CategorySelector_Partial = ({ label, categoryIds, onValueUpdated }: Catego
 }
 
 export default observer(CategorySelector_Partial)
+
