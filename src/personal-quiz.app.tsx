@@ -1,5 +1,5 @@
 import React, { HTMLAttributes, useEffect } from 'react'
-import Nav_Partial from './components/partials/ViewSelectors_Partial'
+import { hot } from 'react-hot-loader/root';
 import Quiz_View from './components/views/quiz/Quiz.view';
 import QuestionManagement_View from './components/views/question-management/QuestionManagement.view';
 
@@ -13,15 +13,11 @@ import { observer } from 'mobx-react';
 import ViewSelectors_Partial from './components/partials/ViewSelectors_Partial';
 
 import CategoryManagement_View from './components/views/category-management/CategoryManagement_View';
-import enableCustomTags from './other/services/custom-tags.service';
 
 
 const { environment } = environmentService
 
 const PersonalQuiz_App = observer(() => {
-  
-  
-  useEffect(enableCustomTags)
 
   let { selectedView } = viewStore
   switch (environment.requiresAuthentication == false || userStore.userAuthenticated) {
@@ -35,14 +31,14 @@ const PersonalQuiz_App = observer(() => {
         <ViewSelectors_Partial/>
 
         {show(<Quiz_View />).if(selectedView == 'Quiz')}
-        {show(<QuestionManagement_View />).if(selectedView == 'Question Management')}
-        {show(<CategoryManagement_View />).if(selectedView == 'Category Management')}
+        {show(<QuestionManagement_View />).if(selectedView == 'Questions')}
+        {show(<CategoryManagement_View />).if(selectedView == 'Categories')}
 
         {show(<Playground_Partial hidden />).if(environment.name == 'Development')}
       </>
   }
 })
-export default PersonalQuiz_App
+export default hot(PersonalQuiz_App)
 
 
 

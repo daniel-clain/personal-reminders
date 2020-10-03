@@ -1,7 +1,8 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-
+const CopyPlugin = require('copy-webpack-plugin');
 const chalk = require('chalk');
+
 
 let config = {	
 	entry: ['./src/index.tsx'],
@@ -25,20 +26,15 @@ let config = {
 						implementation: require('sass')
 					}
 				}]
-			},
-			{
-				test: /\.(png|svg|jpg)$/,
-				use: [{
-					loader: 'file-loader',
-					options: {
-            name: "[name].[ext]",
-            outputPath: "images",
-          }
-				}]
 			}
 		]
 	},
 	plugins: [
+		new CopyPlugin({
+			patterns: [
+				{from: './src/other/images/', to: 'images'}
+			]
+		}),
 		new HtmlWebPackPlugin({
 			title: 'Personal Quiz',
 			favicon: './favicon.ico',
@@ -66,7 +62,8 @@ module.exports = (environment, {mode}) => {
 
 	if(!environment) throw('Gotta specify and environment bro....')
 
-	console.log(chalk.green('YOUR ENVIRONMENT IS '  + environment.toUpperCase()))
+	console.log(chalk.green(`YOUR ENVIRONMENT IS ${environment}`.toUpperCase()))
+	console.log(chalk.blue(`YOUR MODE IS ${mode}`.toUpperCase()))
 	switch(environment){
 		case 'development': {
 			config.entry.unshift('./src/other/set-environment-modules/set-environment-development.ts')

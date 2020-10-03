@@ -6,7 +6,7 @@ export default () =>
 <view-selectors>
   {views.map(view => 
     <view-selector 
-      {...viewStore.selectedView == view ? {selected: ''} : {}}
+      {...viewStore.selectedView == view ? {isActive: ''} : {}}
       onClick={() => viewStore.selectedView = view}
       key={view}
     >

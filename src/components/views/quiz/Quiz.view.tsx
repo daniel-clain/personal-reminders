@@ -6,7 +6,7 @@ import quizStore  from '../../../other/stores/quiz.store'
 function Quiz_View() {
 
   return (
-    <div className='view view--quiz'>
+    <quiz-view>
       {quizStore.quizInProgress == false ? <>
         <CategorySelect_Sub />
         <StartButton_Sub />
@@ -27,7 +27,7 @@ function Quiz_View() {
           </> : null
         }
       </> : null}
-    </div>
+    </quiz-view>
   )
 }
 

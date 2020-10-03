@@ -5,9 +5,11 @@ import QuestionForm_Sub from '../views/question-management/question-management-c
 import { Question_Object } from '../../other/object-models/question.object'
 import { Category_Object } from '../../other/object-models/category.object'
 import { DataTypes_Set } from '../../other/sets/data-types.set'
-import questionsService from '../../other/services/__mocks__/questions.service'
+
 import categoriesService from '../../other/services/categories.service'
 import Data_Object from '../../other/object-models/data.object'
+import questionsService from '../../other/services/questions.service'
+import { observer } from 'mobx-react'
 
 interface ListProps{
   type: DataTypes_Set
@@ -19,20 +21,30 @@ const List_Partial = ({type}: ListProps) => {
   const data: Data_Object[] = 
     type == 'Question' ? questionsService.questions :
     type == 'Category' ? categoriesService.categories : null
-  return <ol>
-    <input className='filter' placeholder='filter' onChange={e => setfilter(e.target.value.toLocaleLowerCase())}/>
+    console.log(data);
+    
+  return <>
+    <input className='list-filter' placeholder='filter...' onChange={e => setfilter(e.target.value.toLocaleLowerCase())}/>
 
     {data
-    .filter(dataItem => dataItem.value.toLocaleLowerCase().includes(filter))
     .map((dataItem, i) =>
-      <li key={i} className={dataItem.id == expandedItemId ? 'expanded' : null}>
+      <list-item 
+        key={i} 
+        {...
+          dataItem.id == expandedItemId 
+          ? {expanded: ''}
+          : {onClick: () => setExpandedItemId(dataItem.id)}
+        }
+        {...
+          dataItem.value.toLocaleLowerCase()
+          .includes(filter) == false ? {'filtered-out': ''} : ''
+        }
+      >
         {show(
-          <div onClick={() => setExpandedItemId(dataItem.id)}>
-            {dataItem.value}
-          </div>
+          dataItem.value
         ).if(dataItem.id != expandedItemId)}
         {show(<>
-          <button className='collapse-btn' onClick={setExpandedItemId}>Collapse</button>
+          <button className='collapse' onClick={setExpandedItemId}>Collapse</button>
           {show(
             <QuestionForm_Sub 
               editedQuestion={dataItem as Question_Object}
@@ -46,9 +58,9 @@ const List_Partial = ({type}: ListProps) => {
             />
           ).if(type == 'Category')}
         </>).if(dataItem.id == expandedItemId)}
-      </li>
+      </list-item>
     )}
-  </ol>
+  </>
 }
 
-export default List_Partial
+export default observer(List_Partial)

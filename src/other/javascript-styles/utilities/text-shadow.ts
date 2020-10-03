@@ -1,1 +1,1 @@
-export default `1px 1px black, 2px 2px black`
+export default `1px 1px #061a2f, 2px 2px #000000`

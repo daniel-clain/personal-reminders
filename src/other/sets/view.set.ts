@@ -1,4 +1,4 @@
-export type View_Type = 'Quiz' | 'Question Management' | 'Category Management'
+export type View_Type = 'Quiz' | 'Questions' | 'Categories'
 type Views_Set = View_Type[]
-const views: Views_Set = ['Quiz', 'Question Management', 'Category Management']
-export default views
+const viewSet: Views_Set = ['Quiz', 'Questions', 'Categories']
+export default viewSet

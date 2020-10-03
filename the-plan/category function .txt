@@ -1,0 +1,5 @@
+if has children, has sub element with 2 numbers, direct child count, total child count
+
+when you click on the tag its self, it simply toggles if the tag its self is selected
+
+when you click on the sub element with the numbers, the category expands, hides the sub element and shows all the direct child categories. it also shows a back button to go back to the initial state

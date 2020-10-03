@@ -12,52 +12,56 @@ import { DataTypes_Set } from '../../other/sets/data-types.set';
 import categoriesService from '../../other/services/categories.service';
 import { Question_Object } from '../../other/object-models/question.object';
 import { Category_Object } from '../../other/object-models/category.object';
+import { observer } from 'mobx-react';
 
-export interface FormFieldProps_Interface {
+export interface FormFieldProps_Interface<T extends string | string[]> {
   label?: string
-  value?: string | string[]
+  value?: T
   onChange?: (value) => void
   editable?: boolean
   type?: FormFields_Set
 }
 
-export interface FormPartialProps_Interface {
+export interface FormPartialProps_Interface{
   dataType: DataTypes_Set,
   data: DataObjects_Set
   isEdit?: boolean
-  fields: FormFieldProps_Interface[]
+  fields: FormFieldProps_Interface<string | string[]>[]
   onUpdate?(): void
 }
 
-const Form_Partial = ({ dataType, data, fields, isEdit, onUpdate }: FormPartialProps_Interface) => {
+function Form_Partial({ dataType, data, fields, isEdit, onUpdate }: FormPartialProps_Interface){
   return <>
     {fields.map((fieldProps, i) =>       
       <form-field key={i}>
-        <label>{fieldProps.label}:</label>
         {show(
-          <TextField_Partial {...fieldProps} />
+          <TextField_Partial {...
+            {...fieldProps, value: fieldProps.value as string}
+          } />
         ).if(fieldProps.type == 'Input')}
         {show(
-          <CategorySelector_Partial {...fieldProps} />
+          <CategorySelector_Partial {...
+            {...fieldProps, value: fieldProps.value as string[]}
+          } />
         ).if(fieldProps.type == 'Category Select')}
       </form-field>
     )}
-    <div className='form-buttons'>
+    <form-buttons>
       {show(
-        <button className='green' onClick={() => handleClick('Add')}>
+        <button className='add' onClick={() => handleClick('Add')}>
           Add
       </button>
       ).if(isEdit == false)}
 
       {show(<>
-        <button className='green' onClick={() => handleClick('Update')}>
+        <button className='update' onClick={() => handleClick('Update')}>
           Update
         </button>
-        <button className='red' onClick={() => handleClick('Delete')}>
+        <button className='delete' onClick={() => handleClick('Delete')}>
           Delete
         </button>
       </>).if(isEdit == true)}
-    </div>
+    </form-buttons>
   </>
 
 
@@ -90,7 +94,7 @@ const Form_Partial = ({ dataType, data, fields, isEdit, onUpdate }: FormPartialP
 
 };
 
-export default Form_Partial
+export default observer(Form_Partial)
 
 
 

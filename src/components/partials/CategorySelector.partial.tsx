@@ -4,58 +4,41 @@ import { Category_Object } from '../../other/object-models/category.object'
 import { observer } from 'mobx-react'
 import { FormFieldProps_Interface } from './Form.partial';
 import categoriesService from '../../other/services/categories.service';
+import { show } from '../../other/services/utilities.service';
+import CategoriesList_Partial from './CategoriesList.partial';
 
 
+const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Interface<string[]>) => {
+  const [categoryFilter, setCategoryFilter] = useState('')
+  const [expandedCategories, setExpandedCategories] = useState([])
+  const selectedCategoryIds: string[] = value
 
-const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Interface) => {
-  const [categoryFilter, setCategoryFilter] = useState(null)
-  const [expandedCategory, setExpandedCategory] = useState(null)
-  const categoryIds: string[] = value as string[]
+  const data = categoriesService.categories.filter(doesCategoryMatchFilter)
+  .filter(onlyTopLevelCategories)
 
-  const filterRef = useRef(null);
-
-  useEffect (() => {
-    filterRef.current.addEventListener('filtering', 
-      filteringEvent => setCategoryFilter(filteringEvent.detail)
-    )
-  })
-
-  return (
+  return <>
+  
+    {label ? <label>{label}:</label> : ''}
     <category-selector>
-      <category-filter 
-        contentEditable
-        ref={filterRef}
-      />
-      <div className="categories">
-        {categoriesService.categories
-        .filter(doesCategoryMatchFilter)
-        .map(category => 
-        <category-tag         
-          {...
-            categoryIds?.some(id => id == category.id) ? {selected:''} : 
-            expandedCategory?.some(id => id == category.id) ? {expanded:''} : 
-            category.childCategoryIds.length ? {'has-children':''} : {} 
-          }
-          key={category.id}>
-          <div
-            className='expander'
-            onClick={() => handleCategorySelected(category)}
-          >
-            {category.value}
-          </div>
-        </category-tag>)}
-      </div>
+      <input className='categories-filter'
+        placeholder='filter...' onChange={e => setCategoryFilter(e.target.value.toLocaleLowerCase())} />
+      <categories-container>
+
+        <CategoriesList_Partial {...{categories: data, selectedCategoryIds, onCategorySelected}} />
+
+      </categories-container>
     </category-selector>
-  )
+  </>
 
-  function handleCategorySelected(selectedCategory: Category_Object){
 
-    const categoryIsAlreadySelected = categoryIds?.find(id => id == selectedCategory.id)
+  function onCategorySelected(selectedCategory: Category_Object){
+
+    const categoryIsAlreadySelected = selectedCategoryIds?.find(id => id == selectedCategory.id)
     
 		if (categoryIsAlreadySelected) {	
-			onChange(categoryIds.filter(id => id != selectedCategory.id))
+			onChange(selectedCategoryIds.filter(id => id != selectedCategory.id))
 		} else {
-      onChange([...categoryIds, selectedCategory.id])
+      onChange([...selectedCategoryIds, selectedCategory.id])
 		}
   }
 
@@ -63,6 +46,10 @@ const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Inte
     return !categoryFilter || 
       category.value.toLocaleLowerCase()
       .includes(categoryFilter.toLocaleLowerCase())
+  }
+
+  function onlyTopLevelCategories(category: Category_Object){
+    return !category.parentCategoryIds?.length || selectedCategoryIds.some(id => category.id == id)
   }
 }
 

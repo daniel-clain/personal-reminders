@@ -1,8 +1,8 @@
 import { observable } from 'mobx'
-import { View_Type } from '../sets/view.set'
+import viewSet, { View_Type } from '../sets/view.set'
 
 const viewStore = observable({
-  selectedView: <View_Type>'Question Management'
+  selectedView: <View_Type> viewSet[2]
 })
 
 export default viewStore

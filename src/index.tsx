@@ -2,7 +2,6 @@ import React, { HTMLAttributes, lazy, Suspense, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 //import './../global-style.scss'
 //import './styles/new-global-style.sass'
-import './other/services/custom-tags.service'
 import resizeObserver from "./other/services/resize-observer"
 import firebase from 'firebase/app'
 import environmentService from './other/services/environment.service'
