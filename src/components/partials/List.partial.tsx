@@ -21,7 +21,6 @@ const List_Partial = ({type}: ListProps) => {
   const data: Data_Object[] = 
     type == 'Question' ? questionsService.questions :
     type == 'Category' ? categoriesService.categories : null
-    console.log(data);
     
   return <>
     <input className='list-filter' placeholder='filter...' onChange={e => setfilter(e.target.value.toLocaleLowerCase())}/>

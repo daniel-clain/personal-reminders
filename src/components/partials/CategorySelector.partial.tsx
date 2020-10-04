@@ -10,11 +10,18 @@ import CategoriesList_Partial from './CategoriesList.partial';
 
 const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Interface<string[]>) => {
   const [categoryFilter, setCategoryFilter] = useState('')
-  const [expandedCategories, setExpandedCategories] = useState([])
   const selectedCategoryIds: string[] = value
 
-  const data = categoriesService.categories.filter(doesCategoryMatchFilter)
-  .filter(onlyTopLevelCategories)
+  let data = categoriesService.categories
+  if(categoryFilter){
+    data =  data.filter(doesCategoryMatchFilter)
+  }
+  else{
+    data = data.filter(onlyTopLevelCategories)
+  }
+
+  let selectedCategories = categoriesService.categories
+  .filter(c => selectedCategoryIds.includes(c.id))
 
   return <>
   
@@ -22,11 +29,11 @@ const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Inte
     <category-selector>
       <input className='categories-filter'
         placeholder='filter...' onChange={e => setCategoryFilter(e.target.value.toLocaleLowerCase())} />
-      <categories-container>
+        
+        <CategoriesList_Partial {...{categories: selectedCategories, selectedCategoryIds, onCategorySelected, isFiltering: null}} type={'selected'} />
 
-        <CategoriesList_Partial {...{categories: data, selectedCategoryIds, onCategorySelected}} />
+        <CategoriesList_Partial {...{categories: data, selectedCategoryIds, onCategorySelected, isFiltering: categoryFilter}} />
 
-      </categories-container>
     </category-selector>
   </>
 
@@ -43,13 +50,11 @@ const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Inte
   }
 
   function doesCategoryMatchFilter(category: Category_Object){
-    return !categoryFilter || 
-      category.value.toLocaleLowerCase()
-      .includes(categoryFilter.toLocaleLowerCase())
+    return  category.value.toLocaleLowerCase().includes(categoryFilter)
   }
 
   function onlyTopLevelCategories(category: Category_Object){
-    return !category.parentCategoryIds?.length || selectedCategoryIds.some(id => category.id == id)
+    return !category.parentCategoryIds?.length
   }
 }
 

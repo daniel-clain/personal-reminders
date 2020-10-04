@@ -10,59 +10,87 @@ interface CategoriesListProps_Interface{
   selectedCategoryIds?: string[]
   categories?: Category_Object[]
   onCategorySelected(Category_Object): void
+  isFiltering: string
+  parentCategory?: Category_Object
+  type?: 'selected'
 }
 
-const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategoryIds}: CategoriesListProps_Interface) => {
-  const [expandedCategories, setExpandedCategories] = useState([])
+const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategoryIds, isFiltering, parentCategory, type}: CategoriesListProps_Interface) => {
+  const [expandedCategory, setExpandedCategory] = useState(null)
 
-  return <>
-  
-    {categories
-    .map(category => <>
 
-      <category-tag         
+  document.addEventListener('animationend', (e: any) => 
+    e.target.style.display = 'none'
+  )
+
+  return (
+
+    <categories-container name={parentCategory ? `For ${parentCategory.value}` : ''} >
+      {categories
+      .map(category => 
+        <category-wrapper
         {...
-          selectedCategoryIds?.some(id => id == category.id) ? {selected:''} : 
-          expandedCategories?.some(id => id == category.id) ? {expanded:''} : 
-          category.childCategoryIds.length ? {'has-children':''} : ''
+          !isFiltering && expandedCategory?.id == category.id ? 
+          {expanded:''} : ''
         }
-        onClick={() => onCategorySelected(category)}
-        key={category.id}
-      >
-        {show(
-          <span onClick={() => parentIdsSeleccted(category)}>
-            ({category.parentCategoryIds.length})
-          </span>
-        ).if(category.parentCategoryIds.length > 0)}
+        {... 
+          !isFiltering && expandedCategory && expandedCategory.id != category.id ? 
+          {'is-hidden':''} : ''
+        }
+        key={`${parentCategory?.id}-${category.id}`}>
 
-        {category.value}
-        
-        {show(
-          <span onClick={e => childIdsSeleccted(e, category)}>
-            ({category.childCategoryIds.length})
-          </span>
-        ).if(category.childCategoryIds.length > 0 && !expandedCategories?.some(id => id == category.id))}
-      </category-tag>
-      {show(
-        <CategoriesList_Partial {...
-          {onCategorySelected, selectedCategoryIds, categories: categoriesService.categories.filter(d => d.parentCategoryIds.includes(category.id))}
-        } />
-      ).if(expandedCategories?.some(id => id == category.id))}
+          <category-tag  
+            {...
+              selectedCategoryIds?.some(id => id == category.id) ? 
+              {selected:''} : ''
+            }       
+            onClick={() => onCategorySelected(category)}
+          >
+            {show(
+              <parent-categories onClick={() => parentIdsSelected(category)}>
+                {category.parentCategoryIds.length}
+              </parent-categories>
+            ).if(type != 'selected' && category.parentCategoryIds.length > 0)}
 
+            {category.value}
+            
+            {show(
+              <child-categories onClick={!isFiltering ? (e => childIdsSelected(e, category)) : null}>
+                {category.childCategoryIds.length}
+              </child-categories>
+            ).if(type != 'selected' && category.childCategoryIds.length > 0)}
+          </category-tag>
+            
+          {show(
+            <CategoriesList_Partial key={category.id}  {...
+              {
+                onCategorySelected, 
+                selectedCategoryIds, 
+                isFiltering, 
+                categories: categoriesService.categories
+                  .filter(d => d.parentCategoryIds.includes(category.id)),
+                parentCategory: category
+              }
+            } />
+          ).if(expandedCategory?.id == category.id)}
 
-    </>)}
-  </>
+        </category-wrapper>
+      )}
+    </categories-container>
+  )
 
-  function parentIdsSeleccted(category: Category_Object){
+  function parentIdsSelected(category: Category_Object){
 
   }
-  function childIdsSeleccted(e, category: Category_Object){
-    e.stopPropagation()
-    if(expandedCategories?.some(id => category.id)){
-      setExpandedCategories([...expandedCategories.filter(id => id != category.id)])
+  function childIdsSelected(e, category: Category_Object){
+    e.stopPropagation() 
+    if(!expandedCategory){
+      setExpandedCategory(category)
     }
     else{
-      setExpandedCategories([...expandedCategories, category.id])
+      setExpandedCategory(null)
+      const container = e.target.closest('categories-container')
+      container.querySelectorAll('category-wrapper').forEach((tag: any) => tag.style.display = '')
     }
   }
 

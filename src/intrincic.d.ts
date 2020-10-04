@@ -1,6 +1,7 @@
 
 interface Elem extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>{
-  class?: any
+  class?: string
+  name?: string
 }
 
 declare namespace JSX {
@@ -22,5 +23,8 @@ declare namespace JSX {
     'quiz-view': Elem
     'form-buttons': Elem
     'list-item': Elem
+    'parent-categories': Elem
+    'child-categories': Elem
+    'category-wrapper': Elem
   }
 }

@@ -80,7 +80,8 @@ module.exports = (environment, {mode}) => {
 			config.devtool = 'source-map'
 			config.devServer = {
 				hot: true,
-				https: true
+				https: true,
+				clientLogLevel: 'silent'
 			}			
 		} break
 		case 'production': {

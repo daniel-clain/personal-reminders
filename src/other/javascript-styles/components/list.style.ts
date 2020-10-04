@@ -24,4 +24,5 @@ export const list = /*css*/`
     background: #ffffff1f;
 
   }
+
 ` 
