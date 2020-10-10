@@ -2,6 +2,7 @@ import { baseFontSize } from "../utilities/base-font-size.style";
 import { size1, size3 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
 import { pxToRem } from "../utilities/pixels-to-rems";
+import { scrollbarWidth } from "../utilities/scrollbar-width";
 
 export const htmlAndBody = /*css*/`  
   html{
@@ -15,12 +16,11 @@ export const htmlAndBody = /*css*/`
   body * {    
     box-sizing: border-box;
     display: block;
-    max-width: 100%;
     outline: none;
   }
 
   * ::-webkit-scrollbar{
-    width: ${pxToRem(size3)};
+    width: ${pxToRem(scrollbarWidth)};
   }
 
   * ::-webkit-scrollbar-track{

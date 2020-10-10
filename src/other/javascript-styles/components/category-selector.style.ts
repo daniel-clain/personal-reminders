@@ -1,10 +1,11 @@
 import boxShadow from "../utilities/box-shadow";
-import { size1, size13, size2, size3, size5, size8 } from "../utilities/fibonacci-sizes";
+import { size1, size13, size144, size2, size3, size5, size8 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
 import { pxToRem } from "../utilities/pixels-to-rems";
+import { scrollbarWidth } from "../utilities/scrollbar-width";
 
 const h_spacing = size5
-const v_spacing = size3
+const v_spacing = size5
 
 
 
@@ -18,7 +19,14 @@ export const categorySelector = /*css*/`
     box-shadow: ${boxShadow}, inset 1px 1px 1px 1px #1f3244, inset -1px -1px 1px 1px #14586d;
     background: #5d96d033;
     padding: ${pxToRem(size8)};
+    padding-right: ${pxToRem(size8)};
     overflow-y: scroll;
+    max-height: ${pxToRem(size144)}
+
+  }
+
+  categories-container + categories-container {
+    margin-top: ${pxToRem(size8)};
   }
 
   input.categories-filter{  
@@ -27,14 +35,15 @@ export const categorySelector = /*css*/`
     margin-left: auto;
     ${size(size5)};
   }
+
   categories-container{
-    margin: 0 -${pxToRem(h_spacing)} -${pxToRem(v_spacing)} 0;    
+    margin-right: -${pxToRem(h_spacing)};    
+    margin-bottom: -${pxToRem(v_spacing)};    
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    width:100%;
-    margin-bottom: ${pxToRem(v_spacing)};
   }
+
   categories-container:after{
     content: '';
     flex: 100;
@@ -48,7 +57,7 @@ export const categorySelector = /*css*/`
     padding: 0 ${pxToRem(size3)};
     color: #000000;
     box-shadow: ${pxToRem(size1)} ${pxToRem(size1)}
-    ${pxToRem(size2)} ${pxToRem(size1)} rgb(0 0 0 / 0.80);
+    ${pxToRem(size1)} ${pxToRem(size1)} rgb(0 0 0 / 0.80);
     border-radius: ${pxToRem(size1)};
     justify-content: center;
     white-space: nowrap;
@@ -69,8 +78,9 @@ export const categorySelector = /*css*/`
   }
 
   expanded-category-wrapper{
-    padding-top: ${pxToRem(size8)};
+    margin-top: ${pxToRem(size5)};
     border-top: 1px white solid;
+    padding-top: ${pxToRem(size8)};
   }
 
   parent-categories, child-categories{

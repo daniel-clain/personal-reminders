@@ -6,7 +6,12 @@ export const fadeOutToLeft = /*css*/`
     0%   { 
       opacity: 1; 
     }
+    70%   { 
+      max-width: 200px; 
+    }
     100% {
+      max-width: 0px; 
+      padding: 0;
       filter: grayscale(1);
       opacity: 0; 
       transform: translateY(70%);
@@ -24,9 +29,9 @@ export const fadeOutToLeft = /*css*/`
   }
 
   [fading-out]{
-    animation: fade-out-to-left .5s;
+    animation: fade-out-to-left .3s;
   }
   [fading-in]{
-    animation: fade-in-from-left .5s;
+    animation: fade-in-from-left .3s;
   }
 `

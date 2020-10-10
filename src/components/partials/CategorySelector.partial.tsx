@@ -34,10 +34,27 @@ const CategorySelector_Partial = ({label, value, onChange, editedCategory }: For
     <category-selector>
       <input className='categories-filter'
         placeholder='filter...' onChange={e => setCategoryFilter(e.target.value.toLocaleLowerCase())} />
-        
-        <CategoriesList_Partial {...{categories: selectedCategories, selectedCategoryIds, onCategorySelected, isFiltering: null}} type={'selected'} />
 
-        <CategoriesList_Partial {...{categories: data, selectedCategoryIds, onCategorySelected, isFiltering: categoryFilter}} />
+        
+        {show(
+          <CategoriesList_Partial 
+            {...{
+              categories: selectedCategories, 
+              selectedCategoryIds, 
+              onCategorySelected, 
+              isFiltering: null
+            }} 
+            type={'selected'} 
+          />
+        ).if(selectedCategoryIds.length)}
+
+        <CategoriesList_Partial {...{
+          categories: data, 
+          selectedCategoryIds, 
+          onCategorySelected, 
+          isFiltering: categoryFilter
+          }} 
+        />
 
     </category-selector>
   </>

@@ -24,7 +24,9 @@ const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategor
     if(animationName == 'fade-out-to-left'){
       target.setAttribute('is-hidden', '')
       target.removeAttribute('class')
-      setHaveFadedOut(true)
+      if(!haveFadedOut){
+        setHaveFadedOut(true)
+      }
     }
     if(animationName == 'fade-in-from-left'){
       target.removeAttribute('fading-in')

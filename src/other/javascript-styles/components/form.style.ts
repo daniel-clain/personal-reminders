@@ -4,11 +4,10 @@ import textShadow from "../utilities/text-shadow";
 import { greenButton, redButton } from "../utilities/button-colors";
 import { size } from "../utilities/font-and-line-size";
 import { pxToRem } from "../utilities/pixels-to-rems";
+import { scrollbarWidth } from "../utilities/scrollbar-width";
 
 
 export const form = /*css*/`
-  .form{    
-  }
   label{
     ${size(size8)}
     margin-bottom: ${pxToRem(size3)};
@@ -24,6 +23,7 @@ export const form = /*css*/`
     box-shadow: ${boxShadow}, inset 1px 1px 1px 1px #1f3244, inset -1px -1px 1px 1px #14586d;
     background: white;
     padding: ${pxToRem(size5)} ${pxToRem(size5)};
+    padding-right: ${pxToRem(size5 - scrollbarWidth)};
     overflow-y: scroll;
     color: black;
   }

@@ -42,6 +42,7 @@ const List_Partial = ({type}: ListProps) => {
         {show(
           dataItem.value
         ).if(dataItem.id != expandedItemId)}
+        
         {show(<>
           <button className='collapse' onClick={setExpandedItemId}>Collapse</button>
           {show(

@@ -17,13 +17,14 @@ export const list = /*css*/`
 
   list-item {
     background: #66add633;
-    padding: ${pxToRem(size2)} ${pxToRem(size5)};
+    padding: 0 ${pxToRem(size5)};
+    ${size(size8)}
     color: #91cff1;
     margin-top: ${pxToRem(size2)};
-    max-height: ${pxToRem(size13)};
-    transition: all .5s linear;
-    opacity: 1;
-    overflow: hidden;
+    height: ${pxToRem(size13)};
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
   }
 
 
@@ -37,7 +38,9 @@ export const list = /*css*/`
 
   list-item[expanded]{
     max-height: 800px;
-    background: #ffffff1f;
+    background: #789db333;
+    height: unset;
+    padding: ${pxToRem(size8)} ${pxToRem(size8)};
   }
 
   button.collapse{    
