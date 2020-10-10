@@ -20,6 +20,7 @@ export interface FormFieldProps_Interface<T extends string | string[]> {
   onChange?: (value) => void
   editable?: boolean
   type?: FormFields_Set
+  editedCategory?: Category_Object
 }
 
 export interface FormPartialProps_Interface{

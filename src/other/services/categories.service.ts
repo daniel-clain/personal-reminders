@@ -36,26 +36,28 @@ function updateParentAndChildCategories(updatedCategroy: Category_Object) {
 
   categoriesService.categories.forEach(loopCategory => {
     if (
-      updatedCategroy.parentCategoryIds.includes(loopCategory.id) &&
-      loopCategory.childCategoryIds.includes(updatedCategroy.id) == false
+      updatedCategroy.parentCategoryIds?.includes(loopCategory.id) &&
+      (!loopCategory.childCategoryIds ||
+      loopCategory.childCategoryIds.includes(updatedCategroy.id) == false)
     ) {
       dataService.update('Category', {
         ...loopCategory,
-        childCategoryIds: [...loopCategory.childCategoryIds, updatedCategroy.id]
+        childCategoryIds: [...loopCategory.childCategoryIds || [], updatedCategroy.id]
       })
     }
     else if (
-      updatedCategroy.childCategoryIds.includes(loopCategory.id) &&
-      loopCategory.parentCategoryIds.includes(updatedCategroy.id) == false
+      updatedCategroy.childCategoryIds?.includes(loopCategory.id) && 
+        (!loopCategory.parentCategoryIds ||
+        loopCategory.parentCategoryIds.includes(updatedCategroy.id) == false)
     ) {
       dataService.update('Category', {
         ...loopCategory,
-        parentCategoryIds: [...loopCategory.parentCategoryIds, updatedCategroy.id]
+        parentCategoryIds: [...loopCategory.parentCategoryIds || [], updatedCategroy.id]
       })
     }
     else if (
-      loopCategory.childCategoryIds.includes(updatedCategroy.id) &&
-      updatedCategroy.parentCategoryIds.includes(loopCategory.id) == false
+      loopCategory.childCategoryIds?.includes(updatedCategroy.id) &&
+      updatedCategroy.parentCategoryIds?.includes(loopCategory.id) == false
     ) {
       dataService.update('Category', {
         ...loopCategory,
@@ -63,8 +65,8 @@ function updateParentAndChildCategories(updatedCategroy: Category_Object) {
       })
     }
     else if (
-      loopCategory.parentCategoryIds.includes(updatedCategroy.id) &&
-      updatedCategroy.childCategoryIds.includes(loopCategory.id) == false
+      loopCategory.parentCategoryIds?.includes(updatedCategroy.id) &&
+      updatedCategroy.childCategoryIds?.includes(loopCategory.id) == false
     ) {
       dataService.update('Category', {
         ...loopCategory,

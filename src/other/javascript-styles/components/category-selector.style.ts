@@ -1,5 +1,7 @@
 import boxShadow from "../utilities/box-shadow";
-import { size1, size3, size5, size8 } from "../utilities/fibonacci-sizes";
+import { size1, size13, size2, size3, size5, size8 } from "../utilities/fibonacci-sizes";
+import { size } from "../utilities/font-and-line-size";
+import { pxToRem } from "../utilities/pixels-to-rems";
 
 const h_spacing = size5
 const v_spacing = size3
@@ -11,26 +13,27 @@ export const categorySelector = /*css*/`
   category-selector{
     
     width: 100%;
-    border-radius: ${size1}px;
-    border: 2px solid #10839a;
+    border-radius: ${pxToRem(size1)};
+    border: ${pxToRem(size1)} solid #10839a;
     box-shadow: ${boxShadow}, inset 1px 1px 1px 1px #1f3244, inset -1px -1px 1px 1px #14586d;
     background: #5d96d033;
-    padding: ${size8}px;
+    padding: ${pxToRem(size8)};
     overflow-y: scroll;
   }
 
   input.categories-filter{  
-    margin-bottom: ${size8}px;
+    margin-bottom: ${pxToRem(size8)};
     display: block;
     margin-left: auto;
+    ${size(size5)};
   }
   categories-container{
-    margin: 0 -${h_spacing}px -${v_spacing}px 0;    
+    margin: 0 -${pxToRem(h_spacing)} -${pxToRem(v_spacing)} 0;    
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
     width:100%;
-    margin-bottom: ${v_spacing}px;
+    margin-bottom: ${pxToRem(v_spacing)};
   }
   categories-container:after{
     content: '';
@@ -41,78 +44,55 @@ export const categorySelector = /*css*/`
     flex: auto;  
     display: inline-flex;
     background: #ffffff;
-    margin: 0 ${h_spacing}px ${v_spacing}px 0;
-    padding: ${size1}px ${size3}px;
+    margin: 0 ${pxToRem(h_spacing)} ${pxToRem(v_spacing)} 0;
+    padding: 0 ${pxToRem(size3)};
     color: #000000;
-    box-shadow: 2px 2px 4px 1px rgb(0 0 0 / 0.80);
-    border-radius: 2px;
+    box-shadow: ${pxToRem(size1)} ${pxToRem(size1)}
+    ${pxToRem(size2)} ${pxToRem(size1)} rgb(0 0 0 / 0.80);
+    border-radius: ${pxToRem(size1)};
     justify-content: center;
     white-space: nowrap;
+    height: ${pxToRem(size13)};
+    align-items: center;
     overflow: hidden;
 
   }
 
+  category-tag[is-hidden]{
+    display: none;
+  }
   category-tag[selected]{
-    background: yellow;
+    background: #ffec63;
   }
   category-wrapper[expanded]{
     max-width: max-content;
   }
 
-  @keyframes tag-leave {
-    0%   { 
-      opacity: 1; 
-      max-width: 200px;
-    }
-    80%{
-      padding: ${size1}px ${size3}px;
-      margin: 0 ${h_spacing}px ${v_spacing}px 0;
-      box-shadow: 2px 2px 4px 1px rgb(0 0 0 / 0.80);
-    }
-    99% { 
-      opacity: 1; 
-      max-width: 0;
-      padding-left: 0;
-      padding-right: 0;
-      box-shadow: 0 0 transparent;
-      margin: 0;
-    }
-    100% {
-      display: none;
-      opacity: 1; 
-      max-width: 0;
-      padding-left: 0;
-      padding-right: 0;
-      box-shadow: 0 0 transparent;
-      margin: 0;
-    }
-  }
-
-  category-wrapper[is-hidden] {
-    animation: tag-leave .5s forwards;
+  expanded-category-wrapper{
+    padding-top: ${pxToRem(size8)};
+    border-top: 1px white solid;
   }
 
   parent-categories, child-categories{
-    
-    border-radius: 12px;
+    cursor: pointer;
+    border-radius: ${pxToRem(size8)};
     color: black;
     border: 1px solid #b1b1b1;
-    font-size: 9px;
+    ${size(size5)};;
     display: flex;
     align-items: center;
-    margin-left: 6px;
-    height: 16px;
-    width: 16px;
+    margin-left: ${pxToRem(size3)};
+    height: ${pxToRem(size8)};
+    width: ${pxToRem(size8)};
     justify-content: center;
     align-self: center;
   }
   parent-categories{
     margin-left: unset;
-    margin-right: 6px;
-
+    margin-right: ${pxToRem(size3)};;
   }
 
-  category-wrapper[expanded] > category-tag > child-categories{
+  category-tag[is-expanded] > child-categories{
     background: #99ffb8;    
   }
 `

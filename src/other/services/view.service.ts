@@ -1,8 +1,8 @@
 import { observable } from 'mobx'
 import viewSet, { View_Type } from '../sets/view.set'
 
-const viewStore = observable({
+const viewService = observable({
   selectedView: <View_Type> viewSet[2]
 })
 
-export default viewStore
+export default viewService

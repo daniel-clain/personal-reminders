@@ -1,30 +1,73 @@
-/* 
-  function updateQuestionCorrectnessRating(question: Question_Object, correctnessMark: CorrectnessMark_Set) {
-    if(!questionCollection)throw('no question collection')
-    
-    let newRating
-    
-    if(correctnessMark == 'Correct'){
-      newRating = question.correctnessRating + 1
-    }
-    if(correctnessMark == 'Almost'){
-      newRating = question.correctnessRating + 0.5
-    }
-    if(correctnessMark == 'Kinda'){
-      newRating = question.correctnessRating - 0.5
-    }
-    if(correctnessMark == 'Wrong'){
-      newRating = question.correctnessRating - 1
-    }
+import { observable } from 'mobx'
+import { generateQuiz } from '../services/quiz-generator.service'
+import { CorrectnessMark_Type } from '../sets/correctness-mark.set'
 
-    if(newRating > 10){
-      newRating = 10
-    }
-    if(newRating < 1){
-      newRating = 1
-    }
+const quizService = observable({
+  activeQuiz: null,
+  quizInProgress: false,
+  answerSubmitted: false,
+  correctnessMarkSubmitted: null,
+  activeQuestionIndex: null,
+  inputAnswer: '',
+  selectedCategoryIds: [],
+  startQuiz,
+  submitQuestion,
+  submitCorrectnessMark,
+  nextQuestion,
+  finishQuiz,
+})
 
-    updateQuestion({...question, correctnessRating: newRating, dateLastAsked: new Date()})
+export default quizService
 
-    
-  } */
+
+function startQuiz() {
+  try{
+    quizService.activeQuiz = generateQuiz()
+    quizService.quizInProgress = true
+    quizService.activeQuestionIndex = 0
+  }
+  catch (e){
+    console.error(e)
+    alert(e)
+  }
+}
+
+function submitQuestion() {
+  quizService.answerSubmitted = true
+}
+
+function submitCorrectnessMark(correctnessMark: CorrectnessMark_Type) {
+  quizService.correctnessMarkSubmitted = correctnessMark
+}
+
+
+function nextQuestion() {
+  const { activeQuiz, activeQuestionIndex } = quizService
+  const question = activeQuiz.questions[activeQuestionIndex]
+  //questionStore.updateQuestionCorrectnessRating(question, correctnessMark)
+
+
+  if (activeQuiz.questions.length == activeQuestionIndex + 1) {
+    finishQuiz()
+  }
+  else {
+    resetQuestionState()
+    quizService.activeQuestionIndex++
+  }
+}
+
+function finishQuiz() {
+  resetQuestionState()
+  quizService.quizInProgress = false
+  quizService.activeQuiz = null
+  quizService.activeQuestionIndex = null
+  quizService.selectedCategoryIds = []
+
+}
+
+function resetQuestionState() {
+  quizService.inputAnswer = ''
+  quizService.answerSubmitted = false
+  quizService.correctnessMarkSubmitted = false
+}
+

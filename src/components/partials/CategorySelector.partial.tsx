@@ -8,20 +8,25 @@ import { show } from '../../other/services/utilities.service';
 import CategoriesList_Partial from './CategoriesList.partial';
 
 
-const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Interface<string[]>) => {
+const CategorySelector_Partial = ({label, value, onChange, editedCategory }: FormFieldProps_Interface<string[]>) => {
   const [categoryFilter, setCategoryFilter] = useState('')
-  const selectedCategoryIds: string[] = value
+  const selectedCategoryIds: string[] = value || []
 
   let data = categoriesService.categories
   if(categoryFilter){
-    data =  data.filter(doesCategoryMatchFilter)
+    data =  data
+    .filter(doesCategoryMatchFilter)
+    .filter(excludeEditedCategory)
   }
   else{
-    data = data.filter(onlyTopLevelCategories)
+    data = data
+    .filter(onlyTopLevelCategories)
+    .filter(excludeEditedCategory)
   }
 
   let selectedCategories = categoriesService.categories
   .filter(c => selectedCategoryIds.includes(c.id))
+  .filter(excludeEditedCategory)
 
   return <>
   
@@ -54,7 +59,10 @@ const CategorySelector_Partial = ({label, value, onChange }: FormFieldProps_Inte
   }
 
   function onlyTopLevelCategories(category: Category_Object){
-    return !category.parentCategoryIds?.length
+    return !category.parentCategoryIds || category.parentCategoryIds.length == 0
+  }
+  function excludeEditedCategory(category: Category_Object){
+    return !editedCategory || editedCategory.id != category.id
   }
 }
 

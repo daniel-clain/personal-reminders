@@ -1,32 +1,21 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import { SubmitButton_Sub, CategorySelect_Sub, StartButton_Sub, Question_Sub, InputAnswer_Sub, CorrectAnswer_Sub, CorrectnessButtons_Sub, NextButton_Sub } from './quiz-components'
-import quizStore  from '../../../other/stores/quiz.store'
+import { show } from '../../../other/services/utilities.service'
+import QuizSetupForm_Sub from './quiz-components/QuizSetupForm_Sub'
+import QuizQuestionForm_Sub from './quiz-components/QuizQuestionForm_Sub'
+import quizService from '../../../other/services/quiz.service'
 
 function Quiz_View() {
 
   return (
     <quiz-view>
-      {quizStore.quizInProgress == false ? <>
-        <CategorySelect_Sub />
-        <StartButton_Sub />
-      </> : null}
+      {show(
+        <QuizSetupForm_Sub/>
+      ).if(quizService.quizInProgress == false)}
 
-      {quizStore.quizInProgress == true ? <>
-        <Question_Sub />
-        <InputAnswer_Sub />
-        {
-          quizStore.answerSubmitted == false ?
-            <SubmitButton_Sub />: 
-          quizStore.answerSubmitted == true ? <>
-            <CorrectAnswer_Sub />
-            <CorrectnessButtons_Sub />
-            {quizStore.answerSubmitted == true ?
-              <NextButton_Sub /> : null 
-            }
-          </> : null
-        }
-      </> : null}
+      {show(
+        <QuizQuestionForm_Sub/>
+      ).if(quizService.quizInProgress == true)}
     </quiz-view>
   )
 }

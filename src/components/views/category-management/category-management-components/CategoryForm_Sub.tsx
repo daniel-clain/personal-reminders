@@ -42,13 +42,15 @@ export default ({ editedCategory, onUpdate }: FormProps_Interface) => {
           label: 'Parent Categories',
           value: parentCategoryIds,
           type: 'Category Select',
-          onChange: parentCategoryIds => setCategory({ ...category, parentCategoryIds })
+          onChange: parentCategoryIds => setCategory({ ...category, parentCategoryIds }),
+          editedCategory
         },
         {
           label: 'Child Categories',
           value: childCategoryIds,
           type: 'Category Select',
-          onChange: childCategoryIds => setCategory({ ...category, childCategoryIds })
+          onChange: childCategoryIds => setCategory({ ...category, childCategoryIds }),
+          editedCategory
         }
       ]}
     />

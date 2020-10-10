@@ -36,7 +36,7 @@ const List_Partial = ({type}: ListProps) => {
         }
         {...
           dataItem.value.toLocaleLowerCase()
-          .includes(filter) == false ? {'filtered-out': ''} : ''
+          .includes(filter) == false && dataItem.id != expandedItemId ? {'filtered-out': ''} : ''
         }
       >
         {show(

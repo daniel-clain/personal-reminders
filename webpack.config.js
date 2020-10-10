@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin}  = require('clean-webpack-plugin');
 const chalk = require('chalk');
 
 
@@ -30,6 +31,7 @@ let config = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new CopyPlugin({
 			patterns: [
 				{from: './src/other/images/', to: 'images'}

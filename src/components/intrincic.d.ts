@@ -25,6 +25,8 @@ declare namespace JSX {
     'list-item': Elem
     'parent-categories': Elem
     'child-categories': Elem
-    'category-wrapper': Elem
+    'expanded-category-wrapper': Elem
+    'quiz-setup': Elem
+    'quiz-question': Elem
   }
 }

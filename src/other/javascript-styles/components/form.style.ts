@@ -1,7 +1,9 @@
-import {size1, size13, size21, size3, size34, size5, size8} from "../utilities/fibonacci-sizes";
-import size from '../utilities/font-and-line-size'
+import {size1, size13, size21, size3, size34, size5, size55, size8} from "../utilities/fibonacci-sizes";
 import boxShadow from "../utilities/box-shadow";
 import textShadow from "../utilities/text-shadow";
+import { greenButton, redButton } from "../utilities/button-colors";
+import { size } from "../utilities/font-and-line-size";
+import { pxToRem } from "../utilities/pixels-to-rems";
 
 
 export const form = /*css*/`
@@ -9,23 +11,32 @@ export const form = /*css*/`
   }
   label{
     ${size(size8)}
-    margin-bottom: ${size3}px;
+    margin-bottom: ${pxToRem(size3)};
     text-shadow: ${textShadow};
     color: #99daff;
   }  
   text-input{
-    height: ${size34}px;
+    height: ${pxToRem(size55)};
     width: 100%;
-    border-radius: ${size1}px;
-    border: 2px solid #10839a;
+    border-radius: ${pxToRem(size1)};
+    border:  ${pxToRem(size1)} solid #10839a;
+    border-right: 0;
     box-shadow: ${boxShadow}, inset 1px 1px 1px 1px #1f3244, inset -1px -1px 1px 1px #14586d;
     background: white;
-    padding: ${size8}px ${size5}px;
+    padding: ${pxToRem(size5)} ${pxToRem(size5)};
     overflow-y: scroll;
-    outline: none;
     color: black;
   }
   form-field{    
-    margin-bottom: ${size21}px;
+    margin-bottom: ${pxToRem(size21)};
+  }
+  
+  button.add, 
+  button.update{
+    ${greenButton}
+  }
+
+  button.delete{
+    ${redButton}
   }
 `

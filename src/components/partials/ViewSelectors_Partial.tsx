@@ -1,5 +1,5 @@
 import React from 'react'
-import viewStore from '../../other/stores/view.store'
+import viewStore from '../../other/services/view.service'
 import views from '../../other/sets/view.set'
 
 export default () =>

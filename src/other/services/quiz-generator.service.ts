@@ -3,8 +3,15 @@ import { chainFunctions, shuffle, random } from "./utilities.service"
 import { Question_Object } from "../object-models/question.object"
 import { QuestionWithRating_Object } from "../object-models/question-with-rating.object"
 import { QuestionWithRandomValue_Object } from "../object-models/question-with-random-value.object"
-import quizStore from "../stores/quiz.store"
 import questionsService from "./questions.service"
+import quizService from "./quiz.service"
+import { Category_Object } from "../object-models/category.object"
+import categoriesService from "./categories.service"
+
+
+
+
+
 
 const numberOfQuestionsInQuiz = 10
 
@@ -21,32 +28,29 @@ export function generateQuiz(): Quiz_Object {
 
 
 
-var f = {
-  'Get all questions that match selected categories': getQuestions,
-  'Give each question a selection chance rating based on its correctness rating and date since it was last asked': rateQuestions,
-  'Select random questions based on thier selection chance': randomQuestions
-}
-
 function getQuestions(): Question_Object[] {
-  const { selectedCategoryIds } = quizStore
   const { questions } = questionsService
+  const { selectedCategoryIds } = quizService
   let returnQuestions: Question_Object[]
 
-  if (selectedCategoryIds.length == 0)
+  if (selectedCategoryIds.length == 0){
     returnQuestions = questions
-  else
+  }
+  else{
     returnQuestions = questions
-      .filter(question =>
-        question.categoryIds.some(questionCategoryId =>
-          selectedCategoryIds.some(selectedCategoryId =>
-            selectedCategoryId === questionCategoryId
-          )))
+    .filter(question => 
+      f2['Question has a category that is an indirect sub category of any selected category'](question, selectedCategoryIds)
+    )
+  }
 
   if (returnQuestions.length == 0)
     throw ('No enough questions to make quiz')
 
   return returnQuestions
 }
+
+
+
 
 function rateQuestions(questions: Question_Object[]): QuestionWithRating_Object[] {
   //console.log(`%c questions ${questions}`, 'color: white; background: green')
@@ -61,10 +65,10 @@ function rateQuestions(questions: Question_Object[]): QuestionWithRating_Object[
 }
 
 function randomQuestions(questionsWithRating: QuestionWithRating_Object[]): Question_Object[] {
-  //console.log(`%c questionsWithRating ${questionsWithRating}`, 'color: white; background: blue')
+  console.log(`%c questionsWithRating`, 'color: white; background: #021562', questionsWithRating)
 
   const questionsWithRandomValue: QuestionWithRandomValue_Object[] = assignQuestionsRandomValue(questionsWithRating)
-  //console.log(`%c questionsWithRandomValue ${questionsWithRandomValue}`, 'color: white; background: red')
+  console.log(`%c questionsWithRandomValue`, 'color: white; background: #740306', questionsWithRandomValue)
   const quizQuestions: Question_Object[] =
     shuffle(questionsWithRandomValue)
       .sort((a, b) => a.randomValue - b.randomValue)
@@ -109,5 +113,51 @@ function assignQuestionsRandomValue(questionsWithRating: QuestionWithRating_Obje
     const questionWithRandomValue: QuestionWithRandomValue_Object = { question, randomValue }
     return questionWithRandomValue
   })
+}
+
+
+
+var f = {
+  'Get all questions that match selected categories': getQuestions,
+  'Give each question a selection chance rating based on its correctness rating and date since it was last asked': rateQuestions,
+  'Select random questions based on thier selection chance': randomQuestions
+}
+
+
+const f2 = {
+  "Question has a category that is an indirect sub category of any selected category": (question: Question_Object, selectedCategoryIds: string[]): boolean => {
+
+    return recursive(question.categoryIds, selectedCategoryIds)
+
+    function recursive(q_c_ids, c_ids){
+      
+      const matchFound = f2["Array of category IDs includes question's category"](c_ids, q_c_ids)    
+
+      if(matchFound) return true
+
+
+      for(const c_id of c_ids){
+        const childIds = f2["Get category ID's children category IDs"](c_id)
+        if(childIds){
+          const matchFound = recursive(q_c_ids, childIds)    
+          if(matchFound) return true
+        }
+      }
+
+    }
+  },
+
+
+  "Get category ID's children category IDs":
+  categoryId => 
+    categoriesService.categories.find
+    (category => category.id == categoryId)
+    ?.childCategoryIds
+  ,
+
+  "Array of category IDs includes question's category":
+  (categoryIds: string[], questionCategoryIds: string[]): boolean => 
+    questionCategoryIds.some
+    (q_c_id => categoryIds.includes(q_c_id))
 }
 
