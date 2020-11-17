@@ -23,8 +23,12 @@ const PersonalQuiz_App = observer(() => {
     case undefined:
       return <>Checking authentication...</>
     case false:
-      userService.showFacebookSignIn()
-      return <>Waiting for sign in with Facebook...</>
+      return <facebook-login>
+        Waiting for sign in with Facebook...
+        <button className='Facebook-Login' onClick={userService.showFacebookSignIn}>
+          Login with Facebook
+        </button>
+      </facebook-login>
     case true:
       return <>
         <ViewSelectors_Partial/>

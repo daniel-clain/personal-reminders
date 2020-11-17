@@ -6,8 +6,8 @@ import correctnessMarkSet from '../../../../other/sets/correctness-mark.set'
 import TextField from '../../../partials/TextField.partial'
 
 export default observer(() => {
-  const {activeQuestionIndex, activeQuiz, submitCorrectnessMark} = quizService
-  const {value, correctAnswer, correctnessMarkSubmitted} = activeQuiz.questions[activeQuestionIndex]
+  const {activeQuestionIndex, activeQuiz, submitCorrectnessMark, correctnessMarkSubmitted} = quizService
+  const {value, correctAnswer} = activeQuiz.questions[activeQuestionIndex]
   const lastQuestion = activeQuiz.questions.length == activeQuestionIndex + 1
 
   const labels = {
@@ -54,8 +54,8 @@ export default observer(() => {
         </form-field>
 
         {correctnessMarkSet.map(correctnessMark =>
-          <button 
-            className={correctnessMark}
+          <correctness-mark-button
+            class={correctnessMark}
             {...{
               key: correctnessMark,
               onClick: () => submitCorrectnessMark(correctnessMark)
@@ -63,7 +63,7 @@ export default observer(() => {
             {...correctnessMarkSubmitted == correctnessMark ? {selected: ''} : ''}
           >
             {correctnessMark}
-          </button>
+          </correctness-mark-button> 
         )}
 
         {show(<>

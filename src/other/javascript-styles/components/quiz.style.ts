@@ -1,26 +1,33 @@
 import { greenButton, lightGreenButton, lightRedButton, purpleButton, redButton } from "../utilities/button-colors";
+import { buttonStyle } from "../utilities/buttons.style";
 import { size2, size21, size5, size8 } from "../utilities/fibonacci-sizes";
 import { pxToRem } from "../utilities/pixels-to-rems";
 
 export const quiz = /*css*/`
   button.start {
+    ${buttonStyle}
     ${greenButton}
   }
 
-  button.Correct{   
+  correctness-mark-button.Correct{   
+    ${buttonStyle}
     ${greenButton}
   }
-  button.Almost{  
+  correctness-mark-button.Almost{ 
+    ${buttonStyle} 
     ${lightGreenButton} 
   }
-  button.Kinda{   
+  correctness-mark-button.Kinda{   
+    ${buttonStyle}
     ${lightRedButton}
   }
-  button.Wrong{   
+  correctness-mark-button.Wrong{  
+    ${buttonStyle} 
     ${redButton}
   }
   
   button.submit, button.next{   
+    ${buttonStyle}
     ${purpleButton}
   }
 

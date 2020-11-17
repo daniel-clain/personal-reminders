@@ -16,6 +16,7 @@ const userService = observable({
   userDoc: <Document> null,
   showFacebookSignIn: () => 
     auth().signInWithPopup(provider)
+    .catch(error => alert(error.message))
 })
 
 export default userService

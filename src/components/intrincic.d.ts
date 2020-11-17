@@ -28,5 +28,8 @@ declare namespace JSX {
     'expanded-category-wrapper': Elem
     'quiz-setup': Elem
     'quiz-question': Elem
+    'facebook-login': Elem
+    'facebook-login-button': Elem
+    'correctness-mark-button': Elem
   }
 }
