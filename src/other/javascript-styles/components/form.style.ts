@@ -14,18 +14,19 @@ export const form = /*css*/`
     text-shadow: ${textShadow};
     color: #99daff;
   }  
-  text-input{
+  textarea{
     height: ${pxToRem(size55)};
     width: 100%;
     border-radius: ${pxToRem(size1)};
-    border:  ${pxToRem(size1)} solid #10839a;
     border-right: 0;
-    box-shadow: ${boxShadow}, inset 1px 1px 1px 1px #1f3244, inset -1px -1px 1px 1px #14586d;
-    background: white;
+    background: rgb(255 255 255 / 86%);
     padding: ${pxToRem(size5)} ${pxToRem(size5)};
     padding-right: ${pxToRem(size5 - scrollbarWidth)};
     overflow-y: scroll;
     color: black;
+    resize: none;
+    box-shadow: ${boxShadow};
+    font-family: 'Roboto', arial;
   }
   form-field{    
     margin-bottom: ${pxToRem(size21)};

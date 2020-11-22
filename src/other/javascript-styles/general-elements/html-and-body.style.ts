@@ -7,6 +7,7 @@ import { scrollbarWidth } from "../utilities/scrollbar-width";
 export const htmlAndBody = /*css*/`  
   html{
     font-size: ${baseFontSize}px;
+    font-family: 'Roboto', arial;
   }
   body{
     background-color: #333;

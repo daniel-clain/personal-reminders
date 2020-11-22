@@ -1,34 +1,35 @@
-import { greenButton, lightGreenButton, lightRedButton, purpleButton, redButton } from "../utilities/button-colors";
-import { buttonStyle } from "../utilities/buttons.style";
-import { size2, size21, size5, size8 } from "../utilities/fibonacci-sizes";
+import { aquaButton, greenButton, lightGreenButton, lightRedButton,  redButton } from "../utilities/button-colors";
+import { size21, size3, size5 } from "../utilities/fibonacci-sizes";
 import { pxToRem } from "../utilities/pixels-to-rems";
 
 export const quiz = /*css*/`
+
   button.start {
-    ${buttonStyle}
     ${greenButton}
   }
 
+  question-categories{
+    color: white;
+    font-style: italic;
+    font-size: ${pxToRem(size5)};
+  }
+
+
   correctness-mark-button.Correct{   
-    ${buttonStyle}
     ${greenButton}
   }
   correctness-mark-button.Almost{ 
-    ${buttonStyle} 
     ${lightGreenButton} 
   }
   correctness-mark-button.Kinda{   
-    ${buttonStyle}
     ${lightRedButton}
   }
   correctness-mark-button.Wrong{  
-    ${buttonStyle} 
     ${redButton}
   }
   
   button.submit, button.next{   
-    ${buttonStyle}
-    ${purpleButton}
+    ${aquaButton}
   }
 
   hr {

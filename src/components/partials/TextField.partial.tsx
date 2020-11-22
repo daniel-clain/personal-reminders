@@ -1,18 +1,22 @@
 import React from 'react'
 import { FormFieldProps_Interface } from './Form.partial'
 
-const TextField_Partial = ({label, value, onChange, editable, type}: FormFieldProps_Interface<string>) => {  
+const TextField_Partial = ({label, value, onChange, editable = true, type}: FormFieldProps_Interface<string>) => {  
   return <>
   
     {label ? <label>{label}:</label> : ''}
-    <text-input 
+    <textarea
       className='text-input'
-      contentEditable
-      onBlur={(e: any) => onChange?.(e.target.innerText)}
+      value={ value ? value : ''}
+      onChange={(e: any) => {
+        console.log(e)
+        onChange?.(e.target.value)
+      }}
       suppressContentEditableWarning={true}
+      {...{readOnly: editable ? false : true}}
     >
-      {value}
-    </text-input>
+      
+    </textarea>
   </>
 }
 

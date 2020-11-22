@@ -71,7 +71,7 @@ export const categorySelector = /*css*/`
     display: none;
   }
   category-tag[selected]{
-    background: #ffec63;
+    background: #ffee77;
   }
   category-wrapper[expanded]{
     max-width: max-content;
@@ -92,8 +92,8 @@ export const categorySelector = /*css*/`
     display: flex;
     align-items: center;
     margin-left: ${pxToRem(size3)};
-    height: ${pxToRem(size8)};
-    width: ${pxToRem(size8)};
+    height: ${pxToRem(size13)};
+    width: ${pxToRem(size13)};
     justify-content: center;
     align-self: center;
   }

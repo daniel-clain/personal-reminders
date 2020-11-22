@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react'
 import React from 'react'
+import categoriesService from '../../../../other/services/categories.service'
 import quizService from '../../../../other/services/quiz.service'
 import { show } from '../../../../other/services/utilities.service'
 import correctnessMarkSet from '../../../../other/sets/correctness-mark.set'
@@ -7,7 +8,8 @@ import TextField from '../../../partials/TextField.partial'
 
 export default observer(() => {
   const {activeQuestionIndex, activeQuiz, submitCorrectnessMark, correctnessMarkSubmitted} = quizService
-  const {value, correctAnswer} = activeQuiz.questions[activeQuestionIndex]
+  const {categories} = categoriesService
+  const {value, correctAnswer, categoryIds} = activeQuiz.questions[activeQuestionIndex]
   const lastQuestion = activeQuiz.questions.length == activeQuestionIndex + 1
 
   const labels = {
@@ -24,13 +26,19 @@ export default observer(() => {
           value,
           readonly: true
         }}/>
+        <question-categories>{
+          categories
+          .filter(c => categoryIds.some(id => id == c.id))
+          .map(c => c.value)
+          .join(', ')
+        }</question-categories>
       </form-field>
       
       <form-field name={labels.answerInput}>
         <TextField {...{
           label: labels.answerInput,
           value: quizService.inputAnswer,
-          onValueUpdated: (answer) => quizService.inputAnswer = answer
+          onChange: (answer) => quizService.inputAnswer = answer
         }} />
       </form-field>
 
@@ -55,12 +63,12 @@ export default observer(() => {
 
         {correctnessMarkSet.map(correctnessMark =>
           <correctness-mark-button
-            class={correctnessMark}
+            class={'button ' + correctnessMark}
             {...{
               key: correctnessMark,
               onClick: () => submitCorrectnessMark(correctnessMark)
             }}          
-            {...correctnessMarkSubmitted == correctnessMark ? {selected: ''} : ''}
+            {...correctnessMarkSubmitted == correctnessMark ? {selected: ''} : correctnessMarkSubmitted ? {notselected: ''} : ''}
           >
             {correctnessMark}
           </correctness-mark-button> 

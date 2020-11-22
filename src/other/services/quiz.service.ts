@@ -1,12 +1,15 @@
 import { observable } from 'mobx'
+import { Question_Object } from '../object-models/question.object'
+import { Quiz_Object } from '../object-models/quiz.object'
 import { generateQuiz } from '../services/quiz-generator.service'
-import { CorrectnessMark_Type } from '../sets/correctness-mark.set'
+import { CorrectnessMark_Type, CorrectnessRatings_Enum, maxRating } from '../sets/correctness-mark.set'
+import questionsService from './questions.service'
 
 const quizService = observable({
-  activeQuiz: null,
+  activeQuiz: <Quiz_Object>null,
   quizInProgress: false,
   answerSubmitted: false,
-  correctnessMarkSubmitted: null,
+  correctnessMarkSubmitted: <CorrectnessMark_Type>null,
   activeQuestionIndex: null,
   inputAnswer: '',
   selectedCategoryIds: [],
@@ -41,10 +44,18 @@ function submitCorrectnessMark(correctnessMark: CorrectnessMark_Type) {
 }
 
 
+
 function nextQuestion() {
-  const { activeQuiz, activeQuestionIndex } = quizService
+  const { activeQuiz, activeQuestionIndex, correctnessMarkSubmitted } = quizService
+  
+  if(!correctnessMarkSubmitted){
+    alert('You must select a correctness mark')
+    return
+  }
+
+
   const question = activeQuiz.questions[activeQuestionIndex]
-  //questionStore.updateQuestionCorrectnessRating(question, correctnessMark)
+  updateQuestionCorrectnessRating(question, correctnessMarkSubmitted)
 
 
   if (activeQuiz.questions.length == activeQuestionIndex + 1) {
@@ -55,6 +66,28 @@ function nextQuestion() {
     quizService.activeQuestionIndex++
   }
 }
+
+function updateQuestionCorrectnessRating(question: Question_Object, correctnessMark: CorrectnessMark_Type){
+
+  if(!correctnessMark) throw('Correctness Mark invalid')
+
+  const markRating = CorrectnessRatings_Enum[correctnessMark]
+  const currentRating = question.correctnessRating
+  
+  
+  let newCorrectnessRating = 
+    currentRating + markRating < 0 ? 0 :
+    currentRating + markRating > maxRating ? maxRating :
+    currentRating + markRating
+
+
+  questionsService.updateQuestion({
+    ...question,
+    correctnessRating: newCorrectnessRating
+  })
+}
+
+
 
 function finishQuiz() {
   resetQuestionState()
@@ -68,6 +101,6 @@ function finishQuiz() {
 function resetQuestionState() {
   quizService.inputAnswer = ''
   quizService.answerSubmitted = false
-  quizService.correctnessMarkSubmitted = false
+  quizService.correctnessMarkSubmitted = null
 }
 

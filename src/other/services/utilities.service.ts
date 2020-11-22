@@ -35,3 +35,32 @@ export function random() { return Math.random() }
 export const show = blocks => ({
   if: condition => condition ? blocks : null
 })
+
+export const createPropsObj = (propsAndConditions: {
+  condition?,
+  prop,
+  elseProp?
+}[]): any => {
+  
+  let returnObj = {}
+  propsAndConditions.forEach(x => {
+    if(x.condition || x.condition == undefined){
+      if(typeof x.prop == 'string'){
+        returnObj[x.prop] = ''
+      }
+      if(typeof x.prop == 'object'){
+        returnObj  = {...returnObj, ...x.prop}
+      }
+    }
+    else{
+      if(typeof x.elseProp == 'string'){
+        returnObj[x.elseProp] = ''
+      }
+      if(typeof x.elseProp == 'object'){
+        returnObj  = {...returnObj, ...x.elseProp}
+      }
+    }
+    
+  })
+  return returnObj
+}

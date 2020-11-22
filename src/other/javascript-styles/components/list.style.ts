@@ -1,4 +1,4 @@
-import { purpleButton } from "../utilities/button-colors";
+import { aquaButton } from "../utilities/button-colors";
 import { size13, size2, size5, size8 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
 import { pxToRem } from "../utilities/pixels-to-rems";
@@ -25,6 +25,7 @@ export const list = /*css*/`
     display: flex;
     justify-content: center;
     flex-direction: column;
+    transition: all 0.2s;
   }
 
 
@@ -46,7 +47,13 @@ export const list = /*css*/`
   button.collapse{    
     margin-left: auto;
     display: block;
-    ${purpleButton}
+    ${aquaButton}
+  }
+
+  item-excerpt {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 ` 

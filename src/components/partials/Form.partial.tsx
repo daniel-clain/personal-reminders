@@ -35,16 +35,22 @@ function Form_Partial({ dataType, data, fields, isEdit, onUpdate }: FormPartialP
   return <>
     {fields.map((fieldProps, i) =>       
       <form-field key={i} name={fieldProps.label}>
+
+        
         {show(
           <TextField_Partial {...
             {...fieldProps, value: fieldProps.value as string}
           } />
         ).if(fieldProps.type == 'Input')}
+
+
         {show(
           <CategorySelector_Partial {...
             {...fieldProps, value: fieldProps.value as string[]}
           } />
         ).if(fieldProps.type == 'Category Select')}
+
+
       </form-field>
     )}
     <form-buttons>

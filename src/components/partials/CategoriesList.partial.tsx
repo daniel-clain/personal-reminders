@@ -41,28 +41,13 @@ const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategor
 
   const categoriesContent = categories.map((category): JSX.Element => 
     
-    <category-tag  
-      {...
-        selectedCategoryIds?.some(id => id == category.id) ? 
-        {selected:''} : ''
-      }     
-      {...
-        expandedCategory && expandedCategory.id != category.id ? 
-        {'fading-out': ''} : ''
-      }  
-      {...
-        expandedCategory?.id == category.id && haveFadedOut  ? 
-        {'is-expanded': ''} : ''
-      } 
-      key={category.id}    
-      onClick={() => onCategorySelected(category)}
-    >
+    <category-tag {...getTagProps(category)}>
 
-      {show(
+      {/* {show(
         <parent-categories onClick={() => parentIdsSelected(category)}>
           {category.parentCategoryIds?.length}
         </parent-categories>
-      ).if(type != 'selected' && category.parentCategoryIds?.length > 0)}
+      ).if(type != 'selected' && category.parentCategoryIds?.length > 0)} */}
 
       {category.value}
       
@@ -104,6 +89,28 @@ const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategor
       </expanded-category-wrapper> : ''
     }
   </>  
+
+  function getTagProps(category){
+
+    const props = {
+      key: category.id,
+      onClick: () => onCategorySelected(category)
+    }
+
+    if(selectedCategoryIds?.some(id => id == category.id)){
+      props['selected'] = true
+    }
+    
+    if(expandedCategory && expandedCategory.id != category.id){
+      props['fading-out'] = true
+    }
+    
+    if(expandedCategory?.id == category.id && haveFadedOut){
+      props['is-expanded'] = true
+    }
+
+    return props
+  }
 
   function parentIdsSelected(category: Category_Object){
 

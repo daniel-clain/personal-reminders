@@ -1,7 +1,7 @@
-export const purpleButton = `
-  background: #7c4b9a;
-  color: #f0d6ff;
-  border-color: #491f63;
+export const aquaButton = `
+  background: #00686d;
+  color: #d5e0ea;
+  border-color: #003640;
 `
 
 export const redButton = `

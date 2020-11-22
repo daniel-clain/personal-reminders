@@ -2,6 +2,7 @@
 interface Elem extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>{
   class?: string
   name?: string
+  readonly?: boolean
 }
 
 declare namespace JSX {
@@ -23,6 +24,7 @@ declare namespace JSX {
     'quiz-view': Elem
     'form-buttons': Elem
     'list-item': Elem
+    'item-excerpt': Elem
     'parent-categories': Elem
     'child-categories': Elem
     'expanded-category-wrapper': Elem
@@ -31,5 +33,6 @@ declare namespace JSX {
     'facebook-login': Elem
     'facebook-login-button': Elem
     'correctness-mark-button': Elem
+    'question-categories': Elem
   }
 }
