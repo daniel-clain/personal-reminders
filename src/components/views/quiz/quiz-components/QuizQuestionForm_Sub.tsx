@@ -1,21 +1,30 @@
 import { observer } from 'mobx-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import categoriesService from '../../../../other/services/categories.service'
 import quizService from '../../../../other/services/quiz.service'
 import { show } from '../../../../other/services/utilities.service'
 import correctnessMarkSet from '../../../../other/sets/correctness-mark.set'
+import {Form_Partial} from '../../../partials/Form.partial'
 import TextField from '../../../partials/TextField.partial'
 
 export default observer(() => {
+
   const {activeQuestionIndex, activeQuiz, submitCorrectnessMark, correctnessMarkSubmitted} = quizService
+
   const {categories} = categoriesService
-  const {value, correctAnswer, categoryIds} = activeQuiz.questions[activeQuestionIndex]
+  const [activeQuestion, setActiveQuestion] = useState(activeQuiz.questions[activeQuestionIndex])
+  const {value, correctAnswer, categoryIds} = activeQuestion
   const lastQuestion = activeQuiz.questions.length == activeQuestionIndex + 1
+
+  useEffect(() => {
+    setActiveQuestion(activeQuiz.questions[activeQuestionIndex])
+  }, [activeQuestionIndex])
+  
 
   const labels = {
     question: `Question ${activeQuestionIndex + 1}`,
-    answerInput: `Enter you're answer`,
-    correctAnswer: 'The correct answer is',
+    answerInput: `You're answer`,
+    correctAnswer: 'The correct answer is'
   }
 
   return (
@@ -24,7 +33,7 @@ export default observer(() => {
         <TextField {...{
           label: labels.question,
           value,
-          readonly: true
+          onChange: value => setActiveQuestion({ ...activeQuestion, value })
         }}/>
         <question-categories>{
           categories
@@ -52,33 +61,40 @@ export default observer(() => {
       ).if(quizService.answerSubmitted == false)}
 
       {show(<>
-      
-        <form-field name={labels.correctAnswer}>
-          <TextField {...{
-            label: labels.correctAnswer,
+        <Form_Partial 
+          dataType='Question'
+          data={activeQuestion}
+          onDelete={quizService.skipQuestion}
+          isEdit={true}
+          hasSmallButtons={true}
+          fields={[{
+            label: 'Correct Answer',
             value: correctAnswer,
-            readonly: true
-          }}/>
-        </form-field>
-
-        {correctnessMarkSet.map(correctnessMark =>
-          <correctness-mark-button
-            class={'button ' + correctnessMark}
-            {...{
-              key: correctnessMark,
-              onClick: () => submitCorrectnessMark(correctnessMark)
-            }}          
-            {...correctnessMarkSubmitted == correctnessMark ? {selected: ''} : correctnessMarkSubmitted ? {notselected: ''} : ''}
-          >
-            {correctnessMark}
-          </correctness-mark-button> 
-        )}
+            type: 'Input',
+            onChange: answerValue => setActiveQuestion({ ...activeQuestion, correctAnswer: answerValue })
+          }]}
+        />
+        
+        <correctness-mark-buttons>
+          {correctnessMarkSet.map(correctnessMark =>
+            <correctness-mark-button
+              class={'button ' + correctnessMark}
+              {...{
+                key: correctnessMark,
+                onClick: () => submitCorrectnessMark(correctnessMark)
+              }}          
+              {...correctnessMarkSubmitted == correctnessMark ? {selected: ''} : correctnessMarkSubmitted ? {notselected: ''} : ''}
+            >
+              {correctnessMark}
+            </correctness-mark-button> 
+          )}
+        </correctness-mark-buttons>
 
         {show(<>
           <hr />
           <button 
             className='next'
-            onClick={() => quizService.nextQuestion()}
+            onClick={() => quizService.nextQuestion(activeQuestion)}
           >
             {lastQuestion ? 'Finish' : 'Next'}
           </button>

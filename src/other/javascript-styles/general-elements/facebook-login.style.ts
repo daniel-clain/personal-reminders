@@ -11,7 +11,7 @@ export const facebookLogin = /*css*/`
     background-color: #3a5696;
     color: white;
     display: block;
-    margin: ${pxToRem(size55)} auto;
+    margin: ${pxToRem(size55)} auto !important;
     border-color: white;
   }
 `

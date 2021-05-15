@@ -1,0 +1,3 @@
+☐ category cant be a parent or child of itself
+☐ category list filter should show child tags when parent tag selected
+☐ dont allow circular relationships with categories

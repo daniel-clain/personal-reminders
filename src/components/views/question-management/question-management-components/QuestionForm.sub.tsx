@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Question_Object } from '../../../../other/object-models/question.object'
-import Form_Partial from '../../../partials/Form.partial'
+import {Form_Partial} from '../../../partials/Form.partial'
 
 interface FormProps_Interface {
   editedQuestion?: Question_Object

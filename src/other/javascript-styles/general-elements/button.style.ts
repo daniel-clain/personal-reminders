@@ -1,6 +1,7 @@
 import boxShadow from "../utilities/box-shadow";
 import { size1, size8, size3, size5, size13, size21 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
+import { mainFont } from "../utilities/fonts";
 import { pxToRem } from "../utilities/pixels-to-rems";
 
 export const button = /*css*/`
@@ -16,6 +17,7 @@ export const button = /*css*/`
     transition-property: filter;
     margin-right: ${pxToRem(size3)};
     cursor: pointer;
+    font-family: ${mainFont}
   }
 
   .button:last-of-type, button:last-of-type{

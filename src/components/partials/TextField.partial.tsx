@@ -1,19 +1,24 @@
 import React from 'react'
-import { FormFieldProps_Interface } from './Form.partial'
+import { Category_Object } from '../../other/object-models/category.object'
+import FormFields_Set from '../../other/sets/form-field.set'
+export interface FormFieldProps_Interface<T extends string | string[]> {
+  label?: string
+  value?: T
+  onChange?: (value) => void
+  editable?: boolean
+  type?: FormFields_Set
+  editedCategory?: Category_Object
+}
 
-const TextField_Partial = ({label, value, onChange, editable = true, type}: FormFieldProps_Interface<string>) => {  
+const TextField_Partial = ({label, value, onChange}: FormFieldProps_Interface<string>) => {  
   return <>
   
     {label ? <label>{label}:</label> : ''}
     <textarea
-      className='text-input'
       value={ value ? value : ''}
       onChange={(e: any) => {
-        console.log(e)
         onChange?.(e.target.value)
       }}
-      suppressContentEditableWarning={true}
-      {...{readOnly: editable ? false : true}}
     >
       
     </textarea>

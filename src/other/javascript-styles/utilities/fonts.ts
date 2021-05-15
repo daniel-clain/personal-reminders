@@ -1,5 +1,8 @@
 
 
 
-export const mainFont = 'Nunito Sans'
+export const nunitoSans = 'Nunito Sans'
 export const sriracha = 'Sriracha'
+
+
+export const mainFont = nunitoSans

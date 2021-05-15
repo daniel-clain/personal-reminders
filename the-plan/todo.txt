@@ -1,3 +1,0 @@
-* category cant be a parent or child of itself
-* scroll padding
-* dont allow circular relationships with categories

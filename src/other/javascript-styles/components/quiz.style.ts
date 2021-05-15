@@ -5,6 +5,7 @@ import { pxToRem } from "../utilities/pixels-to-rems";
 export const quiz = /*css*/`
 
   button.start {
+    margin-top: ${pxToRem(size21)};
     ${greenButton}
   }
 
@@ -14,6 +15,9 @@ export const quiz = /*css*/`
     font-size: ${pxToRem(size5)};
   }
 
+  correctness-mark-buttons{
+    margin-top: ${pxToRem(size21)}; 
+  }
 
   correctness-mark-button.Correct{   
     ${greenButton}
@@ -28,7 +32,8 @@ export const quiz = /*css*/`
     ${redButton}
   }
   
-  button.submit, button.next{   
+  button.submit, button.next{  
+    margin-top: ${pxToRem(size21)}; 
     ${aquaButton}
   }
 

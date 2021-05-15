@@ -15,4 +15,7 @@ const questionsService = observable({
 
 export default questionsService
 
-dataService.data$('Questions', (questions: Question_Object[]) => questionsService.questions = questions)
+dataService.data$('Questions', (questions: Question_Object[]) => {
+  questionsService.questions = questions
+  window['questions'] = questions
+})

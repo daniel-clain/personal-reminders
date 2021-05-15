@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Category_Object } from '../../../../other/object-models/category.object'
-import Form_Partial from '../../../partials/Form.partial'
+import {Form_Partial} from '../../../partials/Form.partial'
 
 interface FormProps_Interface {
   editedCategory?: Category_Object

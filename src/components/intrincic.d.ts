@@ -18,7 +18,6 @@ declare namespace JSX {
     'question-list': Elem
     'question-management': Elem
     'section-heading': Elem
-    'text-input': Elem
     'view-selector': Elem
     'view-selectors': Elem
     'quiz-view': Elem
@@ -33,6 +32,8 @@ declare namespace JSX {
     'facebook-login': Elem
     'facebook-login-button': Elem
     'correctness-mark-button': Elem
+    'correctness-mark-buttons': Elem
     'question-categories': Elem
+    'filter-tools': Elem
   }
 }

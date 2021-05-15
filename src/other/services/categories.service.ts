@@ -30,7 +30,10 @@ const categoriesService = observable({
 export default categoriesService
 
 
-dataService.data$('Categories', (categories: Category_Object[]) => categoriesService.categories = categories)
+dataService.data$('Categories', (categories: Category_Object[]) => {
+  categoriesService.categories = categories
+  window['categories'] = categories
+})
 
 function updateParentAndChildCategories(updatedCategroy: Category_Object) {
 

@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import firebase from 'firebase/app'
 import environmentService from './other/services/environment.service'
@@ -47,11 +47,3 @@ if(false){
 
   }, 10)
 }
-
-type StyleObject = {
-  update()
-}
-
-function styleObjectBase(){
-
-} 

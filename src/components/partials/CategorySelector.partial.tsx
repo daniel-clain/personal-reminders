@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 import { Category_Object } from '../../other/object-models/category.object'
 import { observer } from 'mobx-react'
-import { FormFieldProps_Interface } from './Form.partial';
 import categoriesService from '../../other/services/categories.service';
 import { show } from '../../other/services/utilities.service';
 import CategoriesList_Partial from './CategoriesList.partial';
+import { FormFieldProps_Interface } from './TextField.partial';
 
 
 const CategorySelector_Partial = ({label, value, onChange, editedCategory }: FormFieldProps_Interface<string[]>) => {

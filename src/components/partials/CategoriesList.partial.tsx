@@ -18,36 +18,45 @@ const CategoriesList_Partial = ({onCategorySelected, categories, selectedCategor
   const [expandedCategory, setExpandedCategory] = useState(null)
   const [haveFadedOut, setHaveFadedOut] = useState(false)
 
+  useEffect(() => {
 
-  document.addEventListener('animationend', ({animationName, target}: any) => {
-
-    if(animationName == 'fade-out-to-left'){
-      target.setAttribute('is-hidden', '')
-      target.removeAttribute('class')
-      if(!haveFadedOut){
-        setHaveFadedOut(true)
+    const afterAnimation = ({animationName, target}: any) => {
+      switch(animationName){
+        case 'fade-out-to-left': {
+          target.setAttribute('is-hidden', '')
+          target.removeAttribute('class')
+          if(!haveFadedOut){
+            setHaveFadedOut(true)
+          } 
+          break
+        }
+        case 'fade-in-from-left': {
+          target.removeAttribute('fading-in'); break;
+        }      
+        case 'pop-in': {
+          target.classList.remove('popping-in')
+        }
       }
     }
-    if(animationName == 'fade-in-from-left'){
-      target.removeAttribute('fading-in')
-    }
     
-    if(animationName == 'pop-in'){
-      target.classList.remove('popping-in')
-    }
+    document.addEventListener('animationend', afterAnimation)
 
-  })
+    return () => document.removeEventListener('animationend', afterAnimation)
+
+
+  }, [])
 
 
   const categoriesContent = categories.map((category): JSX.Element => 
     
     <category-tag {...getTagProps(category)}>
 
-      {/* {show(
+      {/* NUMBER OF PARENT CATEGORIES - NOT USEFUL
+      show(
         <parent-categories onClick={() => parentIdsSelected(category)}>
           {category.parentCategoryIds?.length}
         </parent-categories>
-      ).if(type != 'selected' && category.parentCategoryIds?.length > 0)} */}
+      ).if(type != 'selected' && category.parentCategoryIds?.length > 0)*/}
 
       {category.value}
       

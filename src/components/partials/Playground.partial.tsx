@@ -3,7 +3,7 @@ import React from 'react'
 import questionsService from '../../other/services/questions.service'
 import categoriesService from '../../other/services/categories.service'
 import quizService from '../../other/services/quiz.service'
-import viewService from '../../other/services/view.service'
+import * as viewService from '../../other/services/view.service'
 import userService from '../../other/services/user.service'
 import dataService from '../../other/services/data.service'
 

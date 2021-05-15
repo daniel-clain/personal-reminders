@@ -18,6 +18,7 @@ const quizService = observable({
   submitCorrectnessMark,
   nextQuestion,
   finishQuiz,
+  skipQuestion
 })
 
 export default quizService
@@ -43,9 +44,20 @@ function submitCorrectnessMark(correctnessMark: CorrectnessMark_Type) {
   quizService.correctnessMarkSubmitted = correctnessMark
 }
 
+function skipQuestion(){
+  const { activeQuiz, activeQuestionIndex } = quizService
+  if (activeQuiz.questions.length == activeQuestionIndex + 1) {
+    finishQuiz()
+  }
+  else {
+    resetQuestionState()
+    quizService.activeQuestionIndex++
+  }
+}
 
 
-function nextQuestion() {
+
+function nextQuestion(activeQuestion: Question_Object,) {
   const { activeQuiz, activeQuestionIndex, correctnessMarkSubmitted } = quizService
   
   if(!correctnessMarkSubmitted){
@@ -53,9 +65,7 @@ function nextQuestion() {
     return
   }
 
-
-  const question = activeQuiz.questions[activeQuestionIndex]
-  updateQuestionCorrectnessRating(question, correctnessMarkSubmitted)
+  updateQuestionCorrectnessRating(activeQuestion, correctnessMarkSubmitted)
 
 
   if (activeQuiz.questions.length == activeQuestionIndex + 1) {
@@ -72,7 +82,7 @@ function updateQuestionCorrectnessRating(question: Question_Object, correctnessM
   if(!correctnessMark) throw('Correctness Mark invalid')
 
   const markRating = CorrectnessRatings_Enum[correctnessMark]
-  const currentRating = question.correctnessRating
+  const currentRating = question.correctnessRating || 2
   
   
   let newCorrectnessRating = 

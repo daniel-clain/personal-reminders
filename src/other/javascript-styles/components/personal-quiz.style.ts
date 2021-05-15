@@ -16,6 +16,7 @@ export const personalQuiz = /*css*/`
     padding: ${pxToRem(size13)} ${pxToRem(size8)};
     font-family: ${mainFont};
     box-shadow: 0 0 ${pxToRem(size5)} ${pxToRem(size3)} black;
+    color: white;
   }  
 
 

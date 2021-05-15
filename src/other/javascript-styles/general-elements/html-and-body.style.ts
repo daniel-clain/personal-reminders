@@ -1,13 +1,14 @@
 import { baseFontSize } from "../utilities/base-font-size.style";
 import { size1, size3 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
+import { mainFont } from "../utilities/fonts";
 import { pxToRem } from "../utilities/pixels-to-rems";
 import { scrollbarWidth } from "../utilities/scrollbar-width";
 
 export const htmlAndBody = /*css*/`  
   html{
     font-size: ${baseFontSize}px;
-    font-family: 'Roboto', arial;
+    font-family: ${mainFont}, arial;
   }
   body{
     background-color: #333;

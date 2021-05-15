@@ -1,14 +1,28 @@
 import { aquaButton } from "../utilities/button-colors";
-import { size13, size2, size5, size8 } from "../utilities/fibonacci-sizes";
+import { size13, size2, size21, size5, size8 } from "../utilities/fibonacci-sizes";
 import { size } from "../utilities/font-and-line-size";
 import { pxToRem } from "../utilities/pixels-to-rems";
 
 export const list = /*css*/`
 
+  filter-tools{
+    display: flex;
+    margin-bottom: ${pxToRem(size8)};
+  }
 
+  .no-category-checkbox{
+    ${size(size5)}
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 0;
+  }
+  .no-category-checkbox input{
+    width: ${size8}px;
+    height: ${size8}px;
+    margin-left: ${size5}px;
+  }
 
   input.list-filter{  
-    margin-bottom: ${pxToRem(size8)};
     display: block;
     margin-left: auto;
     ${size(size5)};

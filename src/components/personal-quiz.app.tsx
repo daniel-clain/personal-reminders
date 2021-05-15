@@ -1,9 +1,9 @@
-import React, { HTMLAttributes, useEffect } from 'react'
+import React, { HTMLAttributes, useEffect, useState } from 'react'
 import { hot } from 'react-hot-loader/root';
 import Quiz_View from './views/quiz/Quiz.view';
 import QuestionManagement_View from './views/question-management/QuestionManagement.view';
 
-import viewStore from '../other/services/view.service';
+import {onFontLoaded, selectedView} from '../other/services/view.service';
 import { show } from '../other/services/utilities.service';
 import userService from '../other/services/user.service';
 import environmentService from '../other/services/environment.service';
@@ -18,7 +18,13 @@ const { environment } = environmentService
 
 const PersonalQuiz_App = observer(() => {
 
-  let { selectedView } = viewStore
+  const [fontLoaded, setFontLoaded] = useState(false)
+  useEffect(() => {
+    onFontLoaded(() => setFontLoaded(true))
+  })
+
+  if(!fontLoaded) return
+
   switch (environment.requiresAuthentication == false || userService.userAuthenticated) {
     case undefined:
       return <>Checking authentication...</>
@@ -33,9 +39,9 @@ const PersonalQuiz_App = observer(() => {
       return <>
         <ViewSelectors_Partial/>
 
-        {show(<Quiz_View />).if(selectedView == 'Quiz')}
-        {show(<QuestionManagement_View />).if(selectedView == 'Questions')}
-        {show(<CategoryManagement_View />).if(selectedView == 'Categories')}
+        {show(<Quiz_View />).if(selectedView.value == 'Quiz')}
+        {show(<QuestionManagement_View />).if(selectedView.value == 'Questions')}
+        {show(<CategoryManagement_View />).if(selectedView.value == 'Categories')}
 
         {show(<Playground_Partial hidden />).if(environment.name == 'Development')}
       </>

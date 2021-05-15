@@ -19,7 +19,11 @@ interface ListProps{
 
 const List_Partial = ({type}: ListProps) => {  
   
-  const [filter, setfilter] = useState({value: null, categoryIds: null})
+  const [filter, setfilter] = useState({
+    value: null, 
+    categoryIds: null,
+    quesWithNoCategory: false
+  })
 
   const [expandedItemId, setExpandedItemId] = useState(null)
   const data: Data_Object[] = 
@@ -27,7 +31,23 @@ const List_Partial = ({type}: ListProps) => {
     type == 'Category' ? categoriesService.categories : null
     
   return <>
-    <input className='list-filter' placeholder='filter...' onChange={e => setfilter({...filter, value: e.target.value.toLocaleLowerCase()})}/>
+    <filter-tools>
+      {show(
+        <label className='no-category-checkbox'>
+          Show questions with no category
+          <input
+            type='checkbox'
+            onChange={e => setfilter({...filter, quesWithNoCategory: e.target.checked})}
+          />
+        </label>
+      ).if(type == 'Question')}
+      <input 
+        className='list-filter' 
+        placeholder='filter...' 
+        onChange={e => setfilter({...filter, value: e.target.value.toLocaleLowerCase()})}
+      />
+    </filter-tools>
+    
 
     <CategorySelector_Partial {...{
       label: 'filter category',
@@ -73,8 +93,14 @@ const List_Partial = ({type}: ListProps) => {
       },
       {
         prop: 'filtered-out',
-        condition: (() => {      
-          if(expandedItemId == dataItem.id) return false
+        condition: (() => {  
+          if(type == 'Question'){
+            const question = dataItem as Question_Object
+            if(filter.quesWithNoCategory) 
+              return question.categoryIds.length != 0
+          }
+          
+          if(expandedItemId == dataItem.id) return false     
           if(
             filteredOutByCatgegory() || 
             filteredOutByValue()
