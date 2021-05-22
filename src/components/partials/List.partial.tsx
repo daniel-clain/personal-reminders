@@ -10,7 +10,6 @@ import categoriesService from '../../other/services/categories.service'
 import Data_Object from '../../other/object-models/data.object'
 import questionsService from '../../other/services/questions.service'
 import { observer } from 'mobx-react'
-import quizService from '../../other/services/quiz.service'
 import CategorySelector_Partial from './CategorySelector.partial'
 
 interface ListProps{
@@ -20,8 +19,8 @@ interface ListProps{
 const List_Partial = ({type}: ListProps) => {  
   
   const [filter, setfilter] = useState({
-    value: null, 
-    categoryIds: null,
+    value: null as string, 
+    categoryIds: null as string[],
     quesWithNoCategory: false
   })
 
@@ -129,30 +128,9 @@ const List_Partial = ({type}: ListProps) => {
       const filterValueIsInDataValue = dataItem.value.toLocaleLowerCase()
       .includes(filter.value.toLocaleLowerCase())
 
-      return filterValueIsInDataValue
+      return !filterValueIsInDataValue
       
     }
-/* 
-    const lowerValue = dataItem.value.toLocaleLowerCase()
-    const dataAsQuestion = dataItem as Question_Object
-
-    if(!expandedItemId) return
-
-      expandedItemId != dataItem.id &&
-      (
-        !lowerValue.includes(filter.value) ||
-        (
-          type == 'Question' && 
-          !filter.categoryIds.some(cid => 
-            dataAsQuestion.categoryIds.includes(cid)
-          )
-        )
-      ) && 
-      
-    ){
-      props['filtered-out'] = true
-    } */
-  
   }
 }
 

@@ -57,10 +57,10 @@ export const Form_Partial = observer(({ dataType, data, fields, isEdit, onUpdate
       ).if(isEdit == false)}
 
       {show(<>
-        <button className='update' onClick={() => (handleClick('Update'), onUpdate?.())}>
+        <button className='update' onClick={() => handleClick('Update')}>
           Update
         </button>
-        <button className='delete' onClick={() => (handleClick('Delete'), onDelete?.())}>
+        <button className='delete' onClick={() => handleClick('Delete')}>
           Delete
         </button>
       </>).if(isEdit == true)}
@@ -74,21 +74,37 @@ export const Form_Partial = observer(({ dataType, data, fields, isEdit, onUpdate
 
     if(dataType == 'Question'){
       const question = data as Question_Object
-      if(formButton == 'Add')
+      if(formButton == 'Add'){
         addQuestion(question)
-      if(formButton == 'Update')
+        onUpdate?.()
+      }
+      if(formButton == 'Update'){
         updateQuestion(question)
-      if(formButton == 'Delete')
-        deleteQuestion(question)
+        onUpdate?.()
+      }
+      if(formButton == 'Delete'){
+        if(confirm(`Delete question?\n${question.value}`)){
+          deleteQuestion(question)
+          onDelete?.()
+        }
+      }
     }
     if(dataType == 'Category'){
       const category = data as Category_Object
-      if(formButton == 'Add')
+      if(formButton == 'Add'){
         addCategory(category)
-      if(formButton == 'Update')
+        onUpdate?.()
+      }
+      if(formButton == 'Update'){
         updateCategory(category)
-      if(formButton == 'Delete')
-        deleteCategory(category)
+        onUpdate?.()
+      }
+      if(formButton == 'Delete'){
+        if(confirm(`Delete category?\n${category.value}`)){
+          deleteCategory(category)
+          onDelete?.()
+        }
+      }
     }
 
   }
