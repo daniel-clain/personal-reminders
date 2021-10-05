@@ -1,16 +1,21 @@
 {
-	"sideEffects": false,
+  "license": "UNLICENSED",
 	"scripts": {
 		"start:development": "webpack-dev-server --env=development --mode=development",
 		"start:production": "webpack-dev-server --env=production --mode=development",
 		"build:demo": "webpack --env=demo --mode=production",
 		"build:production": "webpack --env=production --mode=production",
-		"test": "jest --watch -i"
+		"serve": "nodemon server.ts"
 	},
 	"dependencies": {
+		"express": "^4.17.1",
+		"nodemon": "^2.0.12"
+	},
+	"devDependencies": {
 		"@firebase/app-types": "^0.6.1",
 		"@firebase/firestore-types": "^1.12.0",
 		"@types/jest": "^26.0.9",
+		"@types/node": "^16.9.6",
 		"@types/react": "^16.9.44",
 		"@types/react-dom": "^16.9.8",
 		"chalk": "^4.1.0",

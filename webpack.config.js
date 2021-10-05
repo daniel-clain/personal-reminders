@@ -6,7 +6,7 @@ const chalk = require('chalk');
 
 
 let config = {	
-	entry: ['./src/index.tsx'],
+	entry: [`${__dirname}/src/index.tsx`],
 	
 	resolve: {
 		extensions: [ '.tsx', '.ts', '.js' ]
@@ -34,12 +34,12 @@ let config = {
 		new CleanWebpackPlugin(),
 		new CopyPlugin({
 			patterns: [
-				{from: './src/other/images/', to: 'images'}
+				{from: `${__dirname}/src/other/images/`, to: 'images'}
 			]
 		}),
 		new HtmlWebPackPlugin({
 			title: 'Personal Quiz',
-			favicon: './favicon.ico',
+			favicon: `${__dirname}/favicon.ico`,
 			meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
 		}),
 		new WebpackPwaManifest({
@@ -49,7 +49,7 @@ let config = {
 			display: 'standalone',
 			icons: [
 				{
-					src: './pqicon.png',
+					src: `${__dirname}/pqicon.png`,
 					sizes: '128x128',
 					type: 'image/png'
 				}
@@ -68,13 +68,13 @@ module.exports = (environment, {mode}) => {
 	console.log(chalk.blue(`YOUR MODE IS ${mode}`.toUpperCase()))
 	switch(environment){
 		case 'development': {
-			config.entry.unshift('./src/other/set-environment-modules/set-environment-development.ts')
+			config.entry.unshift(`${__dirname}/src/other/set-environment-modules/set-environment-development.ts`)
 		} break
 		case 'demo': {
-			config.entry.unshift('./src/other/set-environment-modules/set-environment-demo.ts')
+			config.entry.unshift(`${__dirname}/src/other/set-environment-modules/set-environment-demo.ts`)
 		} break
 		case 'production': {
-			config.entry.unshift('./src/other/set-environment-modules/set-environment-production.ts')
+			config.entry.unshift(`${__dirname}/src/other/set-environment-modules/set-environment-production.ts`)
 		} break
 	}
 	switch(mode){
