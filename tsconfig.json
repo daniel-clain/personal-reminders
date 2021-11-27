@@ -2,16 +2,17 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "lib": ["dom", "es2016"],
+    "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "types": [ "node", "react", "jest", "react-dom" ],
     "listFiles": true
   },
+  "typing": "./index.d.ts",
   "exclude": [
     "**/the-plan/**",
     "custom-tags"

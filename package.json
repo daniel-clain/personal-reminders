@@ -5,7 +5,7 @@
 		"start:production": "webpack-dev-server --env=production --mode=development",
 		"build:demo": "webpack --env=demo --mode=production",
 		"build:production": "webpack --env=production --mode=production",
-		"serve": "nodemon server.ts"
+		"serve": "ts-node server.ts"
 	},
 	"dependencies": {
 		"express": "^4.17.1",
