@@ -1,32 +1,34 @@
 
 import Document from '../interfaces/document.interface'
-import { observable} from "mobx";
+import { computed, makeAutoObservable, makeObservable, observable} from "mobx";
 import { User, auth, firestore } from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import environmentService from '../services/environment.service';
 import 'firebase/auth'
+import firebase from 'firebase/app';
 
-var provider = new auth.FacebookAuthProvider()
+export class UserService{
+  user: User = null
+  userDoc: Document = null
 
 
-const userService = observable({
-  user: <User> null,
-  userAuthenticated: undefined,
-  userDoc: <Document> null,
-  showFacebookSignIn: () => 
-    auth().signInWithPopup(provider)
+  facebookProvider
+
+  constructor() {
+    makeAutoObservable(this)
+
+    if(environmentService.environment.requiresAuthentication){
+      this.facebookProvider = new auth.FacebookAuthProvider()
+      auth().onAuthStateChanged(u => {
+        this.user = u
+        this.userDoc = u ? firestore().collection('Users').doc(u.uid) : null
+      })
+    }
+  }
+
+  showFacebookSignIn = () => {
+    auth().signInWithPopup(this.facebookProvider)
     .catch(error => alert(error.message))
-})
-
-export default userService
-
-
-if(environmentService.environment.requiresAuthentication){
-  auth().onAuthStateChanged(u => {
-    userService.user = u
-    userService.userAuthenticated = !!u
-    userService.userDoc = u ? firestore().collection('Users').doc(u.uid) : null
-  })
+  }
 }
-

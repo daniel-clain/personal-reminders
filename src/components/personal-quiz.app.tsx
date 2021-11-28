@@ -1,27 +1,55 @@
-import React, { HTMLAttributes, useEffect, useState } from 'react'
-import { hot } from 'react-hot-loader/root';
+import React from 'react'
+import { observer } from 'mobx-react';
+
 import Quiz_View from './views/quiz/Quiz.view';
 import QuestionManagement_View from './views/question-management/QuestionManagement.view';
 
-import {onFontLoaded, selectedView} from '../other/services/view.service';
-import { show } from '../other/services/utilities.service';
-import userService from '../other/services/user.service';
-import environmentService from '../other/services/environment.service';
-import Playground_Partial from './partials/Playground.partial';
-import { observer } from 'mobx-react';
 import ViewSelectors_Partial from './partials/ViewSelectors_Partial';
-
 import CategoryManagement_View from './views/category-management/CategoryManagement_View';
+import { WaitingToLogin_View } from './views/waiting-to-login/WaitingToLogin.view';
+import { app } from './app';
+
+const {userService, viewService} = app
+
+export const PersonalQuiz_App = observer(() => {
+  const {activeView} = viewService
+
+  return (
+    <div className='personal-quiz'>
+      {!userService.user ? 
+        <WaitingToLogin_View/> : ''
+      }
+      {userService.user ? 
+        <>
+          <ViewSelectors_Partial/>
+          {activeView == 'Quiz' ? <Quiz_View /> : ''}
+          {activeView == 'Questions' ? <QuestionManagement_View/> : ''}
+          {activeView == 'Categories' ? <CategoryManagement_View/>  : ''}
+        </> : ''
+      }
+    </div>
+  )
+})
 
 
-const { environment } = environmentService
 
-const PersonalQuiz_App = observer(() => {
+
+
+
+/* 
+export const PersonalQuiz_App = hot(observer(({firebaseReturn}: any) => {
 
   const [fontLoaded, setFontLoaded] = useState(false)
   useEffect(() => {
     onFontLoaded(() => setFontLoaded(true))
   })
+  useEffect(() => {
+    console.log('firebaseReturn :>> ', firebaseReturn);
+  }, [firebaseReturn])
+ */
+
+/* 
+  return firebaseReturn ? <div>'yay'</div> : <div>'nay'</div>
 
   if(!fontLoaded) return
 
@@ -46,8 +74,8 @@ const PersonalQuiz_App = observer(() => {
         {show(<Playground_Partial hidden />).if(environment.name == 'Development')}
       </>
   }
-})
-export default hot(PersonalQuiz_App)
+})) */
+
 
 
 

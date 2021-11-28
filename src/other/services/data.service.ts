@@ -12,7 +12,7 @@ import { DataTypes_Set } from '../sets/data-types.set'
 import dataType_collection from '../maps/data-type_collection.map'
 import { DataObjects_Set } from '../sets/data-objects.set'
 import { Collections_Set } from '../sets/firebase-collections.set'
-import userService from './user.service'
+import { app } from '../../components/app'
 
 const {requiresAuthentication} = environmentService.environment
 
@@ -27,8 +27,8 @@ export default observable({
 function data$<T extends Data_Object>(collectionName: Collections_Set, receiveDataFunc: (data: T[]) => void) {
   
   if(requiresAuthentication){  
-    when(() => !!userService.userDoc, () => {  
-      userService.userDoc.collection(collectionName).onSnapshot({
+    when(() => !!app.userService.userDoc, () => {  
+      app.userService.userDoc.collection(collectionName).onSnapshot({
         next: (snapshot: QuerySnapshot<DocumentData>) =>
           receiveDataFunc(snapshot.docs.map(doc => <T>({ ...doc.data(), id: doc.id })))
       })
@@ -44,7 +44,7 @@ function data$<T extends Data_Object>(collectionName: Collections_Set, receiveDa
 
 function getCollection(dataType: DataTypes_Set){  
   if(requiresAuthentication){ 
-    return userService.userDoc.collection(dataType_collection.get(dataType))
+    return app.userService.userDoc.collection(dataType_collection.get(dataType))
   } 
   else {
     return firebase.firestore().collection(dataType_collection.get(dataType))

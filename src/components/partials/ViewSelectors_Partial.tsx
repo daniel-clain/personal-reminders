@@ -1,16 +1,16 @@
 import React from 'react'
-import {selectedView, setView} from '../../other/services/view.service'
 import views from '../../other/sets/view.set'
+import { app } from '../app'
 
 export default () =>
 <view-selectors>
   {views.map(view => 
     <view-selector 
       class='button'
-      {...selectedView.value == view ? 
+      {...app.viewService.activeView == view ? 
         {selected: ''} : {notselected: ''}
       }
-      onClick={() => setView(view)}
+      onClick={() => app.viewService.activeView = view}
       key={view}
     >
       {view}

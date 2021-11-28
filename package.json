@@ -1,5 +1,5 @@
 {
-  "license": "UNLICENSED",
+	"license": "UNLICENSED",
 	"scripts": {
 		"start:development": "webpack-dev-server --env=development --mode=development",
 		"start:production": "webpack-dev-server --env=production --mode=development",
@@ -8,7 +8,14 @@
 		"serve": "ts-node server.ts"
 	},
 	"dependencies": {
+		"@babel/plugin-transform-runtime": "^7.16.4",
+		"@babel/preset-env": "^7.16.4",
+		"@babel/preset-react": "^7.16.0",
+		"@babel/preset-typescript": "^7.16.0",
+		"babel-loader": "^8.2.3",
+		"babel-plugin-transform-runtime": "^6.23.0",
 		"express": "^4.17.1",
+		"mobx": "^6.3.8",
 		"nodemon": "^2.0.12"
 	},
 	"devDependencies": {
@@ -27,7 +34,7 @@
 		"firestore": "^1.1.6",
 		"html-webpack-plugin": "^4.3.0",
 		"jest": "^26.2.2",
-		"mobx": "^5.15.5",
+		"mobx": "^6.3.8",
 		"mobx-react": "^6.2.5",
 		"node-sass": "^6.0.0",
 		"react": "^16.13.1",

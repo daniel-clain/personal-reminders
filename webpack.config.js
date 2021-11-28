@@ -14,10 +14,28 @@ let config = {
 	module: {
 		rules: [
 			{
-				test: /\.tsx?$/,
-				use: {
-					loader: 'ts-loader'
-				},
+				test: /\.(j|t)s(x)?$/,
+				exclude: /node_modules/,
+				use: [
+					{loader: 'react-hot-loader/webpack'},
+					{
+					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true,
+						babelrc: false,
+						presets: [
+							[
+								'@babel/preset-env',
+								{ targets: { browsers: 'last 2 versions' } }, // or whatever your project requires
+							],
+							'@babel/preset-typescript',
+							'@babel/preset-react',
+						],
+						plugins: [
+							'react-hot-loader/babel',
+						],
+					},
+				}],
 			},
 			{
 				test: /\.s[ac]ss$/,
@@ -82,8 +100,7 @@ module.exports = (environment, {mode}) => {
 			config.devtool = 'source-map'
 			config.devServer = {
 				hot: true,
-				https: true,
-				clientLogLevel: 'silent'
+				https: true
 			}			
 		} break
 		case 'production': {
