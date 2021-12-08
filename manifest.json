@@ -1,10 +1,10 @@
 {
-  "name": "Personal Quiz",
-  "short_name": "Personal Quiz",
+  "name": "Personal Priority Reminder",
+  "short_name": "Personal Priority Reminder",
   "start_url": "/",
   "display": "standalone",
   "icons": [{
-    "src": "assets/icon/pqicon.png",
+    "src": "assets/icon/pricon.png",
     "sizes": "128x128",
     "type": "image/png"
   }],

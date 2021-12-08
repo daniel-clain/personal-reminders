@@ -11,7 +11,8 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "types": [ "node", "react", "jest", "react-dom" ],
-    "listFiles": true
+    "listFiles": true,
+    "outDir": "./build"
   },
   "typing": "./index.d.ts",
   "exclude": [

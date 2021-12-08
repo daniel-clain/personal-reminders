@@ -1,5 +1,5 @@
 
-import { SubmittedQuestion_Object } from '../object-models/submitted-question.object'
+import { SubmittedReminder_Object } from '../object-models/submitted-reminder.object'
 import 'firebase/firestore'
 import { SubmittedCategory_Object } from '../object-models/submitted-category.object'
 import { observable, when } from 'mobx'
@@ -70,10 +70,9 @@ function deleteData(collectionName: DataTypes_Set, data: Data_Object) {
 }
 
 
-function validateQuestion({ value, correctAnswer }: SubmittedQuestion_Object) {
+function validateReminder({ value }: SubmittedReminder_Object) {
   const validationErrors = []
-  if (!value) validationErrors.push('requires question')
-  if (!correctAnswer) validationErrors.push('requires answer')
+  if (!value) validationErrors.push('requires reminder')
   if (validationErrors.length > 0) throw (`Failed to validate: ${validationErrors}`)
 }
 function validateCategory({ value }: SubmittedCategory_Object) {

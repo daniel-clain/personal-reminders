@@ -1,6 +1,6 @@
 import { size233 } from "../javascript-styles/utilities/fibonacci-sizes"
 
-const reduceBaseSizeOnSmallDeviceWidth = personalQuizContainer => {
+const reduceBaseSizeOnSmallDeviceWidth = personalPriorityReminderContainer => {
     
   updateIfWidthIsSmallerThanDefault()
 
@@ -9,7 +9,7 @@ const reduceBaseSizeOnSmallDeviceWidth = personalQuizContainer => {
   }
 
   function updateIfWidthIsSmallerThanDefault(){
-    const appWidth = personalQuizContainer.clientWidth
+    const appWidth = personalPriorityReminderContainer.clientWidth
     if(appWidth < size233){  
       const percencategoryeOfMaxWidth = appWidth / size233
       const newFontSize = percencategoryeOfMaxWidth * 16

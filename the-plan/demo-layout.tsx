@@ -1,28 +1,28 @@
 
-<personal-quiz-app>
+<personal-priorityReminder-app>
   <view-selectors>
     <view-selector 
-      onSelect={setView('quiz')} 
-      name='Quiz'/>
+      onSelect={setView('priorityReminder')} 
+      name='PriorityReminder'/>
     <view-selector 
-      onSelect={setView('question management')} 
-      name='Question Management'/>
+      onSelect={setView('reminder management')} 
+      name='Reminder Management'/>
     <view-selector 
       onSelect={setView('category management')} 
       name='Category Management'/>
   </view-selectors>
 
-  {ifSelectedViewIs('quiz').show(
-    <quiz-view>
+  {ifSelectedViewIs('priorityReminder').show(
+    <priorityReminder-view>
 
-    </quiz-view>
+    </priorityReminder-view>
   )}
-  {ifSelectedViewIs('question management').show(
-    <question-management-view/>
+  {ifSelectedViewIs('reminder management').show(
+    <reminder-management-view/>
   )}
   {ifSelectedViewIs('category management').show(
     <category-management-view>
       
     </category-management-view>
   )}
-</personal-quiz-app>
+</personal-priorityReminder-app>

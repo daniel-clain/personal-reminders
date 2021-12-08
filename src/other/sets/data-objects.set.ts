@@ -1,7 +1,7 @@
 import { Category_Object } from "../object-models/category.object"
-import { Question_Object } from "../object-models/question.object"
+import { Reminder_Object } from "../object-models/reminder.object"
 
-export type DataObjects_Set = Question_Object | Category_Object
+export type DataObjects_Set = Reminder_Object | Category_Object
 
 
 

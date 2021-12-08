@@ -8,13 +8,10 @@ const credentials = {key: privateKey, cert: certificate};
 const app = express();
 var httpsServer = https.createServer(credentials, app);
 
-/* app.get('/', (req, res) => {
-  console.log('request made');
-  res.send(`${__dirname}/dist/index.html`)
-}) */
 app.use(express.static('dist'))
 
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(`${__dirname}/favicon.ico`)
 })
-httpsServer.listen(1234, () => console.log('Personal Quiz App is being on port 1234'));
+
+httpsServer.listen(7777, () => console.log('Personal Priority Reminder App is running on port 7777'));

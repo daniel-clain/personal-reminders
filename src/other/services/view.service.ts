@@ -4,7 +4,7 @@ import WebFont from 'webfontloader'
 
 
 export class ViewService{
-  activeView: View_Type = 'Quiz'
+  activeView: View_Type = 'Priority Reminder'
   fontLoaded = false
 
   constructor(){ 

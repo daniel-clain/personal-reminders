@@ -6,11 +6,11 @@ import FormButton_Set from '../../other/sets/form-button.set';
 import FormFields_Set from '../../other/sets/form-field.set';
 import TextField_Partial, { FormFieldProps_Interface } from './TextField.partial'
 import CategorySelector_Partial from './CategorySelector.partial'
-import questionsService from '../../other/services/questions.service';
+import remindersService from '../../other/services/reminders.service';
 import { DataObjects_Set } from '../../other/sets/data-objects.set';
 import { DataTypes_Set } from '../../other/sets/data-types.set';
 import categoriesService from '../../other/services/categories.service';
-import { Question_Object } from '../../other/object-models/question.object';
+import { Reminder_Object } from '../../other/object-models/reminder.object';
 import { Category_Object } from '../../other/object-models/category.object';
 import { observer } from 'mobx-react';
 
@@ -69,22 +69,22 @@ export const Form_Partial = observer(({ dataType, data, fields, isEdit, onUpdate
 
 
   function handleClick(formButton: FormButton_Set) {
-    const {addQuestion, updateQuestion, deleteQuestion} = questionsService
+    const {addReminder, updateReminder, deleteReminder} = remindersService
     const {addCategory, updateCategory, deleteCategory} = categoriesService
 
-    if(dataType == 'Question'){
-      const question = data as Question_Object
+    if(dataType == 'Reminder'){
+      const reminder = data as Reminder_Object
       if(formButton == 'Add'){
-        addQuestion(question)
+        addReminder(reminder)
         onUpdate?.()
       }
       if(formButton == 'Update'){
-        updateQuestion(question)
+        updateReminder(reminder)
         onUpdate?.()
       }
       if(formButton == 'Delete'){
-        if(confirm(`Delete question?\n${question.value}`)){
-          deleteQuestion(question)
+        if(confirm(`Delete reminder?\n${reminder.value}`)){
+          deleteReminder(reminder)
           onDelete?.()
         }
       }

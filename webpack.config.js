@@ -56,18 +56,18 @@ let config = {
 			]
 		}),
 		new HtmlWebPackPlugin({
-			title: 'Personal Quiz',
+			title: 'Personal Priority Reminders',
 			favicon: `${__dirname}/favicon.ico`,
 			meta: { viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
 		}),
 		new WebpackPwaManifest({
-			name: 'Personal Quiz',
-			short_name: 'Personal Quiz',
+			name: 'Personal Priority Reminders',
+			short_name: 'Personal Priority Reminders',
 			start_url: '/',
 			display: 'standalone',
 			icons: [
 				{
-					src: `${__dirname}/pqicon.png`,
+					src: `${__dirname}/pricon.png`,
 					sizes: '128x128',
 					type: 'image/png'
 				}
