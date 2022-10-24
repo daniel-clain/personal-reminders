@@ -1,15 +1,10 @@
 import Environment_Interface from "../interfaces/environment.interface";
-import { firebaseDemoConfig, firebaseConfig } from "./firebase.config";
+import { firebaseConfig } from "./firebase.config";
 
 export const development: Environment_Interface = {
   name: 'Development',
-  firebaseConfig: firebaseDemoConfig,
-  requiresAuthentication: false
-}
-export const demo: Environment_Interface = {
-  name: 'Demo',
-  firebaseConfig: firebaseDemoConfig,
-  requiresAuthentication: false
+  firebaseConfig: firebaseConfig,
+  requiresAuthentication: true
 }
 export const production: Environment_Interface = {
   name: 'Production',

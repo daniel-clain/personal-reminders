@@ -6,7 +6,6 @@ export default interface Environment_Interface{
   firebaseConfig: {    
     apiKey: string
     authDomain: string
-    databaseURL: string
     projectId: string
     storageBucket: string
     messagingSenderId: string
